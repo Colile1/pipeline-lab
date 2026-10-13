@@ -1235,6 +1235,24 @@ Imputers against mean, 9 classification and 6 regression datasets:
   different task type and should not be read against B2's regression
   finding.
 
+### 5% MAR: complete, and a clean null
+
+240 runs in 2,489 s (41 minutes): 236 succeeded, 4 skipped (digits
+under `drop_rows`), 0 failed.
+
+Imputers against mean, 9 classification and 6 regression datasets:
+**no Friedman test is significant for any model on any metric**
+(classification p from 0.1220 to 0.7165, regression p from 0.1146 to
+1.0000). The SVM, which separated kNN from mean at 5% MCAR, sits at
+p = 0.1220 here.
+
+At the same 5% rate, then, the kNN advantage for the SVM is present
+under MCAR and absent under MAR. One pair of sweeps is too little to
+call that a mechanism effect: the two differ by which cells were
+blanked, and a 1-point effect on 9 datasets can come and go with that
+alone. The 15% and 30% MAR sweeps will show whether MAR is
+systematically flatter.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
