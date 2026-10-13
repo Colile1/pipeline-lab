@@ -1452,6 +1452,102 @@ against the numbers `analyse.py` reports.
 Order of work: datasets first, then launch the tuning sweep, then do
 the dashboard work while the sweep runs.
 
+---
+
+## 4n. The three steps, carried out 2026-10-13
+
+### Step 1: three regression datasets, and regression becomes testable
+
+bodyfat, stock and airfoil_self_noise were registered (engine commit
+`3c20256`) and the six injected sweeps were run on those three only and
+appended under the existing config names: 288 runs in about 16 minutes,
+284 succeeded, 4 skipped, 0 failed. No succeeded cell is duplicated.
+The injected arm now has **9 regression datasets**.
+
+Imputers against mean, RMSE, 9 regression datasets. A positive figure
+means a lower error than mean imputation.
+
+| sweep | model | Friedman p | knn vs mean | median vs mean |
+|---|---|---|---|---|
+| MCAR 5% | logreg (LinearRegression) | 0.0131 | not rejected (7 of 9 better) | **worse**: Holm 0.0078, worse on 9 of 9 |
+| MCAR 15% | logreg | 0.0018 | **better**: Holm 0.0078, 8 of 9 | **worse**: Holm 0.0078, 9 of 9 |
+| MCAR 15% | random_forest | 0.0498 | not rejected | **worse**: Holm 0.0078, 9 of 9 |
+| MCAR 30% | all four models | 0.10 to 0.64 | not licensed | not licensed |
+| MAR 5% | logreg | 0.0183 | not rejected (Holm 0.0547) | **worse**: Holm 0.0391, 7 of 9 |
+| MAR 5% | svm (SVR) | 0.0319 | **better**: Holm 0.0391, 7 of 9, CI touches zero | not rejected |
+| MAR 15% | logreg | 0.0084 | **better**: Holm 0.0156, 8 of 9 | **worse**: Holm 0.0195, 7 of 9 |
+| MAR 30% | logreg | 0.0031 | **better**: Holm 0.0273, 7 of 9, CI touches zero | **worse**: Holm 0.0078, 9 of 9 |
+| every sweep | gradient_boosting | 0.37 to 0.89 | no difference | no difference |
+
+What the regression side now supports:
+
+- **Median imputation is worse than mean imputation for linear
+  regression.** Rejected in 5 of 6 sweeps, and worse on all 9 datasets
+  in three of them. This is the most consistent single result in the
+  imputation arm. The differences are small in size (median RMSE
+  change around 0.03 to 0.06) but almost never in the other direction.
+- **kNN beats mean for linear regression at 15% under both mechanisms**
+  (8 of 9 datasets each), and marginally at 30% MAR.
+- **Gradient boosting is indifferent to the imputer** in all six
+  sweeps, on regression as it was on classification.
+- These are median differences in raw RMSE across datasets whose
+  targets are on very different scales, so the size of the "typical
+  change" is not comparable between datasets. The sign and the win
+  count are the reliable parts.
+
+Against B2 (kNN best for regression at 5% and 15% under MCAR and MAR,
+gone by 30%): the lab agrees at 15% under both mechanisms and at 30%
+MCAR, where nothing is rejected. It does not reproduce the 5% result
+(kNN is ahead on 7 of 9 datasets at both 5% sweeps but is not
+rejected), and it finds a marginal kNN advantage at 30% MAR that B2
+did not. That is partial agreement from a different set of datasets
+and models, and should be described that way.
+
+The classification tables in 4k are unchanged: the three new datasets
+are regression only.
+
+### Step 2: random and Bayesian tuning given a real search space
+
+Engine commit `3c20256`. Random and Bayesian search now share one
+continuous space per model (`SPACES` in `components/budgets.py`) at
+the same budget of 10 candidates; grid keeps the small discrete grid.
+
+| model | space searched by random and Bayesian |
+|---|---|
+| logreg | C log-uniform 0.001 to 100 |
+| svm | C log-uniform 0.01 to 100; gamma log-uniform 0.0001 to 1 |
+| random_forest | n_estimators 100 to 300; max_depth one of none, 5, 10, 20, 30; min_samples_leaf 1 to 5 |
+| gradient_boosting | learning_rate log-uniform 0.01 to 0.3; n_estimators 100 to 300; max_depth 2 to 5 |
+
+Tests assert that every space is larger than the random budget, so
+random search cannot collapse into grid search again, and that a
+random search actually draws ten distinct values that are not the grid.
+The applicability check from 4j now uses the parameters the requested
+level really searches. 321 engine tests pass.
+
+A smoke test of all four levels on wine and bodyfat gave four
+different scores per model, where before random and grid were
+identical.
+
+`ofat_tuning_v3` (304 runs: 4 levels x 19 datasets x 4 models) was
+launched at 17:01 on 2026-10-13 under a new config name, because the
+levels mean something different from v2's and the two must not be
+pooled. Its results are recorded in a later section.
+
+### Step 3: the Findings page reads injected sweeps against mean
+
+Dashboard commit `4f4a2ec`. `core/findings.py` decides the reference
+level per sweep: an imputation sweep with injected missingness is
+compared against mean with `drop_rows` excluded, and every other sweep
+keeps its Chapter 1 baseline. Each finding carries a note explaining
+the departure, shown on the page above the numbers.
+
+A test pins the page to `analyse.py --baseline mean --exclude
+drop_rows` on the 30% MCAR sweep (SVM accuracy: Friedman 7.8235,
+p = 0.0200; kNN Holm 0.03125, better on 7 of 9), and the page was
+checked in a browser: 12 findings, each with the note, no console
+errors. 110 dashboard tests pass.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
