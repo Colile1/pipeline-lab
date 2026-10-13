@@ -807,6 +807,80 @@ Two scoping choices worth stating:
   scaling effect without large-dataset evidence. That is a stated gap,
   not an oversight: closing it needs hardware this project lacks.
 
+---
+
+## 4h. The k-sweep answered: it was never "selection hurts"
+
+Both k sweeps finished (k = 0.25 in 1,633 s, k = 0.75 in 2,574 s;
+228 runs each, zero failures, 12 colic skips each). With k = 0.50
+already recorded, the three together settle the question section 4c
+could not.
+
+Median accuracy change against **no selection**, over the 11 datasets
+complete at every k:
+
+| model | technique | k=0.25 | k=0.50 | k=0.75 |
+|---|---|---|---|---|
+| gradient_boosting | chi2 | -0.0188 | +0.0035 | +0.0035 |
+| gradient_boosting | mutual_info | -0.0194 | -0.0002 | +0.0011 |
+| gradient_boosting | rfe | -0.0208 | -0.0028 | +0.0017 |
+| logreg | chi2 | -0.0133 | -0.0035 | +0.0000 |
+| logreg | mutual_info | -0.0163 | -0.0124 | +0.0013 |
+| logreg | rfe | -0.0280 | -0.0052 | -0.0000 |
+| random_forest | chi2 | -0.0312 | -0.0088 | +0.0000 |
+| random_forest | mutual_info | -0.0295 | -0.0095 | -0.0037 |
+| random_forest | rfe | -0.0240 | -0.0105 | -0.0031 |
+| svm | chi2 | +0.0000 | +0.0000 | +0.0000 |
+| svm | mutual_info | -0.0035 | +0.0000 | +0.0013 |
+| svm | rfe | -0.0018 | +0.0000 | +0.0000 |
+
+**Nine of twelve model-technique pairs recover monotonically as k
+grows.** Not one gets worse. The verdict:
+
+> The v2 selection result was **"keeping half the features hurts"**,
+> not **"selection hurts"**. Accuracy tracks how much information is
+> discarded, not whether a selection step is present. At k = 0.75 the
+> penalty is essentially gone, and three cells are mildly positive.
+
+This is the caveat from section 4c discharged. The earlier statement -
+that the result could not distinguish the two explanations - was
+correct at the time and is now resolved by evidence rather than
+argument.
+
+### The SVM exception is real, not an artefact
+
+Two SVM cells read "flat across k", which would be the opposite
+conclusion. The obvious suspicion was the degeneracy seen in the
+encoding arm, where the unscaled SVM collapses to majority-class
+prediction and therefore cannot respond to anything.
+
+Checked rather than assumed: comparing SVM accuracy against each
+dataset's majority-class rate, **only 1 of 11 cells is degenerate**
+(wine, 0.6797 against a 0.6761 majority). The other ten are genuinely
+discriminating, with macro-F1 from 0.70 to 0.99.
+
+So the SVM's insensitivity to feature selection is a real property of
+the model on this data, not a measurement failure. It is also
+consistent: an RBF kernel aggregates over all features, so dropping the
+weakest ones changes the distance geometry less than it changes a
+tree's split choices.
+
+### What this changes for the write-up
+
+The selection arm now supports a sharper and more useful claim than it
+did:
+
+- Blind filtering at a fixed fraction is a **net cost, and the cost is
+  proportional to how much is thrown away**, not a penalty for
+  selecting as such.
+- `lasso`, which chooses its own count from the data, sat at or near
+  zero throughout the v2 arm. Together with the k gradient, that points
+  to the same conclusion from two directions: the number of features
+  kept is what matters, and a method that picks it adaptively avoids
+  the cost that a fixed fraction imposes.
+- The practical advice is therefore not "do not select" but "do not
+  select blindly at an arbitrary k".
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
