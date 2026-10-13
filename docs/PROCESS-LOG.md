@@ -748,6 +748,65 @@ selection result is not overstated in the meantime. When there is time,
 the first route is preferable, with `k_fraction` recorded as its own
 column rather than folded into the level name.
 
+---
+
+## 4g. k made configurable, and the queue after it
+
+The k-sweep decision from 4f was implemented on 2026-10-13 rather than
+left deferred. `k_fraction` now threads from the config through
+`evaluate` -> `build_pipeline` -> `LateResolvedSelector` ->
+`make_selector`, and is stored as **its own column** rather than folded
+into the level name, so analysis can group by technique and by k
+independently. Verified end to end: on sonar, 0.25 keeps 15 of 60
+features, 0.5 keeps 30, 0.75 keeps 45.
+
+**A migration trap caught before it bit.** Adding a schema column left
+the live database at 86 columns while the schema declared 87, and
+`CREATE TABLE IF NOT EXISTS` does nothing to a table that already
+exists. Every write in the next sweep would have failed. `open_db` now
+adds any missing column on open, ADD only, never dropping or retyping.
+Tested on a **copy** of the real record first: 1,433 rows preserved,
+`k_fraction` NULL on all of them, which is the honest value for runs
+that predate the field.
+
+Six new tests cover the behaviour, including that the k = 0.5 default
+has one source of truth (`piplab.config`, which imports no sklearn) and
+that lasso correctly ignores k because it is embedded and picks its own
+count.
+
+### Known inconsistency, recorded rather than patched mid-run
+
+A **skipped** run records `k_fraction` as NULL. So does `cv_k`, and has
+since the first sweep: `_record_failure` builds its row separately from
+the success path and carries none of the protocol settings, even though
+they are known regardless of outcome.
+
+This was noticed while a sweep was actively writing to the same file,
+so it was left alone rather than edited underneath a running process.
+It affects only the skipped rows, which carry no score and are excluded
+from every analysis, so nothing reported depends on it. Worth tidying
+when the queue is idle.
+
+### The queue, launched 2026-10-13
+
+| order | sweep | runs | purpose |
+|---|---|---|---|
+| 1 | selection, k = 0.25 | 228 | with k = 0.5 already recorded... |
+| 2 | selection, k = 0.75 | 228 | ...these separate "selection hurts" from "keeping half hurts" |
+| 3 | scaling, large datasets | 36 | SQ3: adult, bank-marketing, house_16H |
+| 4 | tuning | 256 | the fifth factor, never run |
+
+Two scoping choices worth stating:
+
+- The k-sweeps exclude `none` and `lasso`. k does not apply to the
+  baseline or to embedded selection, so including them would only
+  duplicate rows already recorded.
+- The large-dataset sweep **excludes SVM**. One adult SVM fit exceeded
+  600 CPU-seconds and was abandoned; at roughly O(n^2) on 45,000 rows
+  the sweep would take days. This leaves the model with the largest
+  scaling effect without large-dataset evidence. That is a stated gap,
+  not an oversight: closing it needs hardware this project lacks.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
