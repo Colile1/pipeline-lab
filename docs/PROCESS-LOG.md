@@ -1548,6 +1548,66 @@ p = 0.0200; kNN Holm 0.03125, better on 7 of 9), and the page was
 checked in a browser: 12 findings, each with the note, no console
 errors. 110 dashboard tests pass.
 
+---
+
+## 4o. Two smaller open items closed, 2026-10-13
+
+Done while `ofat_tuning_v3` was running. Neither touches a recorded
+result.
+
+### The house_16H result is explained, and the earlier guess was wrong
+
+Section 4i attributed the 7.7% LinearRegression shift on house_16H to
+"numerical conditioning", meaning lost precision, and said plainly that
+it had not been verified. It has now been checked directly, and the
+cause is more specific than that.
+
+| check on house_16H (22,784 rows, 16 features) | result |
+|---|---|
+| feature standard deviations | one near 66,000; the other fifteen below 0.34 |
+| condition number of the centred raw matrix | 1.4e7 |
+| condition number after standardising | 23 |
+| rank sklearn reports on the raw data | **9 of 16** |
+| rank sklearn reports on the scaled data | 16 of 16 |
+| raw data, default `tol = 1e-6` | RMSE 49,412.8 |
+| raw data, `tol = 1e-9` | rank 16, RMSE **45,539.1** |
+| scaled data | RMSE **45,539.1** |
+
+sklearn's least-squares solver discards any singular value below `tol`
+times the largest. With one feature on a scale 200,000 times the
+others, 7 of the 16 directions fall under that cutoff and are dropped,
+so the unscaled model is fitted on 9 directions instead of 16. Tighten
+the tolerance and the raw data gives exactly the scaled score.
+
+So the estimator **is** scale-invariant, and nothing was lost to
+rounding. The unscaled model was simply not the full model, because the
+solver's default rank cutoff is relative to the largest feature scale.
+This is a sharper statement of the practical point: on data with one
+dominant-scale feature, not scaling can silently remove features from a
+linear model. (These figures use their own fold split, so they differ
+slightly from the recorded 49,283.9 and 45,502.3; the gap between raw
+and scaled is the same.)
+
+The same mechanism probably explains the much smaller shift on autoMpg
+(0.0034 RMSE). That has not been checked.
+
+The comment in `components/models.py` now carries the verified
+explanation.
+
+### Skipped and failed rows now carry their settings
+
+`cv_k`, `inner_k`, `holdout_repeats`, `k_fraction`, `injected_rate` and
+`injected_mechanism` are known before a run starts, but were written on
+the success path only. A skipped row could not say at what missing rate
+it had been skipped. They are now set in `_base_row`, which every
+outcome shares. A test runs a real sweep that skips and checks the
+skipped row carries the settings. 322 engine tests pass.
+
+Rows already recorded keep their NULLs; the record is append-only and
+no analysis reads those fields on a skipped row. `ofat_tuning_v3` had
+already loaded the old code when this was committed, so its skipped
+rows will also be NULL in those columns.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
