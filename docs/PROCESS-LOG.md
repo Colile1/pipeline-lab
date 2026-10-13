@@ -1397,6 +1397,61 @@ All five factors now have recorded sweeps:
 | Dashboard Findings page | still compares against the Chapter 1 baseline only; it does not know about `--baseline mean`, so it will show the injected imputation sweeps against `drop_rows` | moderate |
 | Thesis positioning | how these results sit beside the frozen B1 and B2 record | a supervisor conversation |
 
+---
+
+## 4m. Next three steps, planned 2026-10-13
+
+Colile asked for all three of the leading open items from 4l. This is
+the plan as written **before** any of it was run, so the reasoning is
+on record ahead of the results.
+
+**1. More complete regression datasets.** Every regression comparison
+in the injected imputation arm has 6 datasets, one short of the 7 that
+two Holm-corrected contrasts need. Eight OpenML candidates were probed
+and all are complete, numeric and continuous-target:
+
+| candidate | OpenML id | rows | features |
+|---|---|---|---|
+| bodyfat | 560 | 252 | 14 |
+| yacht_hydrodynamics | 42370 | 308 | 6 |
+| QSAR_fish_toxicity | 44970 | 908 | 6 |
+| stock | 223 | 950 | 9 |
+| airfoil_self_noise | 44957 | 1,503 | 5 |
+| wind | 503 | 6,574 | 14 |
+| puma8NH | 225 | 8,192 | 8 |
+| bank8FM | 572 | 8,192 | 8 |
+
+Three small ones will be added (bodyfat, stock, airfoil_self_noise),
+taking the injected imputation arm to 9 regression datasets, clear of
+the bar with margin as was done for scaling in 4c, and the tuning arm's
+regression side from 4 to 7. They are chosen for being small, so the
+tuning re-run stays affordable, and for differing in width (5, 9 and
+14 features). The choice is made on size and shape before any of them
+has been scored. The six injected sweeps are then run on the three new
+datasets only and appended under the existing config names.
+
+**2. Fix the random and Bayesian tuning levels.** Random search is
+identical to grid search on all 56 pairs because every grid has fewer
+candidates than n_iter. Bayesian search draws 10 trials from the same
+4 to 6 candidates, so it is nearly exhaustive as well. The fix gives
+random and Bayesian a shared **continuous search space** per model at
+the same budget of 10 candidates, and leaves grid as the small discrete
+grid. That makes the three tuned levels genuinely different, and makes
+random against Bayesian a fair comparison at equal budget. Because this
+changes what the levels mean, it runs as a new sweep, `ofat_tuning_v3`,
+on the 16 small datasets plus the 3 new ones; `ofat_tuning_v2` stays in
+the record as it is. Expected cost: about 7 hours.
+
+**3. Teach the dashboard's Findings page the reference level.** The
+page compares every sweep against the Chapter 1 baseline, so it shows
+the injected imputation sweeps against `drop_rows`, which section 4k
+established is not a like-for-like comparison. It will use mean as the
+reference for injected sweeps, say so on the page, and be tested
+against the numbers `analyse.py` reports.
+
+Order of work: datasets first, then launch the tuning sweep, then do
+the dashboard work while the sweep runs.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
