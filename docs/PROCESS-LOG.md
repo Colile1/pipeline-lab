@@ -1281,6 +1281,122 @@ confidence interval clear of zero. The caution written at 5% MAR, that
 one pair of sweeps could not establish a mechanism effect, was the
 right call.
 
+### 30% MAR: complete, and the first tree-model response
+
+240 runs in 2,270 s (38 minutes): 212 succeeded, 28 skipped
+(`drop_rows` on seven datasets, now including iris), 0 failed.
+
+| model | metric | Friedman p | outcome |
+|---|---|---|---|
+| **random_forest** | accuracy | 0.0063 | **knn beats mean**: Holm 0.0156, better on 8 of 9, worse on 0, median +0.0085. **median beats mean**: Holm 0.0391, 6 of 9, median +0.0029, CI [-0.0001, +0.0040] |
+| **random_forest** | macro-F1 | 0.0419 | **knn beats mean**: Holm 0.0156, 8 of 9. median not rejected (0.0781) |
+| **svm** | accuracy | 0.0302 | **knn beats mean**: Holm 0.0469, better on 7 of 9, median +0.0200 |
+| svm | macro-F1 | 0.0930 | not licensed |
+| logreg | both | 0.0743 | not licensed |
+| gradient_boosting | both | 0.82 to 0.89 | no difference |
+| all four models | RMSE | 0.04 to 0.61 | underpowered at n = 6 |
+
+Earlier entries in this section say the tree ensembles are indifferent
+to the imputer, "now across five sweeps". The sixth sweep breaks that
+for random forest: at 30% MAR, kNN beats mean on 8 of 9 datasets. The
+statement stands for gradient boosting, which shows no difference in
+any of the six sweeps, and has to be narrowed for random forest to
+"indifferent in five sweeps of six".
+
+### All six injected sweeps together
+
+1,440 runs in 11,474 s (3.2 hours): **1,340 succeeded, 92 skipped,
+8 failed**. Every skip and failure is `drop_rows` leaving too little
+data, which does not affect the imputer-against-imputer comparison.
+
+kNN against mean, accuracy, 9 classification datasets per sweep:
+
+| sweep | logreg | svm | random_forest | gradient_boosting |
+|---|---|---|---|---|
+| MCAR 5% | - | **+0.0106** | - | - |
+| MCAR 15% | **+0.0131** | - | - | - |
+| MCAR 30% | - | **+0.0295** | - | - |
+| MAR 5% | - | - | - | - |
+| MAR 15% | **+0.0059** | - (Holm 0.0625) | - | - |
+| MAR 30% | - | **+0.0200** | **+0.0085** | - |
+
+A bold figure is the median accuracy gain where the contrast was
+rejected after Holm; a dash means not rejected or not licensed.
+
+What the six sweeps support:
+
+- **kNN imputation beats mean imputation in 6 of 24 model-sweep cells
+  on accuracy, and is never significantly worse.** Every rejected
+  contrast points the same way.
+- **The benefit sits with the scale-sensitive models.** The SVM
+  responds in 3 sweeps and logistic regression in 2; gradient boosting
+  never does; random forest does once, at the highest rate.
+- **The gains are about half a point to three points of accuracy**, and
+  the largest are at 30% missing.
+- **No dependence on mechanism is established.** MCAR gives 3 rejected
+  cells and MAR gives 3. The MAR 5% null is the one sweep with nothing.
+- **Median against mean is not established.** It is rejected twice in
+  24 cells, both times with a confidence interval that touches zero.
+- **Regression was never testable.** Six regression datasets cannot
+  clear the Holm bar for two contrasts (floor 0.03125, bar 0.025). A
+  seventh complete regression dataset would fix that. Descriptively,
+  for LinearRegression kNN lowered RMSE on 5 of 6 datasets at 15% MCAR
+  and 4 of 6 at 30% MAR, while median was worse than mean on 6 of 6 in
+  both.
+
+Two cautions on the whole set:
+
+- **No correction is applied across sweeps.** Each sweep is its own
+  family for Holm. Across the six there are 48 classification Friedman
+  tests at alpha 0.05, so two or three significant results would be
+  expected by chance alone; 13 were observed. The pattern is well
+  beyond chance, but any single cell should not be leaned on.
+- **The reference level is mean, not the Chapter 1 baseline.** The
+  reason is in the 15% MCAR entry above; it is a reported departure.
+
+Against B1 and B2: B1 found a stable null for imputation at 15% MCAR;
+B2 found kNN best for regression at low missingness under both
+mechanisms. The lab finds a small kNN advantage for classification
+with scale-sensitive models and cannot test regression. These are
+compatible rather than confirming: the lab result is on a different
+task type from B2's and uses a different set of models and datasets
+from B1's. Reconciling the three is a job for the comparison chapter,
+not for this log.
+
+---
+
+## 4l. Where the programme stands, 2026-10-13
+
+Sections 1 and 8 were written on 2026-10-12 and are kept as they were.
+This is the current state.
+
+**The record: 3,621 runs** in `pipeline-lab-engine/outputs/lab.db`, 89
+columns (the original 86 plus `k_fraction`, `injected_rate` and
+`injected_mechanism`). Engine tests: 314 passing with the
+timing-sensitive provenance file excluded.
+
+All five factors now have recorded sweeps:
+
+| factor | what ran | headline |
+|---|---|---|
+| scaling | 19 datasets x 4 models; 3 large datasets x 3 models | logreg: standard beats none (Holm 0.0410, 10 of 11). Trees invariant, including at 45,000 rows |
+| selection | k = 0.25, 0.50, 0.75 | the cost is discarding features, not selecting; penalty gone by k = 0.75 |
+| encoding | 19 datasets x 4 models | untestable: 3 informative datasets. Target encoding won 5 of 12 cells |
+| tuning | 16 datasets x 4 models | SVM macro-F1: Bayesian beats none (Holm 0.0381, 10 of 11). 30x to 50x the compute elsewhere for nothing |
+| imputation | natural, then MCAR and MAR at 5/15/30% | kNN beats mean for scale-sensitive models in 6 of 24 cells; never worse |
+
+**Open, in rough order of value:**
+
+| item | why | cost |
+|---|---|---|
+| A seventh complete regression dataset | every regression comparison in the imputation arm, and the tuning arm, is stuck one dataset short of testable | one registry entry plus re-running the regression rows |
+| The `random` tuning level | identical to `grid` on all 56 pairs because every grid is smaller than n_iter. Needs larger grids or continuous distributions | a design change, then a tuning re-run (hours) |
+| SVM on the large datasets | the model with the largest scaling effect has no evidence at 45,000 rows | days on this machine; needs other hardware |
+| Skipped rows carry no protocol settings | `cv_k` and `k_fraction` are NULL on skipped rows; cosmetic, no analysis depends on it | small |
+| Verify the house_16H conditioning explanation | the 7.7% LinearRegression shift is attributed to conditioning without a direct check | small |
+| Dashboard Findings page | still compares against the Chapter 1 baseline only; it does not know about `--baseline mean`, so it will show the injected imputation sweeps against `drop_rows` | moderate |
+| Thesis positioning | how these results sit beside the frozen B1 and B2 record | a supervisor conversation |
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
