@@ -231,3 +231,72 @@ def test_every_reported_comparison_carries_an_effect_size():
             assert effect["n_pairs"] >= 2
             assert (effect["n_improved"] + effect["n_worsened"]
                     + effect["n_tied"]) == effect["n_pairs"]
+
+
+# --- the reference level for injected-missingness sweeps -----------------
+
+
+def test_a_sweep_without_injection_keeps_the_declared_baseline():
+    rows = [{"injected_rate": None}, {"injected_rate": None}]
+    assert findings.reference_for("imputation", rows) == (None, (), "")
+    assert findings.reference_for("scaling", rows) == (None, (), "")
+
+
+def test_an_injected_imputation_sweep_is_read_against_mean():
+    """drop_rows is skipped or scored on different rows under injection,
+    so it cannot be the reference. The note must explain the departure."""
+    rows = [{"injected_rate": 0.15}]
+    reference, excluded, note = findings.reference_for("imputation", rows)
+    assert reference == "mean"
+    assert excluded == ("drop_rows",)
+    assert "mean imputation" in note and "departs" in note
+
+
+def test_injection_does_not_change_the_reference_for_other_factors():
+    """Only the imputation baseline is broken by injected gaps."""
+    assert findings.reference_for("scaling", [{"injected_rate": 0.15}])[0] is None
+
+
+@record_exists
+@needs_scipy
+def test_the_injected_finding_matches_the_engines_analysis():
+    """Numbers from analyse.py --baseline mean --exclude drop_rows on the
+    same record (PROCESS-LOG.md section 4k, 30% MCAR). If the page drifted
+    it would contradict the written result."""
+    with catalogue.connect() as c:
+        present = c.execute(
+            "select count(*) from runs where config_name = 'ofat_imputation_mcar30'"
+        ).fetchone()[0]
+    if not present:
+        pytest.skip("the 30% MCAR sweep is not in this record")
+
+    result = findings.analyse(
+        "ofat_imputation_mcar30", "accuracy_mean", "classification", "svm"
+    )
+    assert result["available"]
+    assert result["baseline"] == "mean"
+    assert result["declared_baseline"] == "drop_rows"
+    assert not result["uses_declared_baseline"]
+    assert result["reference_note"]
+    assert result["n_datasets"] == 9
+    assert result["friedman"]["statistic"] == pytest.approx(7.8235, abs=1e-3)
+    assert result["friedman"]["p_value"] == pytest.approx(0.02001, abs=1e-4)
+
+    by_level = {c["level"]: c for c in result["comparisons"]}
+    assert set(by_level) == {"knn", "median"}, "drop_rows must not be compared"
+    assert by_level["knn"]["p_value"] == pytest.approx(0.015625, abs=1e-5)
+    assert by_level["knn"]["p_adjusted"] == pytest.approx(0.03125, abs=1e-5)
+    assert by_level["knn"]["rejected"]
+    assert by_level["knn"]["effect"]["n_improved"] == 7
+    assert not by_level["median"]["rejected"]
+
+
+@record_exists
+@needs_scipy
+def test_an_ordinary_sweep_reports_that_it_uses_the_declared_baseline():
+    result = findings.analyse(
+        "ofat_scaling_full", "accuracy_mean", "classification", "logreg"
+    )
+    assert result["uses_declared_baseline"]
+    assert result["reference_note"] == ""
+    assert result["excluded_levels"] == []

@@ -130,6 +130,16 @@ function findingCard(finding) {
   verdict.textContent = verdictLine(finding);
   card.appendChild(verdict);
 
+  if (finding.reference_note) {
+    // The comparison is not against the study's usual baseline. Say so
+    // before the numbers, so nobody reads the table as "versus doing
+    // nothing".
+    const note = document.createElement("div");
+    note.className = "banner banner-info";
+    note.appendChild(paragraph(finding.reference_note));
+    card.appendChild(note);
+  }
+
   const warning = powerWarning(finding);
   if (warning) card.appendChild(warning);
 

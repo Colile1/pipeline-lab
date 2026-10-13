@@ -127,6 +127,37 @@ def _effect(baseline_scores, level_scores, higher_is_better):
     }
 
 
+# Under injected missingness the Chapter 1 imputation baseline cannot be
+# the reference level. drop_rows is skipped on most datasets once a
+# meaningful share of cells is blank, and where it does run it is trained
+# and tested on complete rows only, so its score is not comparable with an
+# imputer's score on the full data. The engine's analyse.py reads these
+# sweeps with mean as the reference and drop_rows left out; the dashboard
+# must do the same or it would show the misleading comparison.
+INJECTED_REFERENCE = "mean"
+INJECTED_EXCLUDE = ("drop_rows",)
+INJECTED_NOTE = (
+    "Compared against mean imputation, not against deleting rows. In this "
+    "experiment gaps were blanked on purpose, and row deletion is left out "
+    "because it is scored on a different, smaller set of rows: it keeps "
+    "only complete rows, so its result cannot be set beside an imputer's "
+    "on equal terms. This departs from the study's usual baseline and is "
+    "reported as such."
+)
+
+
+def reference_for(component: str, rows: list[dict]) -> tuple[str | None, tuple, str]:
+    """Decide the reference level for a sweep.
+
+    Output: (reference or None for the declared baseline, levels to
+    exclude, a reader-facing note that is empty when nothing changed).
+    """
+    injected = any(r.get("injected_rate") is not None for r in rows)
+    if component == "imputation" and injected:
+        return INJECTED_REFERENCE, INJECTED_EXCLUDE, INJECTED_NOTE
+    return None, (), ""
+
+
 def analyse(config_name: str, metric: str, task_type: str,
             model: str | None = None, alpha: float = ALPHA) -> dict:
     """Run the full framework over one sweep and return a stated finding."""
@@ -152,11 +183,16 @@ def analyse(config_name: str, metric: str, task_type: str,
     catalogue.engine_src_on_path()
     from piplab.config import TECHNIQUES
 
-    ordered = [lv for lv in TECHNIQUES[component] if lv in levels_present]
+    reference, excluded, reference_note = reference_for(component, rows)
+    declared_baseline = TECHNIQUES[component][0]
+    ordered = [lv for lv in TECHNIQUES[component]
+               if lv in levels_present and lv not in excluded]
     if len(ordered) < 2:
         return {"available": False,
                 "reason": f"only one {component} level was run; nothing to compare."}
-    baseline = ordered[0]
+    baseline = reference if reference in ordered else ordered[0]
+    # Keep the reference first: the contrasts are everything after it.
+    ordered = [baseline] + [lv for lv in ordered if lv != baseline]
 
     all_datasets = sorted({r["dataset"] for r in rows})
     datasets = _complete_datasets(rows, component, ordered, metric, all_datasets)
@@ -177,6 +213,10 @@ def analyse(config_name: str, metric: str, task_type: str,
         "config_name": config_name,
         "component": component,
         "baseline": baseline,
+        "declared_baseline": declared_baseline,
+        "uses_declared_baseline": baseline == declared_baseline,
+        "excluded_levels": list(excluded),
+        "reference_note": reference_note,
         "metric": metric,
         "task_type": task_type,
         "model": model,
