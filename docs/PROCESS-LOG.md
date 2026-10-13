@@ -1138,6 +1138,63 @@ failed, and the four sweeps after it use the fix. Failed and skipped
 rows are both excluded from analysis, so no reported number depends on
 which label a row carries.
 
+### 15% MCAR: complete, and the baseline stops working
+
+240 runs in 1,739 s (29 minutes): 216 succeeded, 20 skipped, 4 failed.
+
+At 15% missing, `drop_rows` leaves too little data on **6 of the 9
+classification datasets** (breast_cancer, digits, ionosphere, sonar,
+wdbc skipped; wine failed on the small-class case under the old code).
+The baseline-referenced analysis therefore collapses to 3
+classification datasets and can test nothing.
+
+On regression, where `drop_rows` does run, every imputer scored
+**worse** than it on 6 of 6 datasets for three of the four models.
+That is not evidence that imputing harms prediction. `drop_rows` trains
+and tests on complete rows only, so its test folds contain no gaps at
+all, while the imputers are tested on rows whose gaps were filled.
+The two scores measure different tasks. This is the like-for-like
+problem flagged at 5%, now large enough to reverse the sign.
+
+**Conclusion: under injected missingness `drop_rows` cannot serve as the
+reference level.** It is skipped where missingness is high and scored
+on different rows where it is not.
+
+### The comparison that is like for like: imputers against each other
+
+`analyse.py` gained `--baseline` and `--exclude`, and the injected
+sweeps are now read with `--baseline mean --exclude drop_rows`: kNN and
+median against mean, all scored on the same full rows, over all 9
+classification datasets and all 6 regression datasets. This is also the
+contrast B2 reports, so it is the one that lines up with that study.
+
+This choice of reference was made after the baseline-referenced
+analysis of the 5% sweep, and was stated in this log then, before any
+imputer-against-imputer number had been computed. It is still a
+departure from the Chapter 1 baseline and should be reported as one.
+
+| sweep | model | metric | Friedman p | outcome |
+|---|---|---|---|---|
+| 5% MCAR | **svm** | accuracy | 0.0297 | **knn beats mean**: Holm 0.0469, better on 7 of 9, median +0.0106 |
+| 5% MCAR | **svm** | macro-F1 | 0.0302 | **knn beats mean**: Holm 0.0469, better on 7 of 9, median +0.0119 |
+| 15% MCAR | **logreg** | accuracy | 0.0319 | **knn beats mean**: Holm 0.0391, 8 of 9, median +0.0131. **median beats mean**: Holm 0.0391, 7 of 9, median +0.0084, CI [-0.0001, +0.0114] |
+| 15% MCAR | logreg | macro-F1 | 0.0319 | not rejected (Holm 0.0547 for both) |
+| both | random_forest, gradient_boosting | both | 0.24 to 0.64 | no difference |
+| both | all four models | RMSE, 6 datasets | mostly > 0.1 | underpowered: 6 datasets cannot clear the Holm bar for two contrasts (floor 0.03125, bar 0.025) |
+
+Read at the strength the numbers allow:
+
+- kNN imputation beats mean imputation for the two scale-sensitive
+  models, SVM at 5% and logistic regression at 15%, by about one
+  accuracy point. The tree ensembles do not care which imputer is used.
+- The effects are small and each appears at one rate for one model, so
+  this is a pattern across two sweeps, not yet a stable result. The
+  30% MCAR and three MAR sweeps will show whether it holds.
+- The median-beats-mean contrast at 15% has a confidence interval that
+  touches zero and should be treated as marginal.
+- Regression cannot be tested at n = 6. For LinearRegression at 15%,
+  kNN lowered RMSE on 5 of 6 datasets; that is a description.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
