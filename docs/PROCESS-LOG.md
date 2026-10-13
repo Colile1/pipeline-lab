@@ -1195,6 +1195,46 @@ Read at the strength the numbers allow:
 - Regression cannot be tested at n = 6. For LinearRegression at 15%,
   kNN lowered RMSE on 5 of 6 datasets; that is a description.
 
+### 30% MCAR: complete
+
+240 runs in 1,620 s (27 minutes): 216 succeeded, 24 skipped, 0 failed.
+All 24 skips are `drop_rows` on the six wide classification datasets
+(wine, breast_cancer, digits, wdbc, ionosphere, sonar), now recorded as
+skipped with the reason because this sweep ran on the fixed code.
+
+Imputers against mean, 9 classification and 6 regression datasets:
+
+| model | metric | Friedman p | outcome |
+|---|---|---|---|
+| **svm** | accuracy | 0.0200 | **knn beats mean**: Holm 0.0313, better on 7 of 9, median +0.0295 |
+| **svm** | macro-F1 | 0.0017 | **knn beats mean**: Holm 0.0156, better on 8 of 9, worse on 0, median +0.0295 |
+| logreg | accuracy | 0.0970 | not licensed |
+| random_forest, gradient_boosting | both | 0.46 to 1.00 | no difference |
+| all four models | RMSE | 0.11 to 0.51 | no difference, and underpowered at n = 6 |
+
+### MCAR across the three rates
+
+| rate | svm: knn vs mean | logreg: knn vs mean | tree ensembles |
+|---|---|---|---|
+| 5% | rejected, +0.0106 accuracy | not licensed (p = 0.2466) | no difference |
+| 15% | not licensed (p = 0.1070) | rejected, +0.0131 accuracy | no difference |
+| 30% | rejected, +0.0295 accuracy | not licensed (p = 0.0970) | no difference |
+
+- The SVM result now appears at two of three rates and is largest at
+  30%, where it also holds on both metrics. That is firmer than it was
+  after two sweeps, though the 15% gap shows it is not uniform.
+- The tree ensembles are indifferent to the imputer at every rate, on
+  both metrics. That is three sweeps agreeing.
+- Median against mean is not rejected at 5% or 30%; the marginal 15%
+  result for logistic regression stands alone.
+- **This neither confirms nor contradicts B2 on regression.** B2 found
+  kNN best for regression at 5% and 15% and the advantage gone by 30%.
+  The lab regression arm has 6 datasets and cannot reject anything with
+  two contrasts, so it has nothing to say on that claim. The lab
+  classification result (kNN advantage largest at 30% for the SVM) is a
+  different task type and should not be read against B2's regression
+  finding.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
