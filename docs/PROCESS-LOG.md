@@ -907,6 +907,79 @@ cost grows faster than the row count suggests. Future cost estimates
 should measure a tree model directly rather than reason from the
 linear one.
 
+---
+
+## 4i. Scaling on the three large datasets (SQ3)
+
+`ofat_scaling_large` finished on 2026-10-13: **36 of 36 runs, 0 failed,
+0 skipped, 4,093 s (68 minutes)**. The 3.8-hour projection in 4h was
+too high; adult and bank-marketing did not cost double house_16H.
+SVM was excluded, as stated in 4g.
+
+| dataset | rows used | model | none | standard | minmax | robust |
+|---|---|---|---|---|---|---|
+| adult | 45,222 | logreg | 0.8386 | **0.8487** | 0.8475 | 0.8480 |
+| adult | 45,222 | random_forest | 0.8496 | 0.8499 | 0.8496 | 0.8494 |
+| adult | 45,222 | gradient_boosting | 0.8633 | 0.8633 | 0.8633 | 0.8633 |
+| bank-marketing | 45,211 | logreg | 0.9004 | 0.9015 | 0.9014 | 0.9016 |
+| bank-marketing | 45,211 | random_forest | 0.9047 | 0.9047 | 0.9049 | 0.9047 |
+| bank-marketing | 45,211 | gradient_boosting | 0.9071 | 0.9071 | 0.9071 | 0.9071 |
+| house_16H (RMSE) | 22,784 | logreg | 49,283.9 | **45,502.3** | 45,502.3 | 45,502.3 |
+| house_16H (RMSE) | 22,784 | random_forest | 31,513.2 | 31,515.0 | 31,512.5 | 31,516.1 |
+| house_16H (RMSE) | 22,784 | gradient_boosting | 34,144.7 | 34,159.7 | 34,159.8 | 34,159.6 |
+
+What this says about SQ3, stated at the strength the evidence allows:
+
+- **The model split holds at 45,000 rows.** Gradient boosting is
+  identical to four decimals under every scaler on both classification
+  datasets; random forest moves by at most 0.0003. Tree ensembles stay
+  scale-invariant at this size.
+- **The logistic regression effect does not vanish with sample size.**
+  Standardisation is worth +0.0101 accuracy on adult and +0.0011 on
+  bank-marketing, against a median of +0.0061 on the 11 small
+  datasets. The fold standard deviations are 0.0074 and 0.0023, so the
+  adult gain is larger than one fold sd and the bank-marketing gain is
+  not.
+- **This is descriptive only.** Two large classification datasets and
+  one large regression dataset cannot support a significance test, and
+  the SVM, the model with the largest scaling effect, has no
+  large-dataset evidence at all. SQ3 is addressed for three models on
+  three datasets, not answered.
+
+### Correction: linear regression is not always scale-invariant in practice
+
+Sections 3 and 4 say the `logreg` key on a regression target resolves
+to LinearRegression, "which is invariant to affine rescaling, so its
+scaling contrast cannot be anything but null". The recorded data
+contradicts the second half of that sentence.
+
+LinearRegression RMSE across the four scalers, all eight regression
+datasets:
+
+| dataset | none | standard | spread |
+|---|---|---|---|
+| abalone, concrete, cpu_small, diabetes, energy-efficiency, kin8nm | identical | identical | 0.000000 |
+| autoMpg | 2.9690 | 2.9656 | 0.0034 |
+| **house_16H** | **49,283.9** | **45,502.3** | **3,781.6** |
+
+Six datasets are exactly invariant, as the mathematics says. house_16H
+is not: scaling lowers RMSE by 7.7%, and the same numbers appear in
+two independently launched sweeps (`ofat_scaling_regression` and
+`ofat_scaling_large`), so it is reproducible rather than noise.
+
+The probable cause is numerical conditioning. house_16H has the widest
+feature spread in the registry (largest feature standard deviation
+12.9 million times the smallest), and an unscaled least-squares solve
+on such a matrix loses precision. That explanation has **not been
+verified directly**; it is the obvious candidate and nothing more.
+
+What changes: the invariance claim is true of the estimator in exact
+arithmetic and false of it in floating point on badly conditioned
+data. The substitution note stored on those rows ("invariant to affine
+feature scaling") overstates the case for house_16H. The note text in
+`models.py` should be softened when the queue is idle; the rows
+already recorded keep the old wording.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
