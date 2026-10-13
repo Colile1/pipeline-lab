@@ -1078,6 +1078,66 @@ grid, is still tuned. The 12 failed rows stay in the record as history.
 The substitution note for LinearRegression was softened in the same
 commit, as promised in 4i.
 
+---
+
+## 4k. Imputation with injected missingness
+
+Six sweeps were queued on 2026-10-13 after the tuning arm: MCAR then MAR
+at 5%, 15% and 30%, 240 runs each (4 imputation levels x 15 complete
+datasets x 4 models, k = 10). The injector is the bit-identical port of
+B2's described in section 4g's follow-up commits. This section is
+extended as each sweep lands.
+
+### 5% MCAR: complete
+
+240 runs in 1,752 s (29 minutes): 236 succeeded, 4 failed, 0 skipped.
+
+With every dataset now carrying gaps, the arm is testable for the first
+time. Classification has 8 complete datasets (sonar dropped, see
+below), regression has 6.
+
+| model | metric | Friedman p | outcome |
+|---|---|---|---|
+| **gradient_boosting** | accuracy | **0.0048** | **all three imputers beat drop_rows**: knn Holm 0.0234 (8 of 8), mean 0.0313 (7 of 8), median 0.0313 (7 of 8); medians +0.042 to +0.051 |
+| **gradient_boosting** | macro-F1 | **0.0026** | all three rejected at Holm 0.0234; medians +0.053 to +0.061 |
+| random_forest | accuracy | 0.0630 | not licensed |
+| svm | accuracy | 0.0789 | not licensed |
+| logreg | accuracy | 0.2547 | not licensed |
+| all four models | RMSE (6 datasets) | 0.10 to 0.13 | not licensed |
+
+Six contrasts rejected in one sweep, against two in the whole programme
+before it. Two things limit what they mean:
+
+- **They say "imputing beats deleting", not "which imputer is best".**
+  Every test is against the Chapter 1 baseline, `drop_rows`. The
+  question B2 answered (kNN against mean and median) needs a comparison
+  among the imputers themselves, which the baseline-referenced design
+  does not make. That secondary analysis is worth running once all six
+  sweeps are in.
+- **`drop_rows` is scored on different rows.** At 5% missing it keeps
+  76 of 1,797 rows on digits and 118 of 569 on breast_cancer, because a
+  wide dataset almost never has a complete row. Its score is a
+  cross-validation over that remnant, while the imputers are scored on
+  the full data. The contrast is real as a comparison of two workflows
+  and is not a like-for-like comparison of test sets.
+
+### The 4 failures, and the fix
+
+All four are sonar under `drop_rows`: 60 columns at 5% missing leaves
+so few complete rows that one class has fewer than 10 members.
+The existing check only compared the total row count with k, so
+sklearn raised a bare ValueError inside the stratified splitter and the
+run was recorded as failed rather than skipped.
+
+Fixed in engine commit `7a3b73a`: `evaluate` now also checks the
+smallest class against k for classification and raises a ProtocolError,
+so the run is skipped with the reason. Two tests cover it. The fix was
+committed while the 15% MCAR sweep was running; that sweep had already
+loaded the old code, so any such case in it is still recorded as
+failed, and the four sweeps after it use the fix. Failed and skipped
+rows are both excluded from analysis, so no reported number depends on
+which label a row carries.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
