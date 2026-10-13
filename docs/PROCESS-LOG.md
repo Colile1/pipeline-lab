@@ -881,6 +881,32 @@ did:
 - The practical advice is therefore not "do not select" but "do not
   select blindly at an arbitrary k".
 
+### A cost estimate that was wrong, corrected by measurement
+
+The large-dataset sweep excluded SVM on the grounds that it is roughly
+O(n^2) while "the other three models are linear or near-linear in rows,
+so this sweep is hours rather than days". The first measurements say
+the second half of that was optimistic:
+
+| model | mean wall time per run, house_16H (22,784 rows) |
+|---|---|
+| logreg | 0.4 s |
+| gradient_boosting | 178.1 s |
+| **random_forest** | **509.8 s** |
+
+Random forest is **1,275 times** slower than logistic regression here,
+not "near-linear". Projected over the three datasets, with adult and
+bank-marketing roughly double house_16H's rows, the 36-run sweep is
+about **3.8 hours** rather than the hour implied earlier.
+
+The sweep is still worth running: it is the only evidence that can
+address SQ3, and 3.8 hours unattended is acceptable where days would
+not have been. But the estimate was wrong, and the reason is worth
+keeping: tree ensembles build many deep trees on large data, so their
+cost grows faster than the row count suggests. Future cost estimates
+should measure a tree model directly rather than reason from the
+linear one.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
