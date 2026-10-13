@@ -1253,6 +1253,34 @@ blanked, and a 1-point effect on 9 datasets can come and go with that
 alone. The 15% and 30% MAR sweeps will show whether MAR is
 systematically flatter.
 
+### 15% MAR: complete
+
+240 runs in 1,604 s (27 minutes): 224 succeeded, 16 skipped (`drop_rows`
+on digits, ionosphere, sonar and wine), 0 failed.
+
+Imputers against mean, 9 classification and 6 regression datasets:
+
+| model | metric | Friedman p | outcome |
+|---|---|---|---|
+| **logreg** | accuracy | 0.0353 | **knn beats mean**: Holm 0.0156, better on 8 of 9, median +0.0059, CI [+0.0040, +0.0288] |
+| **logreg** | macro-F1 | 0.0095 | **knn beats mean**: Holm 0.0156, better on 8 of 9, median +0.0061 |
+| **svm** | macro-F1 | 0.0302 | **knn beats mean**: Holm 0.0313, better on 7 of 9, median +0.0121 |
+| svm | accuracy | 0.0275 | not rejected: knn Holm 0.0625, better on 6 of 9, worse on 0, tied 3 |
+| random_forest, gradient_boosting | both | 0.64 to 0.89 | no difference |
+| all four models | RMSE | 0.07 to 1.00 | no difference; underpowered at n = 6 |
+
+Median against mean is nowhere near rejection (Holm 0.46 to 0.64) and
+is worse than mean on most datasets, so the marginal median result at
+15% MCAR does not repeat under MAR.
+
+The 5% MAR sweep was a clean null, and the tentative reading then was
+that MAR might be flatter than MCAR. This sweep does not support that:
+at 15% MAR the kNN advantage is present for both scale-sensitive
+models, and for logistic regression it holds on both metrics with a
+confidence interval clear of zero. The caution written at 5% MAR, that
+one pair of sweeps could not establish a mechanism effect, was the
+right call.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
