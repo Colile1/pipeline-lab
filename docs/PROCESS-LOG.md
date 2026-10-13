@@ -980,6 +980,104 @@ feature scaling") overstates the case for house_16H. The note text in
 `models.py` should be softened when the queue is idle; the rows
 already recorded keep the old wording.
 
+---
+
+## 4j. Tuning, the fifth factor
+
+`ofat_tuning_v2` finished on 2026-10-13: **256 runs in 20,975 s
+(5.8 hours)**. 228 succeeded, 16 skipped (colic), 12 failed. 16
+datasets under 2,000 rows, four models, nested CV with inner k = 3.
+All four levels ran, including Bayesian, so the optuna-integration fix
+from 4b held across a real sweep.
+
+### Results, classification (11 complete datasets)
+
+| model | metric | Friedman p | outcome |
+|---|---|---|---|
+| **svm** | **macro-F1** | **0.0145** | **bayesian vs none: p = 0.0127, Holm 0.0381, rejected.** Median +0.0068, 95% CI [+0.0017, +0.0539], better on 10 of 11 |
+| svm | accuracy | 0.0262 | all three contrasts p = 0.0254, Holm 0.0762, not rejected; better on 8 of 11 |
+| random_forest | accuracy | 0.0293 | nothing survives Holm; median **-0.0029**, worse on 7 of 11 |
+| random_forest | macro-F1 | 0.0293 | same pattern |
+| logreg | accuracy, macro-F1 | 0.7793 | no difference |
+| gradient_boosting | accuracy, macro-F1 | 0.7679 | no difference |
+
+This is the **second rejected contrast in the whole programme**, after
+logistic regression scaling. Two cautions on reading it:
+
+- It holds for macro-F1 and not for accuracy, where the same model
+  reaches Holm 0.0762. One metric of two is a narrow result.
+- The scaling baseline in this arm is `none`, and section 4c showed the
+  unscaled SVM is the weakest configuration in the study. Tuning C and
+  gamma may partly be compensating for the missing scaling, which OFAT
+  cannot separate. This is the interaction limit of the design, stated
+  in section 2, showing up in a result.
+
+Random forest is the opposite case: tuning made it slightly **worse**
+on 7 of 11 datasets. The defaults were already at least as good as
+anything in a six-candidate grid.
+
+Regression has only four datasets in this sweep, so the power warning
+fires (floor 0.125 against a bar of 0.0167). Gradient boosting improved
+RMSE on 4 of 4; that is a description, not a test.
+
+### A design flaw this exposed: "random" and "grid" are the same search
+
+Every random-search score equals the corresponding grid-search score,
+on all 56 model-dataset pairs:
+
+| model | grid candidates | random n_iter | identical scores |
+|---|---|---|---|
+| logreg | 4 | 10 | 11 of 11 |
+| svm | 6 | 10 | 15 of 15 |
+| random_forest | 6 | 10 | 15 of 15 |
+| gradient_boosting | 6 | 10 | 15 of 15 |
+
+Every grid has fewer candidates than `DEFAULT_N_ITER = 10`, so
+RandomizedSearchCV exhausts the grid and becomes grid search. sklearn
+said so in a warning that had been scrolling past since the first unit
+test. The tuning factor therefore has **three distinct levels, not
+four**: none, exhaustive search, Bayesian. The `random` rows are valid
+measurements but carry no independent information, and the Holm
+correction is charging for three contrasts where only two differ.
+
+Fixing it means either larger grids or continuous distributions for
+the random level. That changes what the level means, so it is recorded
+here as a limitation rather than patched after the results were in.
+
+### What tuning cost
+
+| model | untuned, s per run | tuned, s per run | multiple |
+|---|---|---|---|
+| gradient_boosting | 6.1 | 262 to 339 | 43x to 56x |
+| random_forest | 3.0 | 92 to 138 | 31x to 46x |
+| svm | 0.3 | 6.7 to 17.5 | 22x to 58x |
+| logreg | 1.2 | 17 to 58 | 14x to 48x |
+
+Set against the effects: gradient boosting paid about 50 times the
+compute for no measurable gain, random forest paid about 40 times for
+a slight loss, and the SVM paid the least in absolute terms for the
+only real improvement. That is proposition P2 from the poster (the
+component with the largest cost is not the one with the largest
+effect) with numbers behind it.
+
+### The 12 failures, and the fix
+
+All 12 are one bug: on a regression dataset the `logreg` key is
+LinearRegression, and the `logreg` grid searches over `C`, which
+LinearRegression does not have. Three tuned levels on each of four
+regression datasets failed with "Invalid parameter 'C'".
+
+Fixed after the sweep (engine commit `64351ad`): `evaluate` now checks
+the grid against the estimator's real parameters and raises a
+ProtocolError, so the run is recorded as **skipped with the reason**.
+Ridge was not substituted, because that would compare a tuned model
+against a different untuned one. Three tests cover it, including that
+the untuned baseline still runs and that SVR, which does have a valid
+grid, is still tuned. The 12 failed rows stay in the record as history.
+
+The substitution note for LinearRegression was softened in the same
+commit, as promised in 4i.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
