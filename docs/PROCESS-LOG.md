@@ -681,6 +681,73 @@ provably scale-invariant, selection at a fixed k is a net cost, kNN
 imputation is not expensive, a destructive baseline removes a dataset
 from every other arm - are the substance.
 
+---
+
+## 4e. Committed to git, 2026-10-13
+
+Two repositories initialised and committed, author Colile Sibanda
+<colilesibanda@gmail.com> on both, short subject lines, no body.
+
+| repo | commit | files | size |
+|---|---|---|---|
+| `pipeline-lab-engine` | `0d772f7` Pipeline Lab engine: five-component OFAT framework with run record | 59 | 6.0 MB |
+| `pipeline-lab` | `eb8d97c` Pipeline Lab dashboard: compose, run and analyse experiments in the browser | 90 | 0.5 MB |
+
+**`lab.db` is committed deliberately.** The engine's `.gitignore`
+excluded `outputs/` and `*.db`, which would have left the research
+record out of version control entirely. It is 5.8 MB, it holds all
+1,433 runs and 151 minutes of compute, and it **cannot be regenerated
+identically on other hardware** because the timings, peak memory and
+machine fingerprint are part of the data. The ignore file now carries
+an explicit exception with that reasoning written beside it.
+
+Excluded per git-hygiene: both `.venv` directories (398 MB and 334 MB),
+`data/cache/` (re-downloadable from OpenML), and the scaffolding files
+`PROGRESS.md`, `TODO.md`, `plans.md` and `HANDOFF.md`. The
+research narrative those carried lives in this document, which is
+committed.
+
+## 4f. The k-sweep decision, and why it was not executed today
+
+Colile delegated the choice between the two open design questions.
+**Option B, the k-sweep for feature selection, is the right one**, for
+three reasons:
+
+1. It rescues a result that **already exists**. The selection arm found
+   that every technique costs accuracy, but cannot distinguish
+   "selection hurts" from "keeping half the features hurts", because
+   `DEFAULT_K_FRACTION` is fixed at 0.5. The finding is currently
+   uninterpretable without it.
+2. Option A, MCAR injection, would make the imputation arm testable,
+   but B1 and B2 **already inject MCAR**. Doing it here arguably
+   duplicates the existing studies rather than extending them, which is
+   the weaker contribution.
+3. The k-sweep uses the existing, tested component at different
+   settings, so it cannot invalidate anything already recorded.
+
+**It was not run today, and the reason is worth recording.** The
+initial assessment was that it needed "config only, no code". That was
+checked and found wrong: `resolve_k` accepts a `fraction` argument, but
+all three call sites invoke it without one, so k is not reachable from
+a config file. Two routes exist:
+
+- thread `k_fraction` from the config through `evaluate` ->
+  `build_pipeline` -> `LateResolvedSelector` -> `make_selector`, or
+- encode it in the level name (`chi2@0.25`), which also needs changes
+  to config validation and would pollute the recorded `selection`
+  column that the analysis groups by.
+
+Either is a real design change to an engine that was committed green
+minutes earlier, with 258 passing tests. Making it at speed, without
+the time to think through how the recorded column should represent k,
+risks the integrity of 1,433 rows for a question that is not urgent.
+
+**The honest position: the decision is made, the implementation is
+deferred.** The caveat is already written into section 4c so the
+selection result is not overstated in the meantime. When there is time,
+the first route is preferable, with `k_fraction` recorded as its own
+column rather than folded into the level name.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
