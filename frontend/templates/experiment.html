@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block title %}New Experiment - Pipeline Lab{% endblock %}
+{% block breadcrumb %}New Experiment{% endblock %}
+
+{% block content %}
+<div class="card wide">
+  <p class="card-title">Configure an experiment</p>
+  <p class="card-body">
+    Techniques, models and mechanisms below are each engine's own fixed
+    design - nothing here is invented by this page.
+  </p>
+  <form id="exp-form">
+    <div class="field-row">
+      <label for="exp-engine">Engine</label>
+      <select id="exp-engine">
+        <option value="prepfx">prepfx (B1)</option>
+        <option value="b2">b2 (B2)</option>
+      </select>
+    </div>
+    <div class="field-row">
+      <label for="exp-name">Experiment name</label>
+      <input type="text" id="exp-name" placeholder="e.g. my scaling run" required>
+    </div>
+    <div class="field-row">
+      <label for="exp-factor">Factor</label>
+      <select id="exp-factor">
+        <option value="scaling">scaling</option>
+        <option value="imputation">imputation</option>
+      </select>
+    </div>
+
+    <fieldset>
+      <legend>Techniques</legend>
+      <p class="hint" id="exp-technique-hint"></p>
+      <div id="exp-techniques" class="checkbox-group"></div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Models</legend>
+      <div id="exp-models" class="checkbox-group"></div>
+    </fieldset>
+
+    <div class="field-row">
+      <label for="exp-datasets">Datasets (comma-separated ids)</label>
+      <input type="text" id="exp-datasets" placeholder="e.g. iris, wine" required>
+    </div>
+
+    <div class="field-row">
+      <label for="exp-k">CV folds (k)</label>
+      <input type="number" id="exp-k" min="2" value="5" required>
+    </div>
+    <div class="field-row">
+      <label for="exp-seed">Seed</label>
+      <input type="number" id="exp-seed" min="0" value="671" required>
+    </div>
+
+    <fieldset id="exp-missingness-section" hidden>
+      <legend>Missingness (imputation only)</legend>
+      <p class="hint" id="exp-missingness-hint"></p>
+      <div class="field-row">
+        <label for="exp-rates">Rates (comma-separated, 0-1)</label>
+        <input type="text" id="exp-rates" placeholder="e.g. 0.15">
+      </div>
+      <div class="field-row">
+        <label>Mechanisms</label>
+        <div id="exp-mechanisms" class="checkbox-group"></div>
+      </div>
+    </fieldset>
+
+    <div class="field-row">
+      <button type="submit" class="btn-primary" id="exp-launch">Build and launch run</button>
+      <button type="button" class="btn-secondary" id="exp-save">Save config only</button>
+    </div>
+  </form>
+  <div id="exp-banner"></div>
+</div>
+{% endblock %}
+
+{% block page_js %}
+<script src="{{ url_for('static', path='js/experiment.js') }}"></script>
+{% endblock %}

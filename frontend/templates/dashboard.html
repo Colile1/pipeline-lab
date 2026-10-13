@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - Pipeline Lab{% endblock %}
+{% block breadcrumb %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="card wide">
+  <div class="card-head">
+    <p class="card-title">Experiment dashboard</p>
+    <span id="pulse" class="pulse idle">Checking...</span>
+  </div>
+  <p class="card-body">
+    Every experiment this project has run, in one place. It does not
+    matter whether a run was started from this website or typed at the
+    command line: both write to the same record, and this page reads
+    that record directly.
+  </p>
+  <div id="overview" class="stat-strip"></div>
+  <div id="dash-banner"></div>
+</div>
+
+<div class="card wide">
+  <p class="card-title">What has been run</p>
+  <p class="card-body">
+    Each row is one <strong>sweep</strong>: a set of runs that changed
+    one thing and held everything else steady, so any difference can be
+    traced to the thing that changed.
+  </p>
+  <div id="sweeps"></div>
+</div>
+
+<div class="card wide">
+  <p class="card-title">Where the time went</p>
+  <p class="card-body">
+    Accuracy is only half of a method's cost. This compares how long
+    each option took to fit, which is what decides whether a small gain
+    is worth paying for.
+  </p>
+  <div id="cost-chart"></div>
+</div>
+{% endblock %}
+
+{% block page_js %}
+<script src="{{ url_for('static', path='js/analysis-common.js') }}"></script>
+<script src="{{ url_for('static', path='js/dashboard.js') }}"></script>
+{% endblock %}

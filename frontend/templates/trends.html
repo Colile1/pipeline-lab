@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Trends - Pipeline Lab{% endblock %}
+{% block breadcrumb %}Trends{% endblock %}
+
+{% block content %}
+<div class="card wide">
+  <p class="card-title">Trends</p>
+  <p class="card-body">
+    Pick any recorded column for each axis. Aggregation happens on the
+    server, so the numbers shown are the same ones a direct SQL query
+    over the run record would give.
+  </p>
+  <div class="shared-settings">
+    <div class="field-group grow">
+      <label for="tr-run-id">Run ID</label>
+      <input type="text" id="tr-run-id" placeholder="paste a run-id">
+    </div>
+    <button type="button" class="btn-primary" id="tr-load">Load</button>
+  </div>
+  <div class="shared-settings">
+    <div class="field-group grow">
+      <label for="tr-x">Horizontal axis</label>
+      <select id="tr-x"></select>
+    </div>
+    <div class="field-group grow">
+      <label for="tr-y">Vertical axis</label>
+      <select id="tr-y"></select>
+    </div>
+    <div class="field-group grow">
+      <label for="tr-group">Group by</label>
+      <select id="tr-group"></select>
+    </div>
+  </div>
+  <div class="shared-settings">
+    <span class="row-note">Presets</span>
+    <button type="button" class="btn-secondary preset" data-x="scaling" data-y="accuracy_mean" data-group="model">scaling effect by model</button>
+    <button type="button" class="btn-secondary preset" data-x="selection" data-y="accuracy_mean" data-group="model">selection effect by model</button>
+    <button type="button" class="btn-secondary preset" data-x="tuning" data-y="wall_seconds" data-group="model">tuning cost</button>
+    <button type="button" class="btn-secondary preset" data-x="dataset" data-y="accuracy_mean" data-group="scaling">effect by dataset</button>
+  </div>
+  <div id="tr-banner"></div>
+</div>
+
+<div class="card wide" id="tr-card" hidden>
+  <p class="card-title" id="tr-title"></p>
+  <div id="tr-chart"></div>
+  <div id="tr-table"></div>
+</div>
+{% endblock %}
+
+{% block page_js %}
+<script src="{{ url_for('static', path='js/trends.js') }}"></script>
+{% endblock %}

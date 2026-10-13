@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Network - Pipeline Lab{% endblock %}
+{% block breadcrumb %}Network{% endblock %}
+
+{% block content %}
+<div class="card wide">
+  <p class="card-title">Pipeline network</p>
+  <p class="card-body">
+    Each pipeline stage is a layer and each technique a node. An edge is
+    a path a run actually took: thickness is how many runs took it, and
+    node shading is the mean score of runs through it. Everything here
+    comes from recorded runs - no path is drawn that was not run.
+  </p>
+  <div class="shared-settings">
+    <div class="field-group grow">
+      <label for="net-run-id">Run ID</label>
+      <input type="text" id="net-run-id" placeholder="paste a run-id from the Runs page">
+    </div>
+    <div class="field-group">
+      <label for="net-metric">Colour by</label>
+      <select id="net-metric">
+        <option value="accuracy_mean">accuracy_mean</option>
+        <option value="f1_mean">f1_mean</option>
+        <option value="rmse_mean">rmse_mean</option>
+        <option value="wall_seconds">wall_seconds</option>
+      </select>
+    </div>
+    <button type="button" class="btn-primary" id="net-load">Load</button>
+  </div>
+  <div id="net-banner"></div>
+</div>
+
+<div class="card wide" id="net-card" hidden>
+  <p class="card-title" id="net-summary"></p>
+  <div class="network-scroll"><div id="network"></div></div>
+</div>
+{% endblock %}
+
+{% block page_js %}
+<script src="{{ url_for('static', path='js/network.js') }}"></script>
+{% endblock %}

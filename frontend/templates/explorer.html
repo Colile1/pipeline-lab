@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}Explorer - Pipeline Lab{% endblock %}
+{% block breadcrumb %}Explorer{% endblock %}
+
+{% block content %}
+<div class="card wide">
+  <div class="card-head">
+    <p class="card-title">Explore the record</p>
+    <span id="pulse" class="pulse idle">Checking...</span>
+  </div>
+  <p class="card-body">
+    Plot anything that was recorded against anything else. Every run
+    stores 86 fields, from accuracy to peak memory to the exact library
+    versions, so most questions can be answered without running
+    anything again.
+  </p>
+  <div class="shared-settings">
+    <div class="field-group grow">
+      <label for="ex-x">Compare across</label>
+      <select id="ex-x"></select>
+    </div>
+    <div class="field-group grow">
+      <label for="ex-y">Measuring</label>
+      <select id="ex-y"></select>
+    </div>
+    <div class="field-group grow">
+      <label for="ex-group">Split by</label>
+      <select id="ex-group"></select>
+    </div>
+    <div class="field-group grow">
+      <label for="ex-sweep">Experiment</label>
+      <select id="ex-sweep"></select>
+    </div>
+  </div>
+  <div class="shared-settings">
+    <span class="row-note">Ready-made questions</span>
+    <button type="button" class="btn-secondary preset"
+            data-x="scaling" data-y="accuracy_mean" data-group="model">
+      Does scaling help each model?</button>
+    <button type="button" class="btn-secondary preset"
+            data-x="dataset" data-y="accuracy_mean" data-group="scaling">
+      Which datasets care about scaling?</button>
+    <button type="button" class="btn-secondary preset"
+            data-x="scaling" data-y="wall_seconds" data-group="model">
+      What does each option cost?</button>
+    <button type="button" class="btn-secondary preset"
+            data-x="model" data-y="peak_rss_mb" data-group="none">
+      How much memory per model?</button>
+  </div>
+  <div id="ex-banner"></div>
+</div>
+
+<div class="card wide">
+  <p class="card-title" id="chart-title">Chart</p>
+  <div id="ex-chart"></div>
+  <div id="ex-read"></div>
+</div>
+
+<div class="card wide">
+  <div class="card-head">
+    <p class="card-title">The rows behind the chart</p>
+    <button type="button" class="btn-secondary" id="ex-csv">Download CSV</button>
+  </div>
+  <p class="card-body">
+    Every number above comes from these rows. Nothing is smoothed,
+    filled in or adjusted.
+  </p>
+  <div id="ex-table"></div>
+</div>
+{% endblock %}
+
+{% block page_js %}
+<script src="{{ url_for('static', path='js/analysis-common.js') }}"></script>
+<script src="{{ url_for('static', path='js/explorer.js') }}"></script>
+{% endblock %}

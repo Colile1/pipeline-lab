@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Compose - Pipeline Lab{% endblock %}
+{% block breadcrumb %}Compose{% endblock %}
+
+{% block content %}
+<div class="card wide">
+  <p class="card-title">Compose a sweep</p>
+  <p class="card-body">
+    Drag a technique from the palette into a column to add it to that
+    configuration. Column 1 is the baseline: every component sits at the
+    value Chapter 1 specifies. Each further column varies <em>one</em>
+    component against it, which is what makes an observed effect
+    attributable to that component.
+  </p>
+  <div id="palette" class="palette"></div>
+</div>
+
+<div class="card wide">
+  <p class="card-title">Configurations</p>
+  <div id="grid-wrap" class="grid-scroll">
+    <table class="compose-grid" id="compose-grid"></table>
+  </div>
+  <!-- Settings shared by every column, so they sit below the grid rather
+       than being repeated in each one. Each control is its own .field-group
+       so a short label ("k") does not inherit the wide label column that
+       stacked form rows use. -->
+  <div class="shared-settings">
+    <button type="button" class="btn-secondary" id="add-column">Add configuration</button>
+    <div class="field-group grow">
+      <label for="shared-datasets">Datasets</label>
+      <input type="text" id="shared-datasets" value="iris, wine, breast_cancer">
+    </div>
+    <div class="field-group">
+      <label for="shared-k">Folds (k)</label>
+      <input type="number" id="shared-k" min="2" value="10">
+    </div>
+    <div class="field-group">
+      <label for="shared-seed">Seed</label>
+      <input type="number" id="shared-seed" min="0" value="671">
+    </div>
+  </div>
+  <div id="compose-banner"></div>
+</div>
+{% endblock %}
+
+{% block page_js %}
+<script src="{{ url_for('static', path='js/compose.js') }}"></script>
+{% endblock %}

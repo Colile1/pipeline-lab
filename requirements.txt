@@ -1,0 +1,19 @@
+fastapi==0.142.2
+uvicorn==0.54.0
+jinja2==3.1.6
+pyyaml==6.0.3
+pandas==3.0.6
+python-multipart==0.0.32
+pytest==9.1.1
+# starlette (a fastapi dependency) requires this for TestClient; without it,
+# every test using fastapi.testclient.TestClient fails at collection time —
+# confirmed by installing this exact file into a genuinely fresh venv
+# (docs/build-order.md step 13).
+httpx2==2.13.1
+# scipy powers the Findings page: Friedman and Wilcoxon over the
+# recorded runs, so the UI states the same tested result the engine's
+# analyse.py does rather than showing bare means. scipy only - NOT
+# sklearn, which stays in the engine's own venv (see the costing guard
+# in tests/test_lab_api.py). findings.py degrades with a clear message
+# if it is missing, so this is a soft dependency.
+scipy==1.17.1

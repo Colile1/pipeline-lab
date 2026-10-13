@@ -1,0 +1,53 @@
+<!-- Shared app shell: top bar, text-only left nav, content slot.
+     Pages extend this with the content and page_js blocks below.
+     Nav items are text labels only; no icon glyphs, so nothing depends on
+     an emoji font being installed or on a reader decoding a symbol. -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Pipeline Lab{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', path='css/theme.css') }}">
+</head>
+<body>
+  <header class="app-bar">
+    <span class="app-name">Pipeline Lab</span>
+    <span class="breadcrumb">{% block breadcrumb %}Home{% endblock %}</span>
+  </header>
+
+  <div class="shell">
+    <nav class="nav-rail">
+      <button class="nav-toggle" type="button" aria-label="Toggle navigation">Menu</button>
+      <ul>
+        <li><a href="/dashboard" class="{{ 'active' if active_page == 'dashboard' else '' }}">Dashboard</a></li>
+        <li><a href="/findings" class="{{ 'active' if active_page == 'findings' else '' }}">Findings</a></li>
+        <li><a href="/explorer" class="{{ 'active' if active_page == 'explorer' else '' }}">Explorer</a></li>
+        <li class="nav-divider"><span>Run experiments</span></li>
+        <li><a href="/compose" class="{{ 'active' if active_page == 'compose' else '' }}">Compose</a></li>
+        <li><a href="/network" class="{{ 'active' if active_page == 'network' else '' }}">Network</a></li>
+        <li><a href="/trends" class="{{ 'active' if active_page == 'trends' else '' }}">Trends</a></li>
+        <li class="nav-divider"><span>Other engines</span></li>
+        <li><a href="/datasets" class="{{ 'active' if active_page == 'datasets' else '' }}">Datasets</a></li>
+        <li><a href="/experiment" class="{{ 'active' if active_page == 'experiment' else '' }}">New experiment</a></li>
+        <li><a href="/runs" class="{{ 'active' if active_page == 'runs' else '' }}">Runs</a></li>
+        <li><a href="/results" class="{{ 'active' if active_page == 'results' else '' }}">Results</a></li>
+        <li class="nav-divider"><span>Help</span></li>
+        <li><a href="/guide" class="{{ 'active' if active_page == 'guide' else '' }}">User guide</a></li>
+      </ul>
+    </nav>
+
+    <main class="content">
+      {% block content %}
+      <div class="card">
+        <p class="card-title">App shell is running</p>
+        <p class="card-body">Pick a page from the navigation.</p>
+      </div>
+      {% endblock %}
+    </main>
+  </div>
+
+  <script src="{{ url_for('static', path='js/common.js') }}"></script>
+  {% block page_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Runs - Pipeline Lab{% endblock %}
+{% block breadcrumb %}Runs{% endblock %}
+
+{% block content %}
+<div class="card wide">
+  <p class="card-title">Launched runs</p>
+  <div id="runs-banner"></div>
+  <table class="data-table" id="runs-list-table">
+    <thead>
+      <tr><th>Run ID</th><th>Engine</th><th>State</th><th></th></tr>
+    </thead>
+    <tbody id="runs-list-body"></tbody>
+  </table>
+</div>
+
+<div class="card wide" id="run-detail-card" hidden>
+  <p class="card-title">Run detail</p>
+  <div id="run-detail-banner"></div>
+  <dl class="detail-list" id="run-detail-summary"></dl>
+  <p class="card-title">Log</p>
+  <pre class="log-view" id="run-log"></pre>
+  <div class="field-row">
+    <a id="run-results-link" class="btn-secondary" hidden href="#">View results</a>
+  </div>
+</div>
+{% endblock %}
+
+{% block page_js %}
+<script src="{{ url_for('static', path='js/runs.js') }}"></script>
+{% endblock %}

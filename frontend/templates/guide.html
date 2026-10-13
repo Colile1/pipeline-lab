@@ -1,0 +1,321 @@
+{% extends "base.html" %}
+{% block title %}User guide - Pipeline Lab{% endblock %}
+{% block breadcrumb %}User guide{% endblock %}
+
+{% block content %}
+<div class="card wide">
+  <p class="card-title">What this is</p>
+  <p class="card-body prose">
+    Pipeline Lab measures how much ordinary data-preparation choices
+    change how well a machine learning model predicts. It runs the
+    experiments, stores everything about them, and shows what the
+    results mean.
+  </p>
+  <p class="prose">
+    You do not need a background in machine learning to use this page.
+    Each section starts in plain language, and the grey expandable
+    blocks add the technical detail underneath if you want it.
+  </p>
+</div>
+
+<div class="card wide">
+  <p class="card-title">The idea in one minute</p>
+  <p class="prose">
+    Before a model ever sees data, a person makes five decisions about
+    how to prepare it:
+  </p>
+  <ol class="guide-steps">
+    <li>
+      <strong>Scaling.</strong> Put columns on a comparable footing. A
+      salary column running to six figures and an age column running to
+      two are not naturally comparable, and some models are badly
+      misled by that.
+    </li>
+    <li>
+      <strong>Missing values.</strong> Decide what to do about blanks:
+      drop those rows, fill them with the average, or estimate them
+      from similar rows.
+    </li>
+    <li>
+      <strong>Encoding.</strong> Turn words into numbers, because models
+      do arithmetic. "Red, green, blue" has to become numbers without
+      accidentally implying that blue is greater than red.
+    </li>
+    <li>
+      <strong>Feature selection.</strong> Decide which columns to keep.
+      More is not always better; irrelevant columns can drown the signal.
+    </li>
+    <li>
+      <strong>Tuning.</strong> Search for the model's own settings
+      rather than accepting the defaults.
+    </li>
+  </ol>
+  <p class="prose">
+    These are usually settled by habit or by whatever the software does
+    by default. This project asks a simple question about each one:
+    <em>does it actually change the answer, and is it worth what it
+    costs?</em>
+  </p>
+
+  <details class="explainer">
+    <summary>Why this question is harder than it sounds</summary>
+    <div class="explainer-body">
+      <p>
+        If you change two things at once and the result improves, you
+        cannot tell which change did it. So every experiment here varies
+        exactly <strong>one</strong> of the five decisions and holds the
+        other four at a fixed baseline. That design is called
+        one-factor-at-a-time, or OFAT.
+      </p>
+      <p>
+        It has a known limitation, stated plainly because it affects how
+        the results should be read: OFAT cannot detect
+        <em>interactions</em>, where two choices only matter in
+        combination. Testing every combination of five choices would
+        take tens of thousands of runs, which is not feasible on one
+        machine. The trade is deliberate and recorded.
+      </p>
+      <p>
+        A second trap is subtler. If you prepare the data using
+        information from the rows you later test on, the model looks
+        better than it is. This is called leakage. Every transformation
+        here is fitted inside the training portion only, and the engine
+        has instrumentation that records which rows each step saw, with
+        tests that deliberately build a leaky pipeline to confirm the
+        check actually catches one.
+      </p>
+    </div>
+  </details>
+</div>
+
+<div class="card wide">
+  <p class="card-title">The pages, and when to use each</p>
+
+  <div class="guide-page">
+    <h3>Dashboard</h3>
+    <p class="prose">
+      Start here. It shows how many experiments have been run, how much
+      computing time they used, and a list of every experiment with a
+      link into its results. If a sweep is running right now, the badge
+      at the top says so and the page keeps itself up to date.
+    </p>
+  </div>
+
+  <div class="guide-page">
+    <h3>Findings</h3>
+    <p class="prose">
+      The most important page. It takes one experiment and says whether
+      the differences in it are real, using the same statistical tests
+      as the written research. It will tell you three different things,
+      and the difference between them matters:
+    </p>
+    <ul class="plain-list">
+      <li><strong>A real difference</strong> - the evidence supports it.</li>
+      <li><strong>No difference found</strong> - the options performed
+        about the same. This is a genuine result, not a failure.</li>
+      <li><strong>Not enough datasets to decide</strong> - the test
+        arithmetically could not have found anything. This is
+        <em>not</em> the same as "no difference", and the page says so
+        in red when it happens.</li>
+    </ul>
+  </div>
+
+  <div class="guide-page">
+    <h3>Explorer</h3>
+    <p class="prose">
+      For your own questions. Plot any recorded field against any other,
+      split it by model or dataset, and download the underlying rows as
+      a spreadsheet. The ready-made buttons answer the four most common
+      questions in one click.
+    </p>
+  </div>
+
+  <div class="guide-page">
+    <h3>Compose, Network, Trends</h3>
+    <p class="prose">
+      Compose is where you build and launch a new experiment by dragging
+      options into columns; it prices the job before it starts, because
+      a sweep that looks small can be thousands of model fits. Network
+      draws the pipeline as a graph. Trends is a lighter-weight view of
+      a single launched run.
+    </p>
+  </div>
+</div>
+
+<div class="card wide">
+  <p class="card-title">Reading a result without being misled</p>
+
+  <details class="explainer" open>
+    <summary>What a p-value does and does not tell you</summary>
+    <div class="explainer-body">
+      <p>
+        A p-value is the chance of seeing a pattern at least this strong
+        if the options were really identical. Small means "hard to
+        explain as luck". By convention, below 0.05 is treated as
+        evidence.
+      </p>
+      <p>
+        It does <strong>not</strong> tell you how big the difference is.
+        A tiny, useless difference can be statistically significant if
+        you measure it enough times, and a large, valuable difference
+        can fail to reach significance if you have few datasets. That is
+        why every p-value on these pages is shown next to the size of
+        the change and the number of datasets it helped.
+      </p>
+    </div>
+  </details>
+
+  <details class="explainer">
+    <summary>Why "not significant" sometimes means "we could not tell"</summary>
+    <div class="explainer-body">
+      <p>
+        The test used here works on ranks and is <em>discrete</em>: with
+        a small number of datasets there is a hard floor below which its
+        p-value cannot go, no matter how large the effect.
+      </p>
+      <p>
+        With 6 datasets that floor is 0.031, and because several options
+        are compared at once the bar moves to roughly 0.017. So a method
+        that won on <em>all six</em> datasets still could not be
+        declared significant. That is a limit of the arithmetic, not
+        evidence that the method does not work.
+      </p>
+      <p>
+        This actually happened in this project: robust scaling improved
+        the error on six datasets out of six and could not be reported
+        as a finding. The Findings page now detects this situation and
+        says, in red, how many datasets would be needed.
+      </p>
+    </div>
+  </details>
+
+  <details class="explainer">
+    <summary>Why a skipped run is a good sign</summary>
+    <div class="explainer-body">
+      <p>
+        Some runs appear as "skipped" with a reason attached. One real
+        example: a dataset where a fifth of the values were missing, and
+        the baseline rule was to drop any row containing a blank. That
+        left 7 usable rows out of 368 - too few to split into 10 groups
+        for testing.
+      </p>
+      <p>
+        The engine refused and recorded why, rather than producing a
+        number that would have looked fine in a table and meant nothing.
+        Skips are kept in the record and counted on the Dashboard.
+      </p>
+    </div>
+  </details>
+
+  <details class="explainer">
+    <summary>Averages hide things. Look at the spread</summary>
+    <div class="explainer-body">
+      <p>
+        A method that helps enormously on half the datasets and hurts on
+        the other half can have the same average as one that does
+        nothing anywhere. The two are not the same recommendation.
+      </p>
+      <p>
+        On the Explorer, set "Compare across" to <em>dataset</em> to see
+        each dataset separately. On Findings, the "datasets it helped"
+        bar shows the win and loss count directly, which is usually more
+        honest than the average.
+      </p>
+      <p>
+        A real example from this project: scaling made almost no
+        difference on a dataset whose columns were already on the same
+        scale, and a 42% difference on one whose columns spanned a range
+        of 170,000 to 1. Whether preparation matters depends on the data
+        you have, which is exactly the kind of finding an average alone
+        would bury.
+      </p>
+    </div>
+  </details>
+</div>
+
+<div class="card wide">
+  <p class="card-title">Where the numbers live</p>
+  <p class="prose">
+    Every run writes one row to a single database file, with 86 fields
+    recording what was run, what it scored, how long it took, how much
+    memory it used, and the exact machine and library versions that
+    produced it. Nothing on these pages is stored separately or cached:
+    the website reads that file directly, read-only.
+  </p>
+  <p class="prose">
+    That is why an experiment launched from the command line shows up
+    here with no extra step, and why these pages cannot corrupt a run
+    that is in progress.
+  </p>
+
+  <details class="explainer">
+    <summary>Getting the data out</summary>
+    <div class="explainer-body">
+      <p>
+        The Explorer has a <strong>Download CSV</strong> button that
+        exports every field of every row for the selected experiment, so
+        the numbers can be checked independently in a spreadsheet or
+        statistics package.
+      </p>
+      <p>
+        From code, the record is an ordinary SQLite database with one
+        table named <code>runs</code>, so any SQL tool can read it. The
+        Dashboard shows its full path.
+      </p>
+    </div>
+  </details>
+
+  <details class="explainer">
+    <summary>Why so many fields per run</summary>
+    <div class="explainer-body">
+      <p>
+        Because the interesting questions are often not the ones you
+        thought to ask. Storing the machine, the memory, the timing and
+        every library version means a trend can be investigated later
+        without re-running anything, and means a surprising result can
+        be checked against the conditions that produced it.
+      </p>
+      <p>
+        It also makes the work reproducible. A run records its random
+        seed and the exact fold split it used, so the same experiment
+        can be repeated and checked.
+      </p>
+    </div>
+  </details>
+</div>
+
+<div class="card wide">
+  <p class="card-title">A short glossary</p>
+  <dl class="detail-list glossary">
+    <dt>Model</dt>
+    <dd>The algorithm that learns the pattern and makes predictions.</dd>
+    <dt>Feature</dt>
+    <dd>One column of input data. Age, salary and city are features.</dd>
+    <dt>Accuracy</dt>
+    <dd>How often the model is right, as a fraction. 0.95 means right
+      95 times out of 100.</dd>
+    <dt>Macro-F1</dt>
+    <dd>A score that treats small groups as just as important as large
+      ones. Useful when one answer is far more common than another, where
+      plain accuracy can look good while the model ignores the rare case.</dd>
+    <dt>RMSE</dt>
+    <dd>For predicting a number rather than a category: how far
+      predictions land from the truth on average. Lower is better.</dd>
+    <dt>Cross-validation</dt>
+    <dd>Splitting the data into ten parts and testing ten times, each
+      time holding out a different part. Gives a more trustworthy score
+      than a single split, and shows how much the score wobbles.</dd>
+    <dt>Baseline</dt>
+    <dd>The option everything else is compared against, usually "do
+      nothing". Having a fixed reference is what makes a comparison
+      meaningful.</dd>
+    <dt>Leakage</dt>
+    <dd>When information from the test data sneaks into preparation,
+      making results look better than they really are. The main thing
+      this engine is built to prevent and to prove it prevents.</dd>
+    <dt>Sweep</dt>
+    <dd>One experiment: every combination of one varied decision across
+      the chosen datasets and models.</dd>
+  </dl>
+</div>
+{% endblock %}

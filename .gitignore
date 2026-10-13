@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+
+# Uploaded/staged data and run artefacts
+data/uploads/*
+!data/uploads/.gitkeep
+data/runs/*
+!data/runs/.gitkeep
+backend/app/uploads/tmp/
+
+# Editors / OS
+.vscode/
+.DS_Store
+Thumbs.db

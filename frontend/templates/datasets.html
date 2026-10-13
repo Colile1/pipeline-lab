@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Datasets - Pipeline Lab{% endblock %}
+{% block breadcrumb %}Datasets{% endblock %}
+
+{% block content %}
+<div class="card wide">
+  <p class="card-title">Registered datasets</p>
+  <div class="field-row">
+    <label for="ds-engine">Engine</label>
+    <select id="ds-engine">
+      <option value="prepfx">prepfx (B1)</option>
+      <option value="b2">b2 (B2)</option>
+    </select>
+  </div>
+  <div id="ds-banner"></div>
+  <div id="ds-table-wrap"></div>
+</div>
+
+<div class="card wide">
+  <p class="card-title">Upload a new dataset</p>
+  <form id="upload-form">
+    <div class="field-row">
+      <label for="up-engine">Engine</label>
+      <select id="up-engine" name="engine">
+        <option value="prepfx">prepfx (B1)</option>
+        <option value="b2">b2 (B2)</option>
+      </select>
+    </div>
+    <div class="field-row">
+      <label for="up-file">CSV file</label>
+      <input type="file" id="up-file" name="file" accept=".csv" required>
+    </div>
+    <div class="field-row">
+      <label for="up-id">Dataset name</label>
+      <input type="text" id="up-id" name="dataset_id" placeholder="e.g. my_dataset" required>
+    </div>
+    <div class="field-row">
+      <label for="up-target">Target column</label>
+      <input type="text" id="up-target" name="target" placeholder="column name" required>
+    </div>
+    <div class="field-row">
+      <label for="up-task">Task type</label>
+      <select id="up-task" name="task">
+        <option value="">Infer automatically</option>
+        <option value="classification">Classification</option>
+        <option value="regression">Regression</option>
+      </select>
+    </div>
+    <div class="field-row">
+      <label for="up-domain">Domain (b2 only)</label>
+      <input type="text" id="up-domain" name="domain" placeholder="e.g. finance" value="unspecified">
+    </div>
+    <button type="submit" class="btn-primary">Upload and register</button>
+  </form>
+  <div id="upload-banner"></div>
+</div>
+{% endblock %}
+
+{% block page_js %}
+<script src="{{ url_for('static', path='js/datasets.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Findings - Pipeline Lab{% endblock %}
+{% block breadcrumb %}Findings{% endblock %}
+
+{% block content %}
+<div class="card wide">
+  <div class="card-head">
+    <p class="card-title">What the experiments found</p>
+    <span id="pulse" class="pulse idle">Checking...</span>
+  </div>
+  <p class="card-body">
+    A difference in an average is not yet a finding. This page applies
+    the same tests the written research uses, and says plainly when a
+    difference is real, when it is not, and when there is simply not
+    enough evidence either way.
+  </p>
+  <div class="shared-settings">
+    <div class="field-group grow">
+      <label for="sweep-pick">Experiment</label>
+      <select id="sweep-pick"></select>
+    </div>
+  </div>
+  <div id="findings-banner"></div>
+</div>
+
+<div id="findings"></div>
+{% endblock %}
+
+{% block page_js %}
+<script src="{{ url_for('static', path='js/analysis-common.js') }}"></script>
+<script src="{{ url_for('static', path='js/findings.js') }}"></script>
+{% endblock %}
