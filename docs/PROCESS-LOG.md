@@ -1695,6 +1695,67 @@ why it outperforms a 10-draw sample from a wider space.
   claim does not survive giving Bayesian a real search space. The
   correction in 4j was necessary, not cosmetic.
 
+---
+
+## 4q. SVM on the three large datasets, and what is still missing, 2026-10-14
+
+`ofat_scaling_large_svm` finished overnight: **12 runs in a few hours,
+12 succeeded, 0 failed**. Database passes integrity_check, no succeeded
+cell duplicated. Committed `ab4faf1`.
+
+Only 2 classification datasets (adult, bank-marketing) and 1 regression
+dataset (house_16H) are in this arm, so Friedman has too few datasets to
+run (n=2 and n=1): nothing here is a tested finding, only a direct
+reading of the numbers.
+
+| dataset | metric | none | standard | minmax | robust |
+|---|---|---|---|---|---|
+| adult | accuracy | 0.7913 | **0.8535** | 0.8370 | 0.7963 |
+| adult | macro-F1 | 0.5793 | **0.7873** | 0.7627 | 0.6380 |
+| bank-marketing | accuracy | 0.8831 | **0.9052** | 0.8947 | 0.8828 |
+| bank-marketing | macro-F1 | 0.4773 | **0.7085** | 0.6262 | 0.4731 |
+| house_16H | RMSE | 55347.9 | **55109.0** | 55301.3 | 55337.0 |
+
+Standard scaling wins on every metric on every dataset here, by a wide
+margin on macro-F1 for both classification sets (adult +20.8 points,
+bank-marketing +23.1 points) and a small margin on house_16H RMSE. This
+is the same direction and a larger size than the smaller-dataset SVM
+scaling result in 4c/4i (CD 0.957, +7.3 accuracy points), read without
+a significance test because there are not enough datasets at this size
+to run one. It is evidence, not a finding, and is reported as such.
+
+### What is still a genuine gap
+
+Checking every config against the record directly (not the stale table
+in 4l) found that encoding, selection and tuning have **zero coverage**
+on adult, bank-marketing or house_16H. Every v2 config
+(`ofat_encoding_v2`, `ofat_selection_v2`) and `ofat_tuning_v3`
+deliberately excludes these three datasets for the same cost reason the
+scaling arm originally did, before 4i and this section measured the
+real cost and ran it anyway.
+
+Two new configs close part of this, written and committed `d1c2b83`:
+
+| config | arm | datasets | models | runs |
+|---|---|---|---|---|
+| `ofat_encoding_large` | encoding | adult, bank-marketing | all 4 | 24 |
+| `ofat_selection_large` | selection | adult, bank-marketing, house_16H | all 4 | 60 |
+
+house_16H is excluded from the encoding config only: it has zero
+categorical columns (checked directly), so onehot/ordinal/target have
+nothing to encode there. It is included in selection, which has no such
+requirement.
+
+Tuning on the three large datasets is not attempted here: tuning's cost
+is per-candidate-fit, and on SVM specifically (gamma included in the
+search space) this would multiply the already-measured ~280 CPU-second
+adult fit by up to 10 candidates per fold. That is left as an open item
+rather than run blind.
+
+`ofat_encoding_large` is launched now; `ofat_selection_large` follows
+once it completes, without pausing in between, per standing instruction
+to keep working unattended.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
