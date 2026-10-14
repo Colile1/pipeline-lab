@@ -1802,6 +1802,54 @@ launched immediately after this commit, per standing instruction not to
 pause between sweeps. house_16H is included here, since selection has
 no categorical-column requirement.
 
+---
+
+## 4s. chi2 selection crashed on adult; fixed, record restarted clean, 2026-10-14
+
+`ofat_selection_large` was launched after 4r and reached adult within a
+minute. All four models failed identically on `selection=chi2`:
+`ValueError: setting an array element with a sequence.`
+
+### Cause
+
+`_chi2_or_f_classif` (the wrapper that falls back to f_classif when chi2's
+non-negativity requirement is not met, added 2026-10-12 for ionosphere)
+casts its input with `np.asarray(X, dtype=float)` to check for negative
+values. adult and bank-marketing are the first datasets in the programme
+with enough categorical cardinality that sklearn's `ColumnTransformer`
+keeps the onehot-encoded block **sparse** (a `csr_matrix`) rather than
+densifying it. `np.asarray` cannot cast a sparse matrix that way, so the
+check itself crashed before chi2 or f_classif ever ran. The same cast,
+guarded by a bare except, sits in `substitution_note` too: it did not
+crash, but it silently returned no substitution note on sparse input,
+which would have been a true but unrecorded substitution. The 19 smaller
+datasets in `ofat_selection_v2` never exercise this: none of them have
+enough categorical levels to push the ColumnTransformer into sparse
+output, so the bug was latent until a dataset this wide was run, the
+same pattern as every other large-dataset bug in this programme so far.
+
+### Fix
+
+Both call sites now densify explicitly with `X.toarray()` when
+`scipy.sparse.issparse(X)`, before the existing dense cast. chi2 and
+f_classif both accept sparse input natively; only the negativity CHECK
+needed a dense view. A regression test reproduces the exact csr_matrix
+failure directly (`test_chi2_accepts_sparse_input`) and checks the
+substitution-note path too. 342 engine tests pass. Committed `4201de3`.
+
+### The record was restarted, not resumed
+
+The sweep had written 9 rows (5 succeeded, 4 failed from this bug)
+before being stopped. Since `lab.db` had not been committed since 4r,
+`git checkout -- outputs/lab.db` discarded those 9 rows entirely rather
+than leaving 4 permanently-failed rows under the sweep's config name for
+a bug that no longer exists. Confirmed zero `ofat_selection_large` rows
+and `pragma integrity_check` ok before relaunching under the same config
+name with a fresh batch id. This is the correct use of "append-only":
+once committed, a row stays; nothing here was committed.
+
+`ofat_selection_large` is running again from scratch.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
