@@ -1756,6 +1756,52 @@ rather than run blind.
 once it completes, without pausing in between, per standing instruction
 to keep working unattended.
 
+---
+
+## 4r. Encoding on the two large categorical datasets, 2026-10-14
+
+`ofat_encoding_large` finished: **24 runs, 24 succeeded, 0 failed, 0
+skipped**. Integrity_check ok, no succeeded cell duplicated. Committed
+`49b1886`; config committed `d1c2b83`.
+
+Only adult and bank-marketing qualify (house_16H has no categorical
+columns), so n=2 for every model, below the 6-dataset floor needed for
+Friedman to reach p<0.05 at all. As in 4q, this is a direct reading of
+the numbers, not a tested finding.
+
+| dataset | model | onehot acc / F1 | ordinal acc / F1 | target acc / F1 |
+|---|---|---|---|---|
+| adult | logreg | 0.8386 / 0.7656 | **0.8024 / 0.6840** | 0.8428 / 0.7703 |
+| adult | random_forest | 0.8496 / 0.7879 | 0.8543 / 0.7933 | 0.8608 / 0.8005 |
+| adult | gradient_boosting | 0.8633 / 0.8006 | 0.8625 / 0.7988 | 0.8648 / 0.8048 |
+| adult | svm | 0.7913 / 0.5793 | 0.7914 / 0.5797 | 0.7914 / 0.5797 |
+| bank-marketing | logreg | 0.9004 / 0.6913 | **0.8893 / 0.6201** | 0.9004 / 0.6881 |
+| bank-marketing | random_forest | 0.9047 / 0.7205 | 0.9057 / 0.7312 | 0.9060 / 0.7332 |
+| bank-marketing | gradient_boosting | 0.9071 / 0.7302 | 0.9044 / 0.7193 | 0.9060 / 0.7327 |
+| bank-marketing | svm | 0.8831 / 0.4773 | 0.8831 / 0.4775 | 0.8832 / 0.4775 |
+
+Two readings, consistent with the smaller-dataset encoding work already
+in the record:
+
+- **logreg is the one model ordinal encoding visibly hurts**, on both
+  datasets (adult F1 -8.2 points, bank-marketing F1 -7.1 points): a
+  linear model is sensitive to the false numeric order ordinal imposes
+  on unordered categories, exactly the mechanism the thesis already
+  argues for logreg elsewhere.
+- **SVM is encoding-invariant at four decimal places on both datasets.**
+  This is not new: 4q already showed the unscaled SVM here is dominated
+  by the lack of scaling (one feature's variance swamps the rest), so a
+  categorical-encoding choice changes almost nothing relative to that.
+  Tree models (random_forest, gradient_boosting) show small, inconsistent
+  shifts in both directions, as they do in the smaller-dataset arm.
+
+### Selection launched next
+
+`ofat_selection_large` (60 runs: 5 levels x 3 datasets x 4 models)
+launched immediately after this commit, per standing instruction not to
+pause between sweeps. house_16H is included here, since selection has
+no categorical-column requirement.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
