@@ -1608,6 +1608,93 @@ no analysis reads those fields on a skipped row. `ofat_tuning_v3` had
 already loaded the old code when this was committed, so its skipped
 rows will also be NULL in those columns.
 
+---
+
+## 4p. The corrected tuning sweep: the rejected SVM result does not survive
+
+`ofat_tuning_v3` finished 2026-10-14: **304 runs in 15.2 hours**
+(17:01 on the 13th to 08:13 on the 14th). 267 succeeded, 37 skipped, 0
+failed. All skips are expected: 16 are colic (row deletion, as in every
+other arm), 21 are `logreg` tuning on a regression target, correctly
+refused by the fix in 4j since LinearRegression has nothing to search.
+No row is duplicated; the database passes integrity_check.
+
+### Classification: the rejected result from v2 is gone
+
+| model | metric | v2 Friedman p | v3 Friedman p |
+|---|---|---|---|
+| svm | accuracy | 0.0262 | 0.1788 |
+| **svm** | **macro-F1** | **0.0145 (rejected)** | **0.2330** |
+| random_forest | accuracy | 0.0293 | 0.0931 |
+| random_forest | macro-F1 | 0.0293 | 0.0753 |
+| logreg, gradient_boosting | both | > 0.25 | > 0.25 |
+
+Nothing is significant in v3 on any model or metric for classification.
+The one rejected contrast the programme had from tuning - Bayesian
+beating no tuning for the SVM on macro-F1 - **does not survive when
+Bayesian is given a real space to search instead of the five or six
+points a tiny grid offered**.
+
+Checked directly, dataset by dataset, SVM macro-F1:
+
+| dataset | none (same both sweeps) | v2 bayesian | v3 bayesian |
+|---|---|---|---|
+| iris | 0.9666 | 0.9593 | 0.9732 |
+| wine | 0.6453 | 0.7097 | 0.6877 |
+| sonar | 0.8142 | 0.8911 | 0.8668 |
+| heart-c | 0.6264 | 0.6804 | 0.6573 |
+| credit-approval | 0.5980 | 0.6286 | **0.6676** |
+| pima | 0.7044 | 0.7112 | **0.6782** |
+| credit-g | 0.4743 | 0.4748 | **0.4118** |
+| digits | 0.9889 | 0.9906 | 0.9883 |
+
+The untuned baseline is identical between sweeps, as it must be (same
+seed). Bayesian's gain shrinks on most datasets and reverses outright
+on two (pima, credit-g): with only 10 trials to cover a continuous
+range instead of a handful of grid points, the search sometimes lands
+worse than it would have by accident on the old, effectively
+exhaustive "search". **The v2 result was real in the narrow sense that
+the numbers were not fabricated, but it was measuring how well Bayesian
+search happens to rediscover a small fixed grid, not how well it tunes
+a model.** That is not a finding about tuning; it is restated from 4j
+to make the correction explicit.
+
+### Regression: a new result, on the arm that could not be tested before
+
+4c and 4j could not test regression tuning at n = 4. At n = 7 (3 new
+datasets from 4n):
+
+| model | Friedman p | outcome |
+|---|---|---|
+| **svm (SVR)** | **0.0342** | **grid beats none**: Holm 0.0469, better on 7 of 7, median RMSE improvement +1.18, CI [+0.19, +3.82] |
+| random_forest | 0.1344 | not significant |
+| gradient_boosting | 0.0503 | not significant, just over the line |
+| logreg | - | fewer than two complete datasets (LinearRegression has no grid) |
+
+SVR is the one model where a small, specific grid (C and gamma from
+`GRIDS`) reliably beats the default, won on every one of the seven
+regression datasets, and random and Bayesian search over the wider
+continuous space do not reach significance despite also improving on
+most datasets (6 of 7 and 5 of 7 respectively). The grid here is small
+enough to be close to exhaustive for a 2-parameter model, which may be
+why it outperforms a 10-draw sample from a wider space.
+
+### What this changes
+
+- **Tuning's one surviving positive result in the whole programme is
+  now: grid search tunes the SVM regressor.** Classification tuning has
+  no rejected result at all, replacing what was previously the
+  programme's second-strongest finding.
+- **The cost argument from 4j stands and sharpens.** Gradient boosting
+  and random forest paid 30 to 50 times the compute in v2 for no
+  measurable gain; v3 adds that random and Bayesian search did not
+  rescue classification tuning either, at a similar or higher cost than
+  grid.
+- **This is why the re-run mattered.** Had v2 been reported as final,
+  the thesis would have stated that Bayesian tuning helps the SVM. That
+  claim does not survive giving Bayesian a real search space. The
+  correction in 4j was necessary, not cosmetic.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
