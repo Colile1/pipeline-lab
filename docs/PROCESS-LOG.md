@@ -1850,6 +1850,54 @@ once committed, a row stays; nothing here was committed.
 
 `ofat_selection_large` is running again from scratch.
 
+---
+
+## 4t. A false stall report: rfe+svm on adult was slow, not hung, 2026-10-14
+
+The relaunched `ofat_selection_large` reached `rfe` + `svm` on adult and
+showed zero CPU movement over a sampled 15-second window, a single
+thread parked in `Wait`/`UserRequest`, and no log growth for over 20
+minutes. That was read as a genuine stall and the process was killed,
+losing 13 already-valid rows (`none`, `chi2`, `mutual_info` complete on
+adult across all four models, plus `rfe`/logreg) that had to be
+rewritten.
+
+### This was the wrong read, caught before acting on it twice
+
+Before relaunching, the specific combination was isolated and measured
+directly rather than assumed:
+
+| fit | time |
+|---|---|
+| SVM alone on adult (no selection) | 210.2 s |
+| RFE (decision-tree estimator) + SVM on adult | **532.9 s** |
+
+rfe+svm takes about 2.5x plain SVM, consistent with RFE doing its own
+repeated tree fits before the final SVM fit runs. It was never hung; it
+was a single very slow fit, and the CPU reading that looked like zero
+was a sampling artefact rather than evidence of a deadlock. This project
+has already logged one CPU-measurement bug this session (the
+`.CPU` TimeSpan-vs-double confusion in 4-something); this is a second,
+different mistake in the same area, worth naming so it is not repeated a
+third time: **a short CPU sample during a native BLAS/liblinear call is
+not reliable evidence of a stall, and killing a process on that basis
+alone is premature.** The correct check is a longer sampled window, or
+better, comparing against a directly measured isolated timing for the
+same combination before concluding anything is wrong.
+
+### What this costs
+
+The sweep was relaunched a second time from scratch (fresh batch id,
+`7d79015d749d4d7b91b00445ba536bec`), re-doing the 13 rows that were
+already correct. `lab.db` was not committed between attempts, so nothing
+false entered the permanent record; the cost was time, not correctness.
+Given the measured combination costs above, and that four of the five
+selection levels have at least one SVM run on each of the two
+classification datasets, this sweep likely needs a few hours to finish,
+not the roughly one hour each of the SVM large-dataset sweeps took. That
+is a revised estimate, not the original "60 runs" sizing, which did not
+account for selection methods compounding with SVM's own cost.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
