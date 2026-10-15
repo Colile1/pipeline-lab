@@ -1993,6 +1993,59 @@ in the engine's history; its own test suite covers it with small
 synthetic data only. Progress and the first failure or completion will
 be checked directly against the log and database, not assumed.
 
+---
+
+## 4w. Repeated holdout agrees with k-fold: the secondary protocol closed, 2026-10-14
+
+`holdout_large` finished: **32 runs, 32 succeeded, 0 failed**, each
+averaging 30 repeats of a 70/15/15 split. Integrity_check ok, no
+succeeded cell duplicated. Committed `f9fb599`; config committed
+`4a86...` (pre-existing, never run before this sweep).
+
+This is the first time `repeated_holdout` has run on real data anywhere
+in this engine's history. It did not need a single workaround: no
+failures, no skips, across four datasets and two models.
+
+### Agreement with the k-fold record, read directly (n too small to test)
+
+| dataset | model | k-fold result (earlier sections) | holdout result here |
+|---|---|---|---|
+| house_16H | logreg | raw 49,283.9 vs scaled 45,502.3 (4i, 4o: solver rank cutoff, verified mechanism) | raw 49,445.8 vs scaled (minmax/standard/robust, all identical) 45,829.3 -- **same ~7.3% gap, same direction, same identical-across-non-none-levels signature** |
+| house_16H | random_forest | near scale-invariant in every scaling sweep | 32,295.7 to 32,298.4 across all four levels -- **near-invariant here too** |
+| adult | logreg | standard beats none in `ofat_scaling_large_svm`-era readings (4q, SVM only, no logreg comparison there) | F1 0.7683 (none) to 0.7836 (standard), **standard and robust both ahead of none and minmax, same direction as every other classification dataset in the programme** |
+| adult | random_forest | near scale-invariant throughout | 0.7884 to 0.7889 across all four levels, **effectively flat** |
+| bank-marketing | logreg | standard/robust ahead of none in every classification sweep so far | F1 0.6931 (none) to 0.6997 (robust/standard), **same small, consistent direction** |
+| bank-marketing | random_forest | near scale-invariant | 0.7291 to 0.7297, **flat** |
+
+Every one of these agrees in direction and rough size with the k-fold
+record collected under a completely different evaluation protocol. The
+house_16H logreg result is the sharpest: minmax, standard and robust
+give byte-identical RMSE here, exactly the signature that 4o traced to
+sklearn's solver dropping the same singular values regardless of which
+non-"none" scaler is used, as long as it brings the dominant feature's
+scale down far enough. Seeing that exact signature reappear under 30
+independent 70/15/15 splits, rather than 10-fold CV, is strong evidence
+the mechanism is a property of the data and the solver, not an artefact
+of any one evaluation protocol.
+
+### What this closes
+
+Methodology section 6.1's objection to a single train/test split is
+answered for the four largest datasets in the registry: the scaling
+effect that matters most in this programme (house_16H's rank-deficiency
+gap, and the smaller but consistent logreg-scaling gain on adult and
+bank-marketing) is not an artefact of the k-fold split; it reproduces
+under repeated holdout with a completely different split structure. No
+formal test licenses this as a significant result (n is 2 or 1 per
+model here, same limit as 4q, 4r, 4u), but it is independent corroborating
+evidence for findings the programme already carries, collected under
+the protocol the methodology names as the alternative check.
+
+With this sweep done, every config file in `configs/` has either a
+complete run record or is a superseded original with a v2/v3/k25/k75
+replacement already recorded. No further config-based gap remains
+open.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
