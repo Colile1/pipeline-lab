@@ -2152,6 +2152,32 @@ random_forest or the random/bayesian levels -- would cost roughly 6
 hours instead and is the configuration to run if the full version is
 too expensive to justify.
 
+---
+
+## 4z. Tuning on large datasets launched in full, 2026-10-15
+
+Colile reviewed the cost measured in 4y and asked for the full design
+run regardless of the time it takes: "I want the full runs for
+everything... complete que the rest now even if you think it will take
+days." `ofat_tuning_large` is launched as designed there, with nothing
+narrowed:
+
+| | |
+|---|---|
+| vary | tuning |
+| levels | none, grid, random, bayesian |
+| datasets | adult, bank-marketing, house_16H |
+| models | logreg, random_forest, gradient_boosting (svm excluded, per 4y) |
+| protocol | kfold, cv_k=10, inner_k=3 |
+| runs | 36 |
+
+Config committed `f8cced0`, launched under batch
+`f21442d97da8472b83815f52475d8003`. Expected cost, from the direct
+measurement in 4y: on the order of a day, dominated by random_forest's
+grid search (~23 hours for grid alone on the two large classification
+datasets; random and Bayesian plus house_16H add more on top of that).
+This is accepted and expected, not a surprise to react to.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
