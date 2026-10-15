@@ -2112,6 +2112,46 @@ This closes the item flagged in 4k as "worth running once all six
 sweeps are in", with the honest limitation stated rather than reported
 as a stronger result than the data supports.
 
+---
+
+## 4y. Tuning on large datasets: measured, and left for a decision
+
+With every config-based gap closed (4w) and the imputer secondary
+analysis resolved (4x), the one remaining open item from 4q is tuning
+on the three large datasets. Before writing a config blind, the real
+cost was measured the same way 4i and 4q measured scaling and SVM
+costs: one grid-search fit (one outer fold, inner_k=3) on adult, for
+the three non-SVM models, encoding=onehot, scaling=none:
+
+| model | one grid-search fit | projected for 1 outer run (x10 folds) | projected for 2 large classification datasets x 3 tuned levels (grid, random, bayesian) |
+|---|---|---|---|
+| logreg | 71.6 s | ~12 min | **~1.2 hours** |
+| gradient_boosting | 290.9 s | ~49 min | **~4.8 hours** |
+| random_forest | **1,378.8 s (23 min)** | **~3.8 hours** | **~23 hours** |
+
+random_forest's grid search alone, on adult and bank-marketing, at grid
+level only, already projects to most of a day. Random and Bayesian
+search use a continuous space at a 10-candidate budget (4n), which does
+not obviously cost less per candidate than grid's small discrete set,
+so the true total is at least this, probably more once house_16H and
+the other two levels are added.
+
+This is not run blind. It is the same threshold 4q used to leave SVM
+tuning on large datasets as an open item rather than launch it
+unmeasured: a result this large changes what "launch now" means, and
+the decision of whether roughly a day of compute is worth one
+tuning-on-large-datasets data point belongs to Colile, not to an
+unattended default.
+
+**Left open, with the real number attached**: tuning on adult,
+bank-marketing and house_16H, restricted to logreg/random_forest/
+gradient_boosting (SVM excluded as in 4q), costs on the order of a day
+of machine time, dominated by random_forest's grid search. A narrower
+version -- logreg and gradient_boosting only, or grid only, dropping
+random_forest or the random/bayesian levels -- would cost roughly 6
+hours instead and is the configuration to run if the full version is
+too expensive to justify.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
