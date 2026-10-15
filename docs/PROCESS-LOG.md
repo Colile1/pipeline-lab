@@ -1965,6 +1965,34 @@ any single technique has shown in either selection sweep. The 19
 smaller datasets could not expose this because none has adult's
 categorical width.
 
+---
+
+## 4v. The repeated-holdout secondary protocol, launched 2026-10-14
+
+With encoding and selection now covered on the three large datasets
+(4r, 4u), the scaling arm (4q) already done, and tuning deliberately
+left open (4q), the remaining config-based gap was identified by
+checking every config file against `lab.db` directly: `holdout_large`
+is the only config that has never been run at all. `ofat_encoding`,
+`ofat_selection` and `ofat_tuning` (the original, un-versioned configs)
+also show zero rows, but each is superseded by a v2/v3/k25/k75 variant
+that already has a full record, so running the originals would only
+duplicate inferior versions of work already done.
+
+`holdout_large` is methodology section 6.1's answer to a single
+train/test split: 30 repeats of a 70/15/15 split, on the four datasets
+with at least 4,000 rows (adult, bank-marketing, house_16H, abalone),
+varying scaling, on logreg and random_forest only (no SVM, so none of
+the large-dataset cost concerns from 4q-4u apply here). 32 top-level
+runs, each internally averaging 30 holdout repeats. Config re-validated
+(`load_config` parses, 32 runs) and launched under batch
+`27e9d912882a4844a44b1020635e9ab2`.
+
+This is the first time this protocol has been exercised on any dataset
+in the engine's history; its own test suite covers it with small
+synthetic data only. Progress and the first failure or completion will
+be checked directly against the log and database, not assumed.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
