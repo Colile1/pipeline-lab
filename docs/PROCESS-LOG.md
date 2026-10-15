@@ -2046,6 +2046,72 @@ complete run record or is a superseded original with a v2/v3/k25/k75
 replacement already recorded. No further config-based gap remains
 open.
 
+---
+
+## 4x. The imputer-vs-imputer secondary analysis, closed: a clean null
+
+Section 4k (natural, Chapter-1-baseline missingness) flagged that its
+six rejected contrasts said only "imputing beats deleting", not "which
+imputer is best", and that the imputer-vs-imputer comparison was
+"worth running once all six sweeps are in". `analyse.py --config
+ofat_imputation_v2 --baseline mean --exclude drop_rows --complete-only`
+answers it directly: this compares knn and median against mean,
+excluding drop_rows so the comparison is like-for-like on the same
+rows, which the original Chapter-1-baseline reading (against drop_rows)
+could not offer.
+
+All 19 datasets qualify (unlike the drop_rows-referenced reading, which
+drops whichever datasets make `drop_rows` fail or score on too few
+rows): 12 classification, 7 regression, nothing excluded.
+
+| task | model | Friedman p |
+|---|---|---|
+| classification | gradient_boosting | 0.0970 |
+| classification | logreg | 0.1482 |
+| classification | random_forest | 0.6703 |
+| classification | svm | 0.6065 to 0.8669 (accuracy/F1) |
+| regression | all four models | 0.3679 |
+
+**Nothing is significant.** Not one model, not one metric, not one
+task type shows a global difference among mean, median and kNN
+imputation under natural (Chapter-1-baseline) missingness. This is a
+clean null, not a near-miss: every p-value is comfortably above 0.05,
+several above 0.6.
+
+Checked directly why: natural missingness in this registry is
+overwhelmingly ABSENT, not merely light. 15 of the 19 datasets in this
+sweep have **0.00%** missing values -- mean, median and kNN imputation
+have nothing to act on and are necessarily identical there. Only colic
+(20.1%) has a rate comparable to what the injected sweeps control for;
+credit-approval, heart-c and autoMpg have small genuine rates (0.2-0.7%).
+With at most one or two datasets per sweep actually exercising the
+imputer, a global test across all 19 has no power to detect an
+imputer-choice effect even if one exists on colic alone.
+
+This sharpens what the programme can claim about imputation:
+
+- **Whether to impute at all (versus dropping rows) is the real
+  finding** (4k: six rejected contrasts, drop_rows loses almost every
+  time, because dropping ANY row with a gap is costly even at a true
+  rate near zero if the registry has many columns). **Which imputer to
+  use, among mean/median/kNN, could not be tested here** -- not because
+  the effect is absent, but because this registry's natural missingness
+  gives the comparison almost no datasets to work with.
+- Under INJECTED missingness (4k, 4n), which controls the rate
+  directly, kNN beats mean significantly at several rates and
+  mechanisms, and median is significantly worse than mean for
+  regression at several rates. That is where imputer choice has been
+  shown to matter in this programme.
+- **The honest statement is: this sweep cannot tell "imputer choice does
+  not matter" from "imputer choice was never really tested", and
+  reports the second, not the first.** The null above is a null about
+  the registry's missingness, not a settled null about mean vs median vs
+  kNN.
+
+This closes the item flagged in 4k as "worth running once all six
+sweeps are in", with the honest limitation stated rather than reported
+as a stronger result than the data supports.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
