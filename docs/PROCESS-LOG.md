@@ -1898,6 +1898,73 @@ not the roughly one hour each of the SVM large-dataset sweeps took. That
 is a revised estimate, not the original "60 runs" sizing, which did not
 account for selection methods compounding with SVM's own cost.
 
+---
+
+## 4u. Selection on the three large datasets, 2026-10-14
+
+`ofat_selection_large` finished (after the restart in 4s and the slow,
+not hung, runs described in 4t): **60 runs, 60 succeeded, 0 failed**.
+Integrity_check ok, no succeeded cell duplicated. Committed `02148e3`;
+config committed `d1c2b83`.
+
+n is 2 for classification (adult, bank-marketing) and 1 for regression
+(house_16H), both below Friedman's floor, so as in 4q and 4r this is a
+direct reading, not a tested finding.
+
+### lasso behaves completely differently on the two classification datasets
+
+| dataset | columns after onehot | lasso keeps | chi2/mutual_info/rfe keep |
+|---|---|---|---|
+| adult | 104 | **5** | 52 (half, by `k_fraction`) |
+| bank-marketing | 51 | 49 (almost all) | 26 (half) |
+
+On adult, L1 logistic regression zeroes all but 5 of 104 one-hot
+columns, and every model pays for it: logreg F1 0.7656 to 0.6923 (-7.3
+points), random_forest 0.7879 to 0.7319, gradient_boosting 0.8006 to
+0.7412, even SVM moves (0.5793 to 0.6380, the only model lasso helps
+here, perhaps because dropping correlated one-hot columns reduces
+SVM's sensitivity to feature scale imbalance). On bank-marketing, where
+lasso keeps 49 of 51 columns, every model is within 0.01 F1 of the
+`none` baseline: lasso is close to a no-op there. The other three
+selectors (chi2, mutual_info, rfe) all use the same fixed `k_fraction`
+and keep roughly half the columns on both datasets, with small,
+model-dependent costs (gradient_boosting and random_forest barely move;
+logreg loses 1-3 F1 points; SVM is unaffected, same invariance as 4q
+and 4r).
+
+The mechanism is adult's categorical cardinality: 8 categorical columns
+expand to 104 one-hot columns, several representing rare levels of
+`native-country` and `occupation` with few training examples per level.
+L1 regularisation has far more near-zero coefficients to prune there
+than on bank-marketing's 51 columns, so the SAME technique at the SAME
+default strength produces a near-total prune on one dataset and almost
+no prune on the other. This is a data-dependent interaction the
+smaller-dataset selection arm (4-something, `ofat_selection_v2`) could
+not show: none of its 19 datasets has cardinality anywhere near adult's.
+
+### house_16H: lasso and the baseline are identical
+
+On house_16H, `lasso` and `none` give byte-identical RMSE on every
+model (e.g. gradient_boosting 34144.73 both). `n_features_selected` is
+16 of 16 for both: the L1 penalty does not zero any coefficient on this
+dataset's 16 numeric features, so `_MinFeatures`'s fallback never
+triggers and the selector is a true no-op here, not a near-no-op as on
+bank-marketing. chi2/mutual_info/rfe all cut to 8 of 16 features (the
+`k_fraction` default) and cost gradient_boosting and random_forest
+2,000-9,000 RMSE (worse), while logreg (LinearRegression) and svm (SVR)
+move by comparable or smaller amounts in mixed directions. This matches
+the already-recorded selection pattern (4h): the cost here is
+discarding features outright, not the selection mechanism itself.
+
+### What this adds to the programme
+
+Selection's cost on large datasets is **not uniform across data at all
+sizes**: lasso's behaviour on adult (prune almost everything) versus
+bank-marketing (prune almost nothing) is the sharpest data-dependence
+any single technique has shown in either selection sweep. The 19
+smaller datasets could not expose this because none has adult's
+categorical width.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
