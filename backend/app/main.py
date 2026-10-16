@@ -118,6 +118,14 @@ def results_page(request: Request):
 # run whether it was launched here or from the command line.
 
 
+@app.get("/summary")
+def summary_page(request: Request):
+    """Render the Research summary: the whole project on one page."""
+    return templates.TemplateResponse(
+        request, "summary.html", {"active_page": "summary"}
+    )
+
+
 @app.get("/dashboard")
 def dashboard_page(request: Request):
     """Render the Dashboard: headline numbers and the sweep list."""

@@ -1,0 +1,228 @@
+{% extends "base.html" %}
+{% block title %}Research summary - Pipeline Lab{% endblock %}
+{% block breadcrumb %}Research summary{% endblock %}
+
+{% block content %}
+
+<div class="card">
+  <p class="card-title">What this research asked</p>
+  <p class="card-body">
+    Before a model is trained, a series of decisions is made about the data:
+    how to turn categories into numbers, what to do about missing values,
+    whether to put features on a common scale, whether to drop some features,
+    and whether to search for better model settings. These decisions are
+    usually made by habit. This project measured whether they actually change
+    the result, and by how much.
+  </p>
+  <p class="card-body">
+    The short answer: <strong>most of them do not</strong>, and the ones that
+    do depend on which model you are using rather than being general rules.
+  </p>
+  <div class="stat-strip" id="totals">
+    <p class="card-body">Loading the record...</p>
+  </div>
+  <p class="caption" id="totals-caption"></p>
+</div>
+
+<div class="card">
+  <p class="card-title">The main result: where preprocessing actually matters</p>
+  <p class="verdict" id="sensitivity-verdict">Loading...</p>
+  <p class="card-body">
+    Each number is how much the score moves when you change that one choice,
+    as a percentage of the untouched baseline, for the typical dataset.
+    A larger number means the decision is worth thinking about. A number near
+    zero means it is safe to ignore.
+  </p>
+  <div id="sensitivity-table"></div>
+  <p class="caption">
+    Higher is more sensitive. Read a row as: "for this model, which choices
+    can move my score at all?"
+  </p>
+  <details class="explainer">
+    <summary>How this is measured</summary>
+    <p>
+      For every combination of dataset and model, the best and worst scoring
+      levels of a factor are compared, and the gap is divided by the baseline
+      score so that datasets with different target scales can be averaged
+      together. The table shows the median over 18 datasets. It measures how
+      much a choice <em>can</em> move the score, not whether any particular
+      level is better. Injected-missingness sweeps are excluded, because there
+      the missing-data rate is something the experiment set rather than a
+      property of the dataset.
+    </p>
+  </details>
+</div>
+
+<div class="card">
+  <p class="card-title">Which factors produced a real, tested effect</p>
+  <p class="card-body">
+    Of 167 statistical comparisons, 25 survived correction for multiple
+    testing. Most preprocessing choices produced nothing detectable. These
+    two counts come from the full statistical pass recorded in the findings
+    report; the Findings page re-runs the same tests per sweep on demand,
+    because running all of them at once would make this page slow to load.
+  </p>
+  <img class="figure" src="{{ url_for('static', path='figures/fig1_effects_by_factor.png') }}"
+       alt="Bar chart of statistical cells tested against cells with a significant
+            result, for each of the five preprocessing factors. Imputation has by
+            far the most significant cells; encoding has none.">
+  <p class="caption">
+    Imputation dominates only because it was measured at six different
+    missing-data settings, not because it is intrinsically the most important
+    factor.
+  </p>
+</div>
+
+<div class="card">
+  <p class="card-title">Scaling depends entirely on the model</p>
+  <p class="verdict">
+    Scale your features for SVM and linear models. Do not bother for
+    random forests or gradient boosting.
+  </p>
+  <img class="figure" src="{{ url_for('static', path='figures/fig2_scaling_by_model.png') }}"
+       alt="Grouped bar chart of mean accuracy by model and scaling method.
+            Logistic regression and SVM improve with standard scaling; the two
+            tree ensembles are flat across all scaling choices.">
+  <p class="caption">
+    Logistic regression is the only model with a statistically confirmed gain
+    (better on 10 of 11 datasets). Tree ensembles move by hundredths of a
+    percent.
+  </p>
+  <details class="explainer">
+    <summary>A case where not scaling silently broke the model</summary>
+    <p>
+      On the house_16H dataset, one feature had a standard deviation near
+      66,000 while the rest were below 0.34. The solver inside scikit-learn
+      discards directions whose scale falls below a threshold relative to the
+      largest, so it fitted the unscaled data using only 9 of the 16 features
+      and reported no error. Scaling restored all 16 and lowered the error by
+      7.7 percent. Loosening the solver's tolerance on the raw data reproduced
+      the scaled result exactly, confirming the cause. On data with one
+      dominant-scale feature, failing to scale can silently remove features
+      from a linear model.
+    </p>
+  </details>
+</div>
+
+<div class="card">
+  <p class="card-title">Feature selection is usually harmless and occasionally destroys the model</p>
+  <p class="verdict">
+    Prefer recursive elimination over single-feature filters. The average
+    case hides the risk.
+  </p>
+  <img class="figure" src="{{ url_for('static', path='figures/fig9_selection_tail_risk.png') }}"
+       alt="Horizontal bar chart of the most selection-sensitive dataset and model
+            combinations. The top bars exceed 500 percent, far beyond the median
+            of under 4 percent.">
+  <p class="caption">
+    The typical effect is under 4 percent. On energy-efficiency, two filter
+    methods raised gradient boosting's error more than sixfold, from 0.47 to
+    3.08, by discarding features the model needed together.
+  </p>
+</div>
+
+<div class="card">
+  <p class="card-title">Tuning cost two thirds of the compute for one result</p>
+  <p class="verdict">
+    Budget hyperparameter tuning for gradient boosting. Treat it as optional
+    elsewhere.
+  </p>
+  <div id="cost-table"></div>
+  <img class="figure" src="{{ url_for('static', path='figures/fig5_tuning_cost_benefit.png') }}"
+       alt="Three panels showing improvement over no tuning for three large
+            datasets. Gradient boosting gains clearly in all three; logistic
+            regression and random forest barely move.">
+  <p class="caption">
+    Grid, random and Bayesian search were indistinguishable from each other.
+    Note the right panel is in percent error reduced while the other two are
+    in F1 points, so bar heights are not comparable between panels.
+  </p>
+</div>
+
+<div class="card">
+  <p class="card-title">Two results the system caught and withdrew</p>
+  <p class="card-body">
+    Both would have been reported as findings by a less instrumented study.
+    They are included because a method that cannot catch its own errors
+    cannot be trusted when it reports a success.
+  </p>
+
+  <p class="card-subtitle">A significant result that was an artefact</p>
+  <p class="card-body">
+    An earlier sweep found Bayesian search improving the SVM. Every
+    hyperparameter grid held 4 to 6 candidates while the random search drew
+    10, so the search exhausted the grid and silently became grid search on
+    all 56 model and dataset pairs. Given a genuine continuous range to
+    search, the same comparison is no longer significant and the gain reverses
+    on two datasets.
+  </p>
+
+  <p class="card-subtitle">A comparison that was measuring the wrong thing</p>
+  <img class="figure" src="{{ url_for('static', path='figures/fig4_droprows_artefact.png') }}"
+       alt="Scatter plot of error ratio against percentage of rows kept. Every
+            point falls below the parity line, and the dataset keeping the fewest
+            rows shows the largest apparent advantage.">
+  <p class="caption">
+    Deleting rows with missing values appeared to beat imputing them on
+    regression. It was being scored on different data: on one dataset it kept
+    38 of 252 rows and was measured on the easy remainder. Withdrawn as a
+    measurement artefact.
+  </p>
+</div>
+
+<div class="card">
+  <p class="card-title">Results do not depend on how they were measured</p>
+  <img class="figure" src="{{ url_for('static', path='figures/fig6_protocol_agreement.png') }}"
+       alt="Scatter plot comparing accuracy under 10-fold cross-validation against
+            accuracy under 30 repeated holdout splits. All points lie on the
+            diagonal line of perfect agreement.">
+  <p class="caption">
+    Repeating the measurement with a completely different splitting scheme
+    reproduced the same answers, so the findings are not an artefact of the
+    evaluation method.
+  </p>
+</div>
+
+<div class="card">
+  <p class="card-title">A limit that was discovered, not designed around</p>
+  <p class="card-body">
+    The feature-selection results included five cases where the overall test
+    was clearly significant but no individual comparison survived. This was
+    not a weak effect. With 7 datasets and 4 options to compare, the smallest
+    result the test can possibly produce is already above the threshold for
+    significance, so <strong>nothing could have been confirmed regardless of
+    how large the real effect was</strong>.
+  </p>
+  <div id="power-table"></div>
+  <p class="caption">
+    The lesson: check what the smallest achievable result is before collecting
+    data, not after.
+  </p>
+</div>
+
+<div class="card">
+  <p class="card-title">What to do with this</p>
+  <ul class="card-body">
+    <li>Scale features for SVM and linear models; skip it for tree ensembles.</li>
+    <li>Treat scaling as a correctness issue when feature scales differ by
+        orders of magnitude, not just a performance tweak.</li>
+    <li>Encoding choice only matters in proportion to how much of your data is
+        categorical. Avoid ordinal encoding for linear models.</li>
+    <li>Impute rather than delete rows, and be suspicious of any comparison
+        where the baseline is scored on fewer rows.</li>
+    <li>Use kNN imputation when a substantial share of data is missing; the
+        choice does not measurably matter when little is missing.</li>
+    <li>Spend tuning budget on gradient boosting. No search strategy beat any
+        other, so the cheapest one is the right one.</li>
+  </ul>
+  <p class="card-body">
+    Full detail is in the research report, the findings report and the
+    meta-analysis in the project's documentation folder.
+  </p>
+</div>
+
+{% endblock %}
+
+{% block page_js %}
+<script src="{{ url_for('static', path='js/summary.js') }}"></script>
+{% endblock %}

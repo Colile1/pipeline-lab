@@ -312,3 +312,108 @@ def dimensions() -> dict:
         ]
     return {"dimensions": present, "metrics": metrics,
             "higher_is_better": {m: METRICS[m] for m in metrics}}
+
+
+# Factors in the five-component OFAT design, and the single-sweep arm
+# each one's headline sensitivity is read from. Injected-missingness
+# sweeps are excluded from the sensitivity map because there the
+# missingness rate is a manipulated variable rather than a property of
+# the dataset, so spreads are not comparable with the other arms.
+SUMMARY_ARMS = {
+    "scaling": ("ofat_scaling_v2", "none"),
+    "encoding": ("ofat_encoding_v2", "onehot"),
+    "selection": ("ofat_selection_v2", "none"),
+    "tuning": ("ofat_tuning_v3", "none"),
+}
+
+
+def _median(values: list[float]) -> float:
+    """True median: averages the middle pair on an even count.
+
+    Written out rather than imported from statistics so the figure here
+    matches the one the analysis scripts report exactly; taking the
+    lower-middle element instead shifts several cells by a few tenths.
+    """
+    ordered = sorted(values)
+    mid = len(ordered) // 2
+    if len(ordered) % 2:
+        return ordered[mid]
+    return (ordered[mid - 1] + ordered[mid]) / 2.0
+
+
+def research_summary() -> dict:
+    """Headline numbers for the research summary page.
+
+    Everything here is computed from the record at request time, so the
+    page cannot drift from the database the way a hardcoded figure
+    would. Returns the programme totals, the per-factor run counts, and
+    the factor-by-model sensitivity map (median spread across a
+    factor's levels, as a percentage of the baseline score).
+
+    Inputs: none.
+    Output: {"totals": {...}, "factors": [...], "sensitivity": {...},
+             "cost": [...]}.
+    """
+    with connect() as c:
+        total, ok, failed, skipped = c.execute(
+            "select count(*), sum(status = 'succeeded'), "
+            "sum(status = 'failed'), sum(status = 'skipped') from runs"
+        ).fetchone()
+        datasets = c.execute("select count(distinct dataset) from runs").fetchone()[0]
+        models = c.execute("select count(distinct model) from runs").fetchone()[0]
+        hours = c.execute(
+            "select coalesce(sum(wall_seconds), 0) / 3600.0 from runs"
+        ).fetchone()[0]
+
+        factors = []
+        for factor in ("scaling", "encoding", "imputation", "selection", "tuning"):
+            n = c.execute(
+                "select count(*) from runs where vary = ?", (factor,)
+            ).fetchone()[0]
+            h = c.execute(
+                "select coalesce(sum(wall_seconds), 0) / 3600.0 from runs "
+                "where vary = ?", (factor,)
+            ).fetchone()[0]
+            factors.append({"factor": factor, "runs": n, "hours": round(h, 1)})
+
+        # Sensitivity: median spread across levels, per factor and model.
+        sensitivity: dict[str, dict[str, float]] = {}
+        for factor, (config, baseline) in SUMMARY_ARMS.items():
+            rows = c.execute(
+                f"select dataset, model, {factor}, task_type, "
+                f"accuracy_mean, rmse_mean from runs "
+                f"where config_name = ? and status = 'succeeded'",
+                (config,),
+            ).fetchall()
+            groups: dict[tuple, dict] = {}
+            for dataset, model, level, task, acc, rmse in rows:
+                score = rmse if task == "regression" else acc
+                if score is None:
+                    continue
+                groups.setdefault((dataset, model), {})[level] = score
+            per_model: dict[str, list[float]] = {}
+            for (_dataset, model), levels in groups.items():
+                base = levels.get(baseline)
+                if not base or len(levels) < 2:
+                    continue
+                values = list(levels.values())
+                spread = 100.0 * (max(values) - min(values)) / abs(base)
+                per_model.setdefault(model, []).append(spread)
+            sensitivity[factor] = {
+                model: round(_median(v), 2)
+                for model, v in per_model.items() if v
+            }
+
+    return {
+        "totals": {
+            "total_runs": total or 0,
+            "succeeded": ok or 0,
+            "failed": failed or 0,
+            "skipped": skipped or 0,
+            "datasets": datasets or 0,
+            "models": models or 0,
+            "hours": round(hours, 1),
+        },
+        "factors": factors,
+        "sensitivity": sensitivity,
+    }

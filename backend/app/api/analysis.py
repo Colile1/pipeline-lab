@@ -62,6 +62,16 @@ def overview() -> dict:
     return _guard(catalogue.overview)
 
 
+@router.get("/summary")
+def research_summary() -> dict:
+    """Programme totals and the factor-by-model sensitivity map.
+
+    Backs the research summary page. Computed from the record on every
+    request so the page cannot drift from the database.
+    """
+    return _guard(catalogue.research_summary)
+
+
 @router.get("/sweeps")
 def sweeps() -> dict:
     """Every recorded sweep, however it was launched."""

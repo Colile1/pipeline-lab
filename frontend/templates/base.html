@@ -20,6 +20,7 @@
     <nav class="nav-rail">
       <button class="nav-toggle" type="button" aria-label="Toggle navigation">Menu</button>
       <ul>
+        <li><a href="/summary" class="{{ 'active' if active_page == 'summary' else '' }}">Research summary</a></li>
         <li><a href="/dashboard" class="{{ 'active' if active_page == 'dashboard' else '' }}">Dashboard</a></li>
         <li><a href="/findings" class="{{ 'active' if active_page == 'findings' else '' }}">Findings</a></li>
         <li><a href="/explorer" class="{{ 'active' if active_page == 'explorer' else '' }}">Explorer</a></li>

@@ -1007,3 +1007,34 @@ fieldset legend {
   margin-top: 4px;
   white-space: normal;
 }
+
+/* Figures: a generated chart image inside a card. Bordered rather than
+   shadowed, like every other surface here, and width-constrained so a
+   wide chart does not force the card to scroll on a narrow screen. */
+.figure {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  margin: 16px 0 4px;
+  border: 1px solid var(--border-light);
+  background: var(--surface);
+}
+
+/* Caption: the sentence under a figure or table saying what to look at.
+   Muted so it reads as support, not as the content itself. */
+.caption {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-muted);
+  margin: 4px 0 0;
+}
+
+/* Sub-heading inside a card, for a card that covers two related points
+   and would otherwise need to be split into two cards. */
+.card-subtitle {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text);
+  margin: 20px 0 4px;
+}
