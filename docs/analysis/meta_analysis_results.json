@@ -1,0 +1,3174 @@
+{
+ "cells": [
+  {
+   "dataset": "iris",
+   "model": "logreg",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 4.1379296076104835,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "iris",
+   "model": "svm",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 1.3793788346969604,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "iris",
+   "model": "random_forest",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 0.6993359088587071,
+   "gain_pct": 0.6993359088587071,
+   "n_levels": 4
+  },
+  {
+   "dataset": "iris",
+   "model": "gradient_boosting",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 0.6944791666666644,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "wine",
+   "model": "logreg",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 3.5592134061924665,
+   "gain_pct": 3.5592134061924665,
+   "n_levels": 4
+  },
+  {
+   "dataset": "wine",
+   "model": "svm",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 45.432585154007654,
+   "gain_pct": 45.432585154007654,
+   "n_levels": 4
+  },
+  {
+   "dataset": "wine",
+   "model": "random_forest",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "wine",
+   "model": "gradient_boosting",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "sonar",
+   "model": "logreg",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 7.588576636471629,
+   "gain_pct": 7.588576636471629,
+   "n_levels": 4
+  },
+  {
+   "dataset": "sonar",
+   "model": "svm",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 5.243306708196203,
+   "gain_pct": 5.243306708196203,
+   "n_levels": 4
+  },
+  {
+   "dataset": "sonar",
+   "model": "random_forest",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "sonar",
+   "model": "gradient_boosting",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "heart-c",
+   "model": "logreg",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 0.42364822457635315,
+   "gain_pct": 0.3963084121036854,
+   "n_levels": 4
+  },
+  {
+   "dataset": "heart-c",
+   "model": "svm",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 28.039589854754283,
+   "gain_pct": 28.039589854754283,
+   "n_levels": 4
+  },
+  {
+   "dataset": "heart-c",
+   "model": "random_forest",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 0.4012975367264351,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "heart-c",
+   "model": "gradient_boosting",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 0.44192097202107156,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "ionosphere",
+   "model": "logreg",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 2.656680562424935,
+   "gain_pct": 2.316603211043713,
+   "n_levels": 4
+  },
+  {
+   "dataset": "ionosphere",
+   "model": "svm",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 2.131493265054796,
+   "gain_pct": 1.8258019715323062,
+   "n_levels": 4
+  },
+  {
+   "dataset": "ionosphere",
+   "model": "random_forest",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "ionosphere",
+   "model": "gradient_boosting",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "breast_cancer",
+   "model": "logreg",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 2.578395895730394,
+   "gain_pct": 2.578395895730394,
+   "n_levels": 4
+  },
+  {
+   "dataset": "breast_cancer",
+   "model": "svm",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 6.3053418670914,
+   "gain_pct": 6.3053418670914,
+   "n_levels": 4
+  },
+  {
+   "dataset": "breast_cancer",
+   "model": "random_forest",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "breast_cancer",
+   "model": "gradient_boosting",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "wdbc",
+   "model": "logreg",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 2.3898617134869453,
+   "gain_pct": 2.3898617134869453,
+   "n_levels": 4
+  },
+  {
+   "dataset": "wdbc",
+   "model": "svm",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 6.3053418670914,
+   "gain_pct": 6.3053418670914,
+   "n_levels": 4
+  },
+  {
+   "dataset": "wdbc",
+   "model": "random_forest",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "wdbc",
+   "model": "gradient_boosting",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "credit-approval",
+   "model": "logreg",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 0.8965775279280015,
+   "gain_pct": 0.8911162599377691,
+   "n_levels": 4
+  },
+  {
+   "dataset": "credit-approval",
+   "model": "svm",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 32.00443677519068,
+   "gain_pct": 32.00443677519068,
+   "n_levels": 4
+  },
+  {
+   "dataset": "credit-approval",
+   "model": "random_forest",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 0.350499065221059,
+   "gain_pct": 0.17387232606741346,
+   "n_levels": 4
+  },
+  {
+   "dataset": "credit-approval",
+   "model": "gradient_boosting",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "pima",
+   "model": "logreg",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 0.3341503481004383,
+   "gain_pct": 0.3341503481004383,
+   "n_levels": 4
+  },
+  {
+   "dataset": "pima",
+   "model": "svm",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 2.229860336854053,
+   "gain_pct": 2.229860336854053,
+   "n_levels": 4
+  },
+  {
+   "dataset": "pima",
+   "model": "random_forest",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 0.3402732528675105,
+   "gain_pct": 0.3402732528675105,
+   "n_levels": 4
+  },
+  {
+   "dataset": "pima",
+   "model": "gradient_boosting",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 0.3414970906341379,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "credit-g",
+   "model": "logreg",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 1.0709504685408309,
+   "gain_pct": 1.0709504685408309,
+   "n_levels": 4
+  },
+  {
+   "dataset": "credit-g",
+   "model": "svm",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 9.295774647887333,
+   "gain_pct": 9.295774647887333,
+   "n_levels": 4
+  },
+  {
+   "dataset": "credit-g",
+   "model": "random_forest",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 0.12953367875647678,
+   "gain_pct": 0.12953367875647678,
+   "n_levels": 4
+  },
+  {
+   "dataset": "credit-g",
+   "model": "gradient_boosting",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "digits",
+   "model": "logreg",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 0.9801078398269922,
+   "gain_pct": 0.63324308704452,
+   "n_levels": 4
+  },
+  {
+   "dataset": "digits",
+   "model": "svm",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 1.9707402512168026,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "digits",
+   "model": "random_forest",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 0.11348402055344949,
+   "gain_pct": 0.1131784082898431,
+   "n_levels": 4
+  },
+  {
+   "dataset": "digits",
+   "model": "gradient_boosting",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "autoMpg",
+   "model": "logreg",
+   "factor": "scaling",
+   "task": "regression",
+   "spread_pct": 0.11613255682597454,
+   "gain_pct": 0.11613255682597454,
+   "n_levels": 4
+  },
+  {
+   "dataset": "autoMpg",
+   "model": "svm",
+   "factor": "scaling",
+   "task": "regression",
+   "spread_pct": 21.89505334073717,
+   "gain_pct": 21.89505334073717,
+   "n_levels": 4
+  },
+  {
+   "dataset": "autoMpg",
+   "model": "random_forest",
+   "factor": "scaling",
+   "task": "regression",
+   "spread_pct": 0.23112693945752905,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "autoMpg",
+   "model": "gradient_boosting",
+   "factor": "scaling",
+   "task": "regression",
+   "spread_pct": 0.3034389213241898,
+   "gain_pct": 0.23357881045950932,
+   "n_levels": 4
+  },
+  {
+   "dataset": "diabetes",
+   "model": "logreg",
+   "factor": "scaling",
+   "task": "regression",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "diabetes",
+   "model": "svm",
+   "factor": "scaling",
+   "task": "regression",
+   "spread_pct": 1.8224478384365972,
+   "gain_pct": 0.4848865131890605,
+   "n_levels": 4
+  },
+  {
+   "dataset": "diabetes",
+   "model": "random_forest",
+   "factor": "scaling",
+   "task": "regression",
+   "spread_pct": 0.14619649921511552,
+   "gain_pct": 0.05269771026586024,
+   "n_levels": 4
+  },
+  {
+   "dataset": "diabetes",
+   "model": "gradient_boosting",
+   "factor": "scaling",
+   "task": "regression",
+   "spread_pct": 0.24427441319130702,
+   "gain_pct": 0.13999339119523327,
+   "n_levels": 4
+  },
+  {
+   "dataset": "energy-efficiency",
+   "model": "logreg",
+   "factor": "scaling",
+   "task": "regression",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "energy-efficiency",
+   "model": "svm",
+   "factor": "scaling",
+   "task": "regression",
+   "spread_pct": 50.775094966051505,
+   "gain_pct": 50.775094966051505,
+   "n_levels": 4
+  },
+  {
+   "dataset": "energy-efficiency",
+   "model": "random_forest",
+   "factor": "scaling",
+   "task": "regression",
+   "spread_pct": 1.1902327827346593,
+   "gain_pct": 0.036324721256698916,
+   "n_levels": 4
+  },
+  {
+   "dataset": "energy-efficiency",
+   "model": "gradient_boosting",
+   "factor": "scaling",
+   "task": "regression",
+   "spread_pct": 0.07135862100001238,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "concrete",
+   "model": "logreg",
+   "factor": "scaling",
+   "task": "regression",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "concrete",
+   "model": "svm",
+   "factor": "scaling",
+   "task": "regression",
+   "spread_pct": 40.466482031339744,
+   "gain_pct": 40.466482031339744,
+   "n_levels": 4
+  },
+  {
+   "dataset": "concrete",
+   "model": "random_forest",
+   "factor": "scaling",
+   "task": "regression",
+   "spread_pct": 0.04813616718060471,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "concrete",
+   "model": "gradient_boosting",
+   "factor": "scaling",
+   "task": "regression",
+   "spread_pct": 0.032012320417375076,
+   "gain_pct": 0.032012320417375076,
+   "n_levels": 4
+  },
+  {
+   "dataset": "abalone",
+   "model": "logreg",
+   "factor": "scaling",
+   "task": "regression",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "abalone",
+   "model": "svm",
+   "factor": "scaling",
+   "task": "regression",
+   "spread_pct": 5.952398290614139,
+   "gain_pct": 4.814322969420206,
+   "n_levels": 4
+  },
+  {
+   "dataset": "abalone",
+   "model": "random_forest",
+   "factor": "scaling",
+   "task": "regression",
+   "spread_pct": 0.08205185658971019,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "abalone",
+   "model": "gradient_boosting",
+   "factor": "scaling",
+   "task": "regression",
+   "spread_pct": 0.019008383624417587,
+   "gain_pct": 0.019008383624417587,
+   "n_levels": 4
+  },
+  {
+   "dataset": "cpu_small",
+   "model": "logreg",
+   "factor": "scaling",
+   "task": "regression",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "cpu_small",
+   "model": "svm",
+   "factor": "scaling",
+   "task": "regression",
+   "spread_pct": 45.94024674737949,
+   "gain_pct": 41.906257754064,
+   "n_levels": 4
+  },
+  {
+   "dataset": "cpu_small",
+   "model": "random_forest",
+   "factor": "scaling",
+   "task": "regression",
+   "spread_pct": 0.0244646450371724,
+   "gain_pct": 0.012392106121875572,
+   "n_levels": 4
+  },
+  {
+   "dataset": "cpu_small",
+   "model": "gradient_boosting",
+   "factor": "scaling",
+   "task": "regression",
+   "spread_pct": 0.02591488553797615,
+   "gain_pct": 0.02591488553797615,
+   "n_levels": 4
+  },
+  {
+   "dataset": "kin8nm",
+   "model": "logreg",
+   "factor": "scaling",
+   "task": "regression",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "kin8nm",
+   "model": "svm",
+   "factor": "scaling",
+   "task": "regression",
+   "spread_pct": 0.18825773739300353,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "kin8nm",
+   "model": "random_forest",
+   "factor": "scaling",
+   "task": "regression",
+   "spread_pct": 0.0021648614127907227,
+   "gain_pct": 0.001443240941860482,
+   "n_levels": 4
+  },
+  {
+   "dataset": "kin8nm",
+   "model": "gradient_boosting",
+   "factor": "scaling",
+   "task": "regression",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "iris",
+   "model": "logreg",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "iris",
+   "model": "svm",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "iris",
+   "model": "random_forest",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "iris",
+   "model": "gradient_boosting",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "wine",
+   "model": "logreg",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "wine",
+   "model": "svm",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "wine",
+   "model": "random_forest",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "wine",
+   "model": "gradient_boosting",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "sonar",
+   "model": "logreg",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "sonar",
+   "model": "svm",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "sonar",
+   "model": "random_forest",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "sonar",
+   "model": "gradient_boosting",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "heart-c",
+   "model": "logreg",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 1.1477966488522031,
+   "gain_pct": 1.1477966488522031,
+   "n_levels": 3
+  },
+  {
+   "dataset": "heart-c",
+   "model": "svm",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.5118371946286183,
+   "gain_pct": 0.5118371946286183,
+   "n_levels": 3
+  },
+  {
+   "dataset": "heart-c",
+   "model": "random_forest",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 2.0338105813036815,
+   "gain_pct": 0.4011771715384513,
+   "n_levels": 3
+  },
+  {
+   "dataset": "heart-c",
+   "model": "gradient_boosting",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 4.743601245786501,
+   "gain_pct": 4.743601245786501,
+   "n_levels": 3
+  },
+  {
+   "dataset": "ionosphere",
+   "model": "logreg",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "ionosphere",
+   "model": "svm",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "ionosphere",
+   "model": "random_forest",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "ionosphere",
+   "model": "gradient_boosting",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "breast_cancer",
+   "model": "logreg",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "breast_cancer",
+   "model": "svm",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "breast_cancer",
+   "model": "random_forest",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "breast_cancer",
+   "model": "gradient_boosting",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "wdbc",
+   "model": "logreg",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "wdbc",
+   "model": "svm",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "wdbc",
+   "model": "random_forest",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "wdbc",
+   "model": "gradient_boosting",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "credit-approval",
+   "model": "logreg",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 1.2405212141212145,
+   "gain_pct": 1.2405212141212145,
+   "n_levels": 3
+  },
+  {
+   "dataset": "credit-approval",
+   "model": "svm",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "credit-approval",
+   "model": "random_forest",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.8827893941324152,
+   "gain_pct": 0.5322903289113562,
+   "n_levels": 3
+  },
+  {
+   "dataset": "credit-approval",
+   "model": "gradient_boosting",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.36374143959314714,
+   "gain_pct": 0.36374143959314714,
+   "n_levels": 3
+  },
+  {
+   "dataset": "pima",
+   "model": "logreg",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "pima",
+   "model": "svm",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "pima",
+   "model": "random_forest",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "pima",
+   "model": "gradient_boosting",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "credit-g",
+   "model": "logreg",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 5.220883534136551,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "credit-g",
+   "model": "svm",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "credit-g",
+   "model": "random_forest",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 3.108808290155443,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "credit-g",
+   "model": "gradient_boosting",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 1.7150395778364131,
+   "gain_pct": 1.4511873350923497,
+   "n_levels": 3
+  },
+  {
+   "dataset": "digits",
+   "model": "logreg",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "digits",
+   "model": "svm",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "digits",
+   "model": "random_forest",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "digits",
+   "model": "gradient_boosting",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "autoMpg",
+   "model": "logreg",
+   "factor": "encoding",
+   "task": "regression",
+   "spread_pct": 10.961357295889782,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "autoMpg",
+   "model": "svm",
+   "factor": "encoding",
+   "task": "regression",
+   "spread_pct": 0.464593959497062,
+   "gain_pct": 0.464593959497062,
+   "n_levels": 3
+  },
+  {
+   "dataset": "autoMpg",
+   "model": "random_forest",
+   "factor": "encoding",
+   "task": "regression",
+   "spread_pct": 14.823392743708354,
+   "gain_pct": 14.823392743708354,
+   "n_levels": 3
+  },
+  {
+   "dataset": "autoMpg",
+   "model": "gradient_boosting",
+   "factor": "encoding",
+   "task": "regression",
+   "spread_pct": 11.104793672050755,
+   "gain_pct": 11.104793672050755,
+   "n_levels": 3
+  },
+  {
+   "dataset": "diabetes",
+   "model": "logreg",
+   "factor": "encoding",
+   "task": "regression",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "diabetes",
+   "model": "svm",
+   "factor": "encoding",
+   "task": "regression",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "diabetes",
+   "model": "random_forest",
+   "factor": "encoding",
+   "task": "regression",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "diabetes",
+   "model": "gradient_boosting",
+   "factor": "encoding",
+   "task": "regression",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "energy-efficiency",
+   "model": "logreg",
+   "factor": "encoding",
+   "task": "regression",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "energy-efficiency",
+   "model": "svm",
+   "factor": "encoding",
+   "task": "regression",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "energy-efficiency",
+   "model": "random_forest",
+   "factor": "encoding",
+   "task": "regression",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "energy-efficiency",
+   "model": "gradient_boosting",
+   "factor": "encoding",
+   "task": "regression",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "concrete",
+   "model": "logreg",
+   "factor": "encoding",
+   "task": "regression",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "concrete",
+   "model": "svm",
+   "factor": "encoding",
+   "task": "regression",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "concrete",
+   "model": "random_forest",
+   "factor": "encoding",
+   "task": "regression",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "concrete",
+   "model": "gradient_boosting",
+   "factor": "encoding",
+   "task": "regression",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "abalone",
+   "model": "logreg",
+   "factor": "encoding",
+   "task": "regression",
+   "spread_pct": 1.143992615554786,
+   "gain_pct": 0.004608501057924182,
+   "n_levels": 3
+  },
+  {
+   "dataset": "abalone",
+   "model": "svm",
+   "factor": "encoding",
+   "task": "regression",
+   "spread_pct": 2.8709844415522023,
+   "gain_pct": 2.030105351518163,
+   "n_levels": 3
+  },
+  {
+   "dataset": "abalone",
+   "model": "random_forest",
+   "factor": "encoding",
+   "task": "regression",
+   "spread_pct": 0.727722369944124,
+   "gain_pct": 0.607652081761656,
+   "n_levels": 3
+  },
+  {
+   "dataset": "abalone",
+   "model": "gradient_boosting",
+   "factor": "encoding",
+   "task": "regression",
+   "spread_pct": 0.47265968549006415,
+   "gain_pct": 0.39022820723589446,
+   "n_levels": 3
+  },
+  {
+   "dataset": "cpu_small",
+   "model": "logreg",
+   "factor": "encoding",
+   "task": "regression",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "cpu_small",
+   "model": "svm",
+   "factor": "encoding",
+   "task": "regression",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "cpu_small",
+   "model": "random_forest",
+   "factor": "encoding",
+   "task": "regression",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "cpu_small",
+   "model": "gradient_boosting",
+   "factor": "encoding",
+   "task": "regression",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "kin8nm",
+   "model": "logreg",
+   "factor": "encoding",
+   "task": "regression",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "kin8nm",
+   "model": "svm",
+   "factor": "encoding",
+   "task": "regression",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "kin8nm",
+   "model": "random_forest",
+   "factor": "encoding",
+   "task": "regression",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "kin8nm",
+   "model": "gradient_boosting",
+   "factor": "encoding",
+   "task": "regression",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "iris",
+   "model": "logreg",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "iris",
+   "model": "svm",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 1.3793788346969604,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "iris",
+   "model": "random_forest",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 1.398671817717426,
+   "gain_pct": 1.398671817717426,
+   "n_levels": 5
+  },
+  {
+   "dataset": "iris",
+   "model": "gradient_boosting",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 0.6944791666666644,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "wine",
+   "model": "logreg",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 0.6502237925986143,
+   "gain_pct": 0.03424435177640912,
+   "n_levels": 5
+  },
+  {
+   "dataset": "wine",
+   "model": "svm",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 0.8172254350566874,
+   "gain_pct": 0.8172254350566874,
+   "n_levels": 5
+  },
+  {
+   "dataset": "wine",
+   "model": "random_forest",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 2.858034867130465,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "wine",
+   "model": "gradient_boosting",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 1.823890960362149,
+   "gain_pct": 1.7894580555622899,
+   "n_levels": 5
+  },
+  {
+   "dataset": "sonar",
+   "model": "logreg",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 4.985868302589542,
+   "gain_pct": 1.9755401785361528,
+   "n_levels": 5
+  },
+  {
+   "dataset": "sonar",
+   "model": "svm",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 6.923549558647287,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "sonar",
+   "model": "random_forest",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 7.574115930589938,
+   "gain_pct": 1.2244824740788576,
+   "n_levels": 5
+  },
+  {
+   "dataset": "sonar",
+   "model": "gradient_boosting",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 4.63912132004056,
+   "gain_pct": 2.9208747830542356,
+   "n_levels": 5
+  },
+  {
+   "dataset": "heart-c",
+   "model": "logreg",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 3.224552578025449,
+   "gain_pct": 0.3963084121036854,
+   "n_levels": 5
+  },
+  {
+   "dataset": "heart-c",
+   "model": "svm",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 1.058830573291439,
+   "gain_pct": 1.0235208688029516,
+   "n_levels": 5
+  },
+  {
+   "dataset": "heart-c",
+   "model": "random_forest",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 2.822443292950819,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "heart-c",
+   "model": "gradient_boosting",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 2.165515296771468,
+   "gain_pct": 2.165515296771468,
+   "n_levels": 5
+  },
+  {
+   "dataset": "ionosphere",
+   "model": "logreg",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 3.640426115994644,
+   "gain_pct": 0.9928961362533373,
+   "n_levels": 5
+  },
+  {
+   "dataset": "ionosphere",
+   "model": "svm",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 1.5370162518202994,
+   "gain_pct": 1.5370162518202994,
+   "n_levels": 5
+  },
+  {
+   "dataset": "ionosphere",
+   "model": "random_forest",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 2.1313108294469854,
+   "gain_pct": 0.5943191434957067,
+   "n_levels": 5
+  },
+  {
+   "dataset": "ionosphere",
+   "model": "gradient_boosting",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 4.627631029109893,
+   "gain_pct": 1.2254470576421121,
+   "n_levels": 5
+  },
+  {
+   "dataset": "breast_cancer",
+   "model": "logreg",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 1.3023728464814652,
+   "gain_pct": 0.003254357427126355,
+   "n_levels": 5
+  },
+  {
+   "dataset": "breast_cancer",
+   "model": "svm",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 0.1941963047217484,
+   "gain_pct": 0.19082370783302308,
+   "n_levels": 5
+  },
+  {
+   "dataset": "breast_cancer",
+   "model": "random_forest",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 2.1885659736294123,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "breast_cancer",
+   "model": "gradient_boosting",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 2.9265273428966685,
+   "gain_pct": 0.3649187046842284,
+   "n_levels": 5
+  },
+  {
+   "dataset": "wdbc",
+   "model": "logreg",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 1.4805259854368027,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "wdbc",
+   "model": "svm",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 0.1941963047217484,
+   "gain_pct": 0.19082370783302308,
+   "n_levels": 5
+  },
+  {
+   "dataset": "wdbc",
+   "model": "random_forest",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 2.370471409751577,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "wdbc",
+   "model": "gradient_boosting",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 2.9265273428966685,
+   "gain_pct": 0.3649187046842284,
+   "n_levels": 5
+  },
+  {
+   "dataset": "credit-approval",
+   "model": "logreg",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 1.4193486915034261,
+   "gain_pct": 1.0618099339302747,
+   "n_levels": 5
+  },
+  {
+   "dataset": "credit-approval",
+   "model": "svm",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "credit-approval",
+   "model": "random_forest",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 0.5296506830370659,
+   "gain_pct": 0.1791516178160069,
+   "n_levels": 5
+  },
+  {
+   "dataset": "credit-approval",
+   "model": "gradient_boosting",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 0.8891842690785043,
+   "gain_pct": 0.5361920998641834,
+   "n_levels": 5
+  },
+  {
+   "dataset": "pima",
+   "model": "logreg",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 1.3545931005710425,
+   "gain_pct": 0.5079398190399221,
+   "n_levels": 5
+  },
+  {
+   "dataset": "pima",
+   "model": "svm",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 1.3776314661001898,
+   "gain_pct": 0.6854511508850251,
+   "n_levels": 5
+  },
+  {
+   "dataset": "pima",
+   "model": "random_forest",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 4.55542110107873,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "pima",
+   "model": "gradient_boosting",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 1.5482428745192232,
+   "gain_pct": 1.020151878759991,
+   "n_levels": 5
+  },
+  {
+   "dataset": "credit-g",
+   "model": "logreg",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 3.7483266398929085,
+   "gain_pct": 0.13386880856760386,
+   "n_levels": 5
+  },
+  {
+   "dataset": "credit-g",
+   "model": "svm",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "credit-g",
+   "model": "random_forest",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 2.720207253886013,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "credit-g",
+   "model": "gradient_boosting",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 1.3192612137203177,
+   "gain_pct": 1.187335092348286,
+   "n_levels": 5
+  },
+  {
+   "dataset": "digits",
+   "model": "logreg",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 2.077563474489018,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "digits",
+   "model": "svm",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 0.6189912293564181,
+   "gain_pct": 0.22571286128467233,
+   "n_levels": 5
+  },
+  {
+   "dataset": "digits",
+   "model": "random_forest",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 1.1922953110929038,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "digits",
+   "model": "gradient_boosting",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 0.7470843788351518,
+   "gain_pct": 0.05738863147724013,
+   "n_levels": 5
+  },
+  {
+   "dataset": "autoMpg",
+   "model": "logreg",
+   "factor": "selection",
+   "task": "regression",
+   "spread_pct": 42.53624342838936,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "autoMpg",
+   "model": "svm",
+   "factor": "selection",
+   "task": "regression",
+   "spread_pct": 1.430762767025455,
+   "gain_pct": 1.430762767025455,
+   "n_levels": 5
+  },
+  {
+   "dataset": "autoMpg",
+   "model": "random_forest",
+   "factor": "selection",
+   "task": "regression",
+   "spread_pct": 21.091685124058163,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "autoMpg",
+   "model": "gradient_boosting",
+   "factor": "selection",
+   "task": "regression",
+   "spread_pct": 21.595251807136375,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "diabetes",
+   "model": "logreg",
+   "factor": "selection",
+   "task": "regression",
+   "spread_pct": 4.847900183371513,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "diabetes",
+   "model": "svm",
+   "factor": "selection",
+   "task": "regression",
+   "spread_pct": 6.3281095006599815,
+   "gain_pct": 6.3281095006599815,
+   "n_levels": 5
+  },
+  {
+   "dataset": "diabetes",
+   "model": "random_forest",
+   "factor": "selection",
+   "task": "regression",
+   "spread_pct": 6.561619733322717,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "diabetes",
+   "model": "gradient_boosting",
+   "factor": "selection",
+   "task": "regression",
+   "spread_pct": 5.012077348221683,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "energy-efficiency",
+   "model": "logreg",
+   "factor": "selection",
+   "task": "regression",
+   "spread_pct": 54.35824408126357,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "energy-efficiency",
+   "model": "svm",
+   "factor": "selection",
+   "task": "regression",
+   "spread_pct": 30.182809649149053,
+   "gain_pct": 9.183684533245607,
+   "n_levels": 5
+  },
+  {
+   "dataset": "energy-efficiency",
+   "model": "random_forest",
+   "factor": "selection",
+   "task": "regression",
+   "spread_pct": 570.3990499019015,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "energy-efficiency",
+   "model": "gradient_boosting",
+   "factor": "selection",
+   "task": "regression",
+   "spread_pct": 560.5397540377621,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "concrete",
+   "model": "logreg",
+   "factor": "selection",
+   "task": "regression",
+   "spread_pct": 15.412298288177874,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "concrete",
+   "model": "svm",
+   "factor": "selection",
+   "task": "regression",
+   "spread_pct": 25.38481887363371,
+   "gain_pct": 25.38481887363371,
+   "n_levels": 5
+  },
+  {
+   "dataset": "concrete",
+   "model": "random_forest",
+   "factor": "selection",
+   "task": "regression",
+   "spread_pct": 31.111753684313268,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "concrete",
+   "model": "gradient_boosting",
+   "factor": "selection",
+   "task": "regression",
+   "spread_pct": 33.90914872003808,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "abalone",
+   "model": "logreg",
+   "factor": "selection",
+   "task": "regression",
+   "spread_pct": 43.141669388845,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "abalone",
+   "model": "svm",
+   "factor": "selection",
+   "task": "regression",
+   "spread_pct": 43.98137911585225,
+   "gain_pct": 2.5006145615561155,
+   "n_levels": 5
+  },
+  {
+   "dataset": "abalone",
+   "model": "random_forest",
+   "factor": "selection",
+   "task": "regression",
+   "spread_pct": 45.476885665995226,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "abalone",
+   "model": "gradient_boosting",
+   "factor": "selection",
+   "task": "regression",
+   "spread_pct": 46.88176739023702,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "cpu_small",
+   "model": "logreg",
+   "factor": "selection",
+   "task": "regression",
+   "spread_pct": 25.989116714013427,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "cpu_small",
+   "model": "svm",
+   "factor": "selection",
+   "task": "regression",
+   "spread_pct": 15.618259156025571,
+   "gain_pct": 1.3040493430448912,
+   "n_levels": 5
+  },
+  {
+   "dataset": "cpu_small",
+   "model": "random_forest",
+   "factor": "selection",
+   "task": "regression",
+   "spread_pct": 10.047263989853384,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "cpu_small",
+   "model": "gradient_boosting",
+   "factor": "selection",
+   "task": "regression",
+   "spread_pct": 9.083617773454009,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "kin8nm",
+   "model": "logreg",
+   "factor": "selection",
+   "task": "regression",
+   "spread_pct": 30.16411633286935,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "kin8nm",
+   "model": "svm",
+   "factor": "selection",
+   "task": "regression",
+   "spread_pct": 228.50096638971866,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "kin8nm",
+   "model": "random_forest",
+   "factor": "selection",
+   "task": "regression",
+   "spread_pct": 128.43401141603584,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "kin8nm",
+   "model": "gradient_boosting",
+   "factor": "selection",
+   "task": "regression",
+   "spread_pct": 49.52203960080931,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "iris",
+   "model": "logreg",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 1.3792753864567673,
+   "gain_pct": 0.6895859691082813,
+   "n_levels": 4
+  },
+  {
+   "dataset": "iris",
+   "model": "svm",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 0.6895859691082813,
+   "gain_pct": 0.6895859691082813,
+   "n_levels": 4
+  },
+  {
+   "dataset": "iris",
+   "model": "random_forest",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 0.6993359088587071,
+   "gain_pct": 0.6993359088587071,
+   "n_levels": 4
+  },
+  {
+   "dataset": "iris",
+   "model": "gradient_boosting",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 2.7778124999999996,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "wine",
+   "model": "logreg",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 0.5818398118340945,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "wine",
+   "model": "svm",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 21.34613432508655,
+   "gain_pct": 21.34613432508655,
+   "n_levels": 4
+  },
+  {
+   "dataset": "wine",
+   "model": "random_forest",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "wine",
+   "model": "gradient_boosting",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 1.7549198513593582,
+   "gain_pct": 1.1699816673739258,
+   "n_levels": 4
+  },
+  {
+   "dataset": "sonar",
+   "model": "logreg",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 4.452735859741912,
+   "gain_pct": 2.5398861562046444,
+   "n_levels": 4
+  },
+  {
+   "dataset": "sonar",
+   "model": "svm",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 14.571270402297092,
+   "gain_pct": 8.777535116588895,
+   "n_levels": 4
+  },
+  {
+   "dataset": "sonar",
+   "model": "random_forest",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 5.153852593310136,
+   "gain_pct": 5.153852593310136,
+   "n_levels": 4
+  },
+  {
+   "dataset": "sonar",
+   "model": "gradient_boosting",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 2.892249368256344,
+   "gain_pct": 2.892249368256344,
+   "n_levels": 4
+  },
+  {
+   "dataset": "heart-c",
+   "model": "logreg",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 1.1886874988113136,
+   "gain_pct": 0.765158142984845,
+   "n_levels": 4
+  },
+  {
+   "dataset": "heart-c",
+   "model": "svm",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 8.275980650281932,
+   "gain_pct": 8.275980650281932,
+   "n_levels": 4
+  },
+  {
+   "dataset": "heart-c",
+   "model": "random_forest",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 0.7747907150294023,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "heart-c",
+   "model": "gradient_boosting",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 2.6221755123489237,
+   "gain_pct": 2.194993783884236,
+   "n_levels": 4
+  },
+  {
+   "dataset": "ionosphere",
+   "model": "logreg",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 2.3257537937273414,
+   "gain_pct": 1.654749673648525,
+   "n_levels": 4
+  },
+  {
+   "dataset": "ionosphere",
+   "model": "svm",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 1.8258019715322944,
+   "gain_pct": 1.2228721713925617,
+   "n_levels": 4
+  },
+  {
+   "dataset": "ionosphere",
+   "model": "random_forest",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 0.3057721173916747,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "ionosphere",
+   "model": "gradient_boosting",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 0.31702463311633805,
+   "gain_pct": 0.3084943381516901,
+   "n_levels": 4
+  },
+  {
+   "dataset": "breast_cancer",
+   "model": "logreg",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 0.736639550520755,
+   "gain_pct": 0.736639550520755,
+   "n_levels": 4
+  },
+  {
+   "dataset": "breast_cancer",
+   "model": "svm",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 3.053832086016444,
+   "gain_pct": 3.053832086016444,
+   "n_levels": 4
+  },
+  {
+   "dataset": "breast_cancer",
+   "model": "random_forest",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 0.7306275893020918,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "breast_cancer",
+   "model": "gradient_boosting",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 1.104742486814875,
+   "gain_pct": 1.0949641634852478,
+   "n_levels": 4
+  },
+  {
+   "dataset": "wdbc",
+   "model": "logreg",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 0.7352856422825449,
+   "gain_pct": 0.5514904282931479,
+   "n_levels": 4
+  },
+  {
+   "dataset": "wdbc",
+   "model": "svm",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 3.053832086016444,
+   "gain_pct": 3.053832086016444,
+   "n_levels": 4
+  },
+  {
+   "dataset": "wdbc",
+   "model": "random_forest",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 0.7306275893020918,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "wdbc",
+   "model": "gradient_boosting",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 1.4632116590902022,
+   "gain_pct": 0.9091760202224017,
+   "n_levels": 4
+  },
+  {
+   "dataset": "credit-approval",
+   "model": "logreg",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 0.36021129297262533,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "credit-approval",
+   "model": "svm",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 8.154939268969578,
+   "gain_pct": 8.154939268969578,
+   "n_levels": 4
+  },
+  {
+   "dataset": "credit-approval",
+   "model": "random_forest",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 0.5324050961232852,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "credit-approval",
+   "model": "gradient_boosting",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 1.058860924090499,
+   "gain_pct": 0.3502181639552665,
+   "n_levels": 4
+  },
+  {
+   "dataset": "pima",
+   "model": "logreg",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 0.5079398190399221,
+   "gain_pct": 0.33858308779431573,
+   "n_levels": 4
+  },
+  {
+   "dataset": "pima",
+   "model": "svm",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 2.074297890868786,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "pima",
+   "model": "random_forest",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 1.0051764973574493,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "pima",
+   "model": "gradient_boosting",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 2.7481508267858903,
+   "gain_pct": 1.2043788421710153,
+   "n_levels": 4
+  },
+  {
+   "dataset": "credit-g",
+   "model": "logreg",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 1.0709504685408309,
+   "gain_pct": 1.0709504685408309,
+   "n_levels": 4
+  },
+  {
+   "dataset": "credit-g",
+   "model": "svm",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 1.4084507042253533,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "credit-g",
+   "model": "random_forest",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 1.0362694300518143,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "credit-g",
+   "model": "gradient_boosting",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 0.9234828496042224,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "digits",
+   "model": "logreg",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 0.5181738901674334,
+   "gain_pct": 0.5181738901674334,
+   "n_levels": 4
+  },
+  {
+   "dataset": "digits",
+   "model": "svm",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 0.22530835794903628,
+   "gain_pct": 0.16948689763131944,
+   "n_levels": 4
+  },
+  {
+   "dataset": "digits",
+   "model": "random_forest",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 0.6244677253075447,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "digits",
+   "model": "gradient_boosting",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 0.5170137681106991,
+   "gain_pct": 0.3443317888634981,
+   "n_levels": 4
+  },
+  {
+   "dataset": "autoMpg",
+   "model": "svm",
+   "factor": "tuning",
+   "task": "regression",
+   "spread_pct": 27.494566636389393,
+   "gain_pct": 5.699768507452255,
+   "n_levels": 4
+  },
+  {
+   "dataset": "autoMpg",
+   "model": "random_forest",
+   "factor": "tuning",
+   "task": "regression",
+   "spread_pct": 1.9196005251092,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "autoMpg",
+   "model": "gradient_boosting",
+   "factor": "tuning",
+   "task": "regression",
+   "spread_pct": 2.269561229423219,
+   "gain_pct": 2.269561229423219,
+   "n_levels": 4
+  },
+  {
+   "dataset": "diabetes",
+   "model": "svm",
+   "factor": "tuning",
+   "task": "regression",
+   "spread_pct": 31.514206127718094,
+   "gain_pct": 20.62925255534388,
+   "n_levels": 4
+  },
+  {
+   "dataset": "diabetes",
+   "model": "random_forest",
+   "factor": "tuning",
+   "task": "regression",
+   "spread_pct": 1.898134953419759,
+   "gain_pct": 1.898134953419759,
+   "n_levels": 4
+  },
+  {
+   "dataset": "diabetes",
+   "model": "gradient_boosting",
+   "factor": "tuning",
+   "task": "regression",
+   "spread_pct": 2.647648717533256,
+   "gain_pct": 1.9915903837145041,
+   "n_levels": 4
+  },
+  {
+   "dataset": "energy-efficiency",
+   "model": "svm",
+   "factor": "tuning",
+   "task": "regression",
+   "spread_pct": 59.74772305805641,
+   "gain_pct": 59.74772305805641,
+   "n_levels": 4
+  },
+  {
+   "dataset": "energy-efficiency",
+   "model": "random_forest",
+   "factor": "tuning",
+   "task": "regression",
+   "spread_pct": 15.59418108417331,
+   "gain_pct": 0.3271400046112832,
+   "n_levels": 4
+  },
+  {
+   "dataset": "energy-efficiency",
+   "model": "gradient_boosting",
+   "factor": "tuning",
+   "task": "regression",
+   "spread_pct": 31.64015540321906,
+   "gain_pct": 31.64015540321906,
+   "n_levels": 4
+  },
+  {
+   "dataset": "concrete",
+   "model": "svm",
+   "factor": "tuning",
+   "task": "regression",
+   "spread_pct": 48.30157572819763,
+   "gain_pct": 48.30157572819763,
+   "n_levels": 4
+  },
+  {
+   "dataset": "concrete",
+   "model": "random_forest",
+   "factor": "tuning",
+   "task": "regression",
+   "spread_pct": 5.245435853922598,
+   "gain_pct": 0.8939391259673702,
+   "n_levels": 4
+  },
+  {
+   "dataset": "concrete",
+   "model": "gradient_boosting",
+   "factor": "tuning",
+   "task": "regression",
+   "spread_pct": 22.067382395032823,
+   "gain_pct": 22.067382395032823,
+   "n_levels": 4
+  },
+  {
+   "dataset": "bodyfat",
+   "model": "svm",
+   "factor": "tuning",
+   "task": "regression",
+   "spread_pct": 25.776394708571015,
+   "gain_pct": 25.776394708571015,
+   "n_levels": 4
+  },
+  {
+   "dataset": "bodyfat",
+   "model": "random_forest",
+   "factor": "tuning",
+   "task": "regression",
+   "spread_pct": 5.145852139335471,
+   "gain_pct": 3.752956701001782,
+   "n_levels": 4
+  },
+  {
+   "dataset": "bodyfat",
+   "model": "gradient_boosting",
+   "factor": "tuning",
+   "task": "regression",
+   "spread_pct": 3.651389281587529,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "stock",
+   "model": "svm",
+   "factor": "tuning",
+   "task": "regression",
+   "spread_pct": 62.723520754816754,
+   "gain_pct": 62.723520754816754,
+   "n_levels": 4
+  },
+  {
+   "dataset": "stock",
+   "model": "random_forest",
+   "factor": "tuning",
+   "task": "regression",
+   "spread_pct": 2.734061452662726,
+   "gain_pct": 0.5064626613763182,
+   "n_levels": 4
+  },
+  {
+   "dataset": "stock",
+   "model": "gradient_boosting",
+   "factor": "tuning",
+   "task": "regression",
+   "spread_pct": 16.281537461627174,
+   "gain_pct": 16.281537461627174,
+   "n_levels": 4
+  },
+  {
+   "dataset": "airfoil_self_noise",
+   "model": "svm",
+   "factor": "tuning",
+   "task": "regression",
+   "spread_pct": 3.9952833427195986,
+   "gain_pct": 3.9952833427195986,
+   "n_levels": 4
+  },
+  {
+   "dataset": "airfoil_self_noise",
+   "model": "random_forest",
+   "factor": "tuning",
+   "task": "regression",
+   "spread_pct": 13.255164051630855,
+   "gain_pct": 0.600882574586492,
+   "n_levels": 4
+  },
+  {
+   "dataset": "airfoil_self_noise",
+   "model": "gradient_boosting",
+   "factor": "tuning",
+   "task": "regression",
+   "spread_pct": 42.470895768436236,
+   "gain_pct": 42.470895768436236,
+   "n_levels": 4
+  }
+ ],
+ "characteristics": {
+  "abalone": {
+   "task": "regression",
+   "n_rows": 4177,
+   "n_features": 8,
+   "n_numeric": 7,
+   "n_categorical": 1,
+   "cat_fraction": 0.125,
+   "class_balance": null,
+   "mean_abs_correlation": 0.920162,
+   "missing_pct": 0.0
+  },
+  "adult": {
+   "task": "classification",
+   "n_rows": 48842,
+   "n_features": 14,
+   "n_numeric": 6,
+   "n_categorical": 8,
+   "cat_fraction": 0.5714285714285714,
+   "class_balance": 0.314547,
+   "mean_abs_correlation": 0.059435,
+   "missing_pct": 0.945468
+  },
+  "airfoil_self_noise": {
+   "task": "regression",
+   "n_rows": 1503,
+   "n_features": 5,
+   "n_numeric": 5,
+   "n_categorical": 0,
+   "cat_fraction": 0.0,
+   "class_balance": null,
+   "mean_abs_correlation": 0.224516,
+   "missing_pct": 0.0
+  },
+  "autoMpg": {
+   "task": "regression",
+   "n_rows": 398,
+   "n_features": 7,
+   "n_numeric": 4,
+   "n_categorical": 3,
+   "cat_fraction": 0.42857142857142855,
+   "class_balance": null,
+   "mean_abs_correlation": 0.724159,
+   "missing_pct": 0.215363
+  },
+  "bank-marketing": {
+   "task": "classification",
+   "n_rows": 45211,
+   "n_features": 16,
+   "n_numeric": 7,
+   "n_categorical": 9,
+   "cat_fraction": 0.5625,
+   "class_balance": 0.132483,
+   "mean_abs_correlation": 0.057295,
+   "missing_pct": 0.0
+  },
+  "bodyfat": {
+   "task": "regression",
+   "n_rows": 252,
+   "n_features": 14,
+   "n_numeric": 14,
+   "n_categorical": 0,
+   "cat_fraction": 0.0,
+   "class_balance": null,
+   "mean_abs_correlation": 0.531924,
+   "missing_pct": 0.0
+  },
+  "breast_cancer": {
+   "task": "classification",
+   "n_rows": 569,
+   "n_features": 30,
+   "n_numeric": 30,
+   "n_categorical": 0,
+   "cat_fraction": 0.0,
+   "class_balance": 0.593838,
+   "mean_abs_correlation": 0.408646,
+   "missing_pct": 0.0
+  },
+  "colic": {
+   "task": "classification",
+   "n_rows": 368,
+   "n_features": 26,
+   "n_numeric": 7,
+   "n_categorical": 19,
+   "cat_fraction": 0.7307692307692307,
+   "class_balance": 0.586207,
+   "mean_abs_correlation": 0.18894,
+   "missing_pct": 20.14005
+  },
+  "concrete": {
+   "task": "regression",
+   "n_rows": 1030,
+   "n_features": 8,
+   "n_numeric": 8,
+   "n_categorical": 0,
+   "cat_fraction": 0.0,
+   "class_balance": null,
+   "mean_abs_correlation": 0.217553,
+   "missing_pct": 0.0
+  },
+  "cpu_small": {
+   "task": "regression",
+   "n_rows": 8192,
+   "n_features": 12,
+   "n_numeric": 12,
+   "n_categorical": 0,
+   "cat_fraction": 0.0,
+   "class_balance": null,
+   "mean_abs_correlation": 0.231082,
+   "missing_pct": 0.0
+  },
+  "credit-approval": {
+   "task": "classification",
+   "n_rows": 690,
+   "n_features": 15,
+   "n_numeric": 6,
+   "n_categorical": 9,
+   "cat_fraction": 0.6,
+   "class_balance": 0.801567,
+   "mean_abs_correlation": 0.166753,
+   "missing_pct": 0.647343
+  },
+  "credit-g": {
+   "task": "classification",
+   "n_rows": 1000,
+   "n_features": 20,
+   "n_numeric": 7,
+   "n_categorical": 13,
+   "cat_fraction": 0.65,
+   "class_balance": 0.428571,
+   "mean_abs_correlation": 0.116071,
+   "missing_pct": 0.0
+  },
+  "diabetes": {
+   "task": "regression",
+   "n_rows": 442,
+   "n_features": 10,
+   "n_numeric": 10,
+   "n_categorical": 0,
+   "cat_fraction": 0.0,
+   "class_balance": null,
+   "mean_abs_correlation": 0.339705,
+   "missing_pct": 0.0
+  },
+  "digits": {
+   "task": "classification",
+   "n_rows": 1797,
+   "n_features": 64,
+   "n_numeric": 64,
+   "n_categorical": 0,
+   "cat_fraction": 0.0,
+   "class_balance": 0.95082,
+   "mean_abs_correlation": 0.129639,
+   "missing_pct": 0.0
+  },
+  "energy-efficiency": {
+   "task": "regression",
+   "n_rows": 768,
+   "n_features": 8,
+   "n_numeric": 8,
+   "n_categorical": 0,
+   "cat_fraction": 0.0,
+   "class_balance": null,
+   "mean_abs_correlation": 0.256388,
+   "missing_pct": 0.0
+  },
+  "heart-c": {
+   "task": "classification",
+   "n_rows": 303,
+   "n_features": 13,
+   "n_numeric": 6,
+   "n_categorical": 7,
+   "cat_fraction": 0.5384615384615384,
+   "class_balance": 0.836364,
+   "mean_abs_correlation": 0.201328,
+   "missing_pct": 0.17771
+  },
+  "house_16H": {
+   "task": "regression",
+   "n_rows": 22784,
+   "n_features": 16,
+   "n_numeric": 16,
+   "n_categorical": 0,
+   "cat_fraction": 0.0,
+   "class_balance": null,
+   "mean_abs_correlation": 0.1488,
+   "missing_pct": 0.0
+  },
+  "ionosphere": {
+   "task": "classification",
+   "n_rows": 351,
+   "n_features": 34,
+   "n_numeric": 34,
+   "n_categorical": 0,
+   "cat_fraction": 0.0,
+   "class_balance": 0.56,
+   "mean_abs_correlation": 0.243375,
+   "missing_pct": 0.0
+  },
+  "iris": {
+   "task": "classification",
+   "n_rows": 150,
+   "n_features": 4,
+   "n_numeric": 4,
+   "n_categorical": 0,
+   "cat_fraction": 0.0,
+   "class_balance": 1.0,
+   "mean_abs_correlation": 0.641515,
+   "missing_pct": 0.0
+  },
+  "kin8nm": {
+   "task": "regression",
+   "n_rows": 8192,
+   "n_features": 8,
+   "n_numeric": 8,
+   "n_categorical": 0,
+   "cat_fraction": 0.0,
+   "class_balance": null,
+   "mean_abs_correlation": 0.012849,
+   "missing_pct": 0.0
+  },
+  "pima": {
+   "task": "classification",
+   "n_rows": 768,
+   "n_features": 8,
+   "n_numeric": 8,
+   "n_categorical": 0,
+   "cat_fraction": 0.0,
+   "class_balance": 0.536,
+   "mean_abs_correlation": 0.181182,
+   "missing_pct": 0.0
+  },
+  "sonar": {
+   "task": "classification",
+   "n_rows": 208,
+   "n_features": 60,
+   "n_numeric": 60,
+   "n_categorical": 0,
+   "cat_fraction": 0.0,
+   "class_balance": 0.873874,
+   "mean_abs_correlation": 0.238608,
+   "missing_pct": 0.0
+  },
+  "stock": {
+   "task": "regression",
+   "n_rows": 950,
+   "n_features": 9,
+   "n_numeric": 9,
+   "n_categorical": 0,
+   "cat_fraction": 0.0,
+   "class_balance": null,
+   "mean_abs_correlation": 0.429007,
+   "missing_pct": 0.0
+  },
+  "wdbc": {
+   "task": "classification",
+   "n_rows": 569,
+   "n_features": 30,
+   "n_numeric": 30,
+   "n_categorical": 0,
+   "cat_fraction": 0.0,
+   "class_balance": 0.593838,
+   "mean_abs_correlation": 0.408646,
+   "missing_pct": 0.0
+  },
+  "wine": {
+   "task": "classification",
+   "n_rows": 178,
+   "n_features": 13,
+   "n_numeric": 13,
+   "n_categorical": 0,
+   "cat_fraction": 0.0,
+   "class_balance": 0.676056,
+   "mean_abs_correlation": 0.32303,
+   "missing_pct": 0.0
+  }
+ },
+ "sensitivity": [
+  {
+   "factor": "scaling",
+   "model": "logreg",
+   "n": 18,
+   "median": 0.6601128762521773,
+   "p90": 3.732828266617872,
+   "max_dataset": "sonar",
+   "max_spread": 7.588576636471629
+  },
+  {
+   "factor": "scaling",
+   "model": "svm",
+   "n": 18,
+   "median": 6.3053418670914,
+   "p90": 45.584883632019206,
+   "max_dataset": "energy-efficiency",
+   "max_spread": 50.775094966051505
+  },
+  {
+   "factor": "scaling",
+   "model": "random_forest",
+   "n": 18,
+   "median": 0.09776793857157984,
+   "p90": 0.4907090483661169,
+   "max_dataset": "energy-efficiency",
+   "max_spread": 1.1902327827346593
+  },
+  {
+   "factor": "scaling",
+   "model": "gradient_boosting",
+   "n": 18,
+   "median": 0.009504191812208794,
+   "p90": 0.37162425505021807,
+   "max_dataset": "iris",
+   "max_spread": 0.6944791666666644
+  },
+  {
+   "factor": "encoding",
+   "model": "logreg",
+   "n": 18,
+   "median": 0.0,
+   "p90": 2.4346299101258184,
+   "max_dataset": "autoMpg",
+   "max_spread": 10.961357295889782
+  },
+  {
+   "factor": "encoding",
+   "model": "svm",
+   "n": 18,
+   "median": 0.0,
+   "p90": 0.4787669300365289,
+   "max_dataset": "abalone",
+   "max_spread": 2.8709844415522023
+  },
+  {
+   "factor": "encoding",
+   "model": "random_forest",
+   "n": 18,
+   "median": 0.0,
+   "p90": 2.3563098939592106,
+   "max_dataset": "autoMpg",
+   "max_spread": 14.823392743708354
+  },
+  {
+   "factor": "encoding",
+   "model": "gradient_boosting",
+   "n": 18,
+   "median": 0.0,
+   "p90": 2.6236080782214417,
+   "max_dataset": "autoMpg",
+   "max_spread": 11.104793672050755
+  },
+  {
+   "factor": "selection",
+   "model": "logreg",
+   "n": 18,
+   "median": 3.694376377943776,
+   "p90": 42.717871216526056,
+   "max_dataset": "energy-efficiency",
+   "max_spread": 54.35824408126357
+  },
+  {
+   "factor": "selection",
+   "model": "svm",
+   "n": 18,
+   "median": 1.4050708008612078,
+   "p90": 34.322380489160025,
+   "max_dataset": "kin8nm",
+   "max_spread": 228.50096638971866
+  },
+  {
+   "factor": "selection",
+   "model": "random_forest",
+   "n": 18,
+   "median": 3.7067279841045977,
+   "p90": 70.36402339100746,
+   "max_dataset": "energy-efficiency",
+   "max_spread": 570.3990499019015
+  },
+  {
+   "factor": "selection",
+   "model": "gradient_boosting",
+   "n": 18,
+   "median": 3.777079186003281,
+   "p90": 47.67384905340871,
+   "max_dataset": "energy-efficiency",
+   "max_spread": 560.5397540377621
+  },
+  {
+   "factor": "tuning",
+   "model": "logreg",
+   "n": 11,
+   "median": 0.736639550520755,
+   "p90": 2.3257537937273414,
+   "max_dataset": "sonar",
+   "max_spread": 4.452735859741912
+  },
+  {
+   "factor": "tuning",
+   "model": "svm",
+   "n": 18,
+   "median": 8.215459959625754,
+   "p90": 51.73541992715528,
+   "max_dataset": "stock",
+   "max_spread": 62.723520754816754
+  },
+  {
+   "factor": "tuning",
+   "model": "random_forest",
+   "n": 18,
+   "median": 1.0207229637046318,
+   "p90": 7.64835431323508,
+   "max_dataset": "energy-efficiency",
+   "max_spread": 15.59418108417331
+  },
+  {
+   "factor": "tuning",
+   "model": "gradient_boosting",
+   "n": 18,
+   "median": 2.63491211494109,
+   "p90": 24.9392142974887,
+   "max_dataset": "airfoil_self_noise",
+   "max_spread": 42.470895768436236
+  }
+ ],
+ "correlations": [
+  {
+   "factor": "scaling",
+   "property": "n_rows",
+   "model": null,
+   "task": null,
+   "n": 72,
+   "rho": -0.1997306083285298,
+   "p": 0.09254858472416426
+  },
+  {
+   "factor": "scaling",
+   "property": "n_features",
+   "model": null,
+   "task": null,
+   "n": 72,
+   "rho": -0.04287382098071259,
+   "p": 0.7206471957880045
+  },
+  {
+   "factor": "scaling",
+   "property": "cat_fraction",
+   "model": null,
+   "task": null,
+   "n": 72,
+   "rho": 0.11370710179640274,
+   "p": 0.3415841542996672
+  },
+  {
+   "factor": "scaling",
+   "property": "missing_pct",
+   "model": null,
+   "task": null,
+   "n": 72,
+   "rho": 0.1485158279871539,
+   "p": 0.2131091772834896
+  },
+  {
+   "factor": "scaling",
+   "property": "mean_abs_correlation",
+   "model": null,
+   "task": null,
+   "n": 72,
+   "rho": 0.05940778372566841,
+   "p": 0.6201007189308747
+  },
+  {
+   "factor": "scaling",
+   "property": "class_balance",
+   "model": null,
+   "task": null,
+   "n": 44,
+   "rho": 0.09712523379121704,
+   "p": 0.530531783942449
+  },
+  {
+   "factor": "encoding",
+   "property": "n_rows",
+   "model": null,
+   "task": null,
+   "n": 72,
+   "rho": -0.003308492603982231,
+   "p": 0.9779953545046219
+  },
+  {
+   "factor": "encoding",
+   "property": "n_features",
+   "model": null,
+   "task": null,
+   "n": 72,
+   "rho": -0.1710171528032418,
+   "p": 0.15090643627922373
+  },
+  {
+   "factor": "encoding",
+   "property": "cat_fraction",
+   "model": null,
+   "task": null,
+   "n": 72,
+   "rho": 0.8827547039863791,
+   "p": 1.1652743871874086e-24
+  },
+  {
+   "factor": "encoding",
+   "property": "missing_pct",
+   "model": null,
+   "task": null,
+   "n": 72,
+   "rho": 0.6669956570079184,
+   "p": 1.5846597826481594e-10
+  },
+  {
+   "factor": "encoding",
+   "property": "mean_abs_correlation",
+   "model": null,
+   "task": null,
+   "n": 72,
+   "rho": 0.07050822341269374,
+   "p": 0.5561668543074494
+  },
+  {
+   "factor": "encoding",
+   "property": "class_balance",
+   "model": null,
+   "task": null,
+   "n": 44,
+   "rho": -0.10278762671826015,
+   "p": 0.5067225323955525
+  },
+  {
+   "factor": "selection",
+   "property": "n_rows",
+   "model": null,
+   "task": null,
+   "n": 72,
+   "rho": 0.4101490276540172,
+   "p": 0.0003460737631447563
+  },
+  {
+   "factor": "selection",
+   "property": "n_features",
+   "model": null,
+   "task": null,
+   "n": 72,
+   "rho": -0.40095185616588896,
+   "p": 0.000482460972616464
+  },
+  {
+   "factor": "selection",
+   "property": "cat_fraction",
+   "model": null,
+   "task": null,
+   "n": 72,
+   "rho": -0.13417199257245124,
+   "p": 0.26116090320576096
+  },
+  {
+   "factor": "selection",
+   "property": "missing_pct",
+   "model": null,
+   "task": null,
+   "n": 72,
+   "rho": -0.17825337414204592,
+   "p": 0.13411122260021247
+  },
+  {
+   "factor": "selection",
+   "property": "mean_abs_correlation",
+   "model": null,
+   "task": null,
+   "n": 72,
+   "rho": 0.10639448593602122,
+   "p": 0.37372612977838776
+  },
+  {
+   "factor": "selection",
+   "property": "class_balance",
+   "model": null,
+   "task": null,
+   "n": 44,
+   "rho": -0.1259596820567442,
+   "p": 0.4152319838809995
+  },
+  {
+   "factor": "tuning",
+   "property": "n_rows",
+   "model": null,
+   "task": null,
+   "n": 65,
+   "rho": 0.03738208024985401,
+   "p": 0.7675054169351565
+  },
+  {
+   "factor": "tuning",
+   "property": "n_features",
+   "model": null,
+   "task": null,
+   "n": 65,
+   "rho": -0.373638619066419,
+   "p": 0.0021709997134784728
+  },
+  {
+   "factor": "tuning",
+   "property": "cat_fraction",
+   "model": null,
+   "task": null,
+   "n": 65,
+   "rho": -0.14996165671813547,
+   "p": 0.2331331057748503
+  },
+  {
+   "factor": "tuning",
+   "property": "missing_pct",
+   "model": null,
+   "task": null,
+   "n": 65,
+   "rho": -0.05818188853564076,
+   "p": 0.6452534779253085
+  },
+  {
+   "factor": "tuning",
+   "property": "mean_abs_correlation",
+   "model": null,
+   "task": null,
+   "n": 65,
+   "rho": 0.24810607495045037,
+   "p": 0.04628772642093674
+  },
+  {
+   "factor": "tuning",
+   "property": "class_balance",
+   "model": null,
+   "task": null,
+   "n": 44,
+   "rho": 0.013898996227467087,
+   "p": 0.9286483143058624
+  }
+ ]
+}

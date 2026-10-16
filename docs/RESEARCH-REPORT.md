@@ -478,7 +478,12 @@ The system was built for one study but is not specific to it.
   `n_features`, `missing_pct`, `class_balance` and
   `mean_abs_correlation` per run, so "which data characteristics predict
   whether scaling helps?" is answerable from the existing 4,377 rows
-  without new experiments — a meta-analysis the data already supports.
+  without new experiments. **This has since been carried out — see
+  [META-ANALYSIS.md](META-ANALYSIS.md)** — and produced a factor x model
+  sensitivity map, a strong predictor of encoding sensitivity
+  (categorical fraction, rho = 0.88), a caught confound, and the
+  discovery that univariate filter selection can raise error sixfold on
+  specific datasets.
 
 ### 7.2 Methodological and pedagogical applications
 

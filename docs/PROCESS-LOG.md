@@ -2239,6 +2239,82 @@ With this, every factor in the five-component design now has coverage
 on the three large datasets (scaling: 4q; encoding: 4r; selection: 4u;
 tuning: this section), closing the large-dataset gap entirely.
 
+---
+
+## 4zb. The dataset-characteristic meta-analysis, carried out 2026-10-16
+
+The research report named this the highest-value next step because it
+needs no new compute: the engine stores dataset characteristics on every
+run, so "which properties of a dataset predict that a preprocessing
+choice will matter?" is answerable from the 4,377 rows already recorded.
+Written up in `docs/META-ANALYSIS.md`, with figures 7-9.
+
+281 (dataset, model, factor) cells. Response is the SPREAD across a
+factor's levels as a percentage of the baseline score, which makes
+datasets on different target scales comparable.
+
+### The sensitivity map
+
+| | scaling | encoding | selection | tuning |
+|---|---|---|---|---|
+| logreg | 0.66% | 0.00% | 3.69% | 0.74% |
+| svm | **6.31%** | 0.00% | 1.41% | **8.22%** |
+| random_forest | 0.10% | 0.00% | 3.71% | 1.02% |
+| gradient_boosting | 0.01% | 0.00% | 3.78% | 2.63% |
+
+This is probably the most directly useful table the programme has
+produced for an applied reader. SVM is the sensitive model; scaling is
+irrelevant to tree ensembles (0.01% median for gradient boosting);
+selection is the only factor that is consistently non-trivial for every
+model family.
+
+### Two corrections made while doing it
+
+**`missing_pct` is contaminated by the injection sweeps.** Reading it
+with `max()` over all runs returns the injected rate, so iris reads 30%
+when its natural rate is zero. It must be read from uninjected runs
+only. Corrected figure: 20 of the 25 registry datasets have 0.00%
+natural missingness. (The earlier reports' "15 of 19" is the imputation
+arm's 19 datasets and is also correct; both were re-verified.)
+
+**An apparently strong correlation was a confound and was discarded.**
+Natural missingness appeared to predict encoding sensitivity
+(rho = 0.667, p < 0.0001), which has no plausible mechanism. In this
+registry every dataset with missing values also has categorical features
+(rho = 0.748 across the 25 datasets). Partial correlations settle it:
+controlling for categorical fraction, the missingness effect collapses
+to rho = 0.123 (p = 0.305), while categorical fraction survives at
+rho = 0.780 (p < 0.0001). Reported as a confound, not a finding.
+
+### What it found
+
+- **cat_fraction predicts encoding sensitivity at rho = 0.883.**
+  Mechanistically obvious, and it serves as the sanity check that
+  validates the sensitivity measure before anything subtler is trusted.
+- **Univariate filter selection is a tail risk.** Median selection
+  spread is under 4%, but chi2 and mutual_info raise gradient boosting
+  RMSE on energy-efficiency from 0.467 to 3.08, a sixfold increase, by
+  discarding features the model needs jointly. RFE stays within 4% of no
+  selection. Checked directly against the raw per-level RMSE to confirm
+  it is a real effect and not a near-zero-baseline ratio artefact.
+- **A negative result on the house_16H mechanism.** The hypothesis that
+  feature-scale disparity predicts scaling sensitivity shows no
+  relationship for any model (all p > 0.25). The likely cause is that
+  `mean_abs_correlation` is the wrong proxy: it measures inter-feature
+  correlation, not scale disparity, and the record stores no
+  scale-ratio statistic. **Recommended instrumentation change: record
+  max(std)/median(std) per dataset**, which is a one-line addition and
+  makes the hypothesis testable on the next sweep.
+
+### Honest limits
+
+Cells are not independent (four models share each dataset, so effective
+n is nearer 18 than 72), and no multiple-comparison correction was
+applied across the 24 correlations tested, so roughly one false positive
+is expected. The two headline results are far beyond that threshold; the
+weakest (tuning vs mean_abs_correlation, p = 0.0463) is flagged as
+unconfirmed in the write-up.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
