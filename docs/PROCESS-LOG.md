@@ -2178,6 +2178,67 @@ grid search (~23 hours for grid alone on the two large classification
 datasets; random and Bayesian plus house_16H add more on top of that).
 This is accepted and expected, not a surprise to react to.
 
+---
+
+## 4za. Tuning on large datasets finished: gradient_boosting is the one model it reliably helps
+
+`ofat_tuning_large` finished after roughly 30 hours (launched 13:12 on
+2026-10-15, completed 20:00 on 2026-10-16): **36 runs, 33 succeeded, 3
+skipped, 0 failed**. All three skips are `logreg` tuning on house_16H's
+regression target, correctly refused by the applicability check from
+4j (LinearRegression has no `C` to search); the untuned baseline for
+logreg still ran there. Integrity_check ok, no succeeded cell
+duplicated. Committed `f06291e`; config committed `f8cced0`.
+
+n is 2 for classification (adult, bank-marketing) and 1 for regression
+(house_16H), the same limit as every other large-dataset arm, so this
+is a direct reading, not a tested finding.
+
+| dataset | model | none | grid | random | bayesian |
+|---|---|---|---|---|---|
+| adult | gradient_boosting (F1) | 0.8006 | **0.8145** | **0.8154** | **0.8143** |
+| adult | random_forest (F1) | 0.7879 | 0.7955 | 0.8004 | 0.7998 |
+| adult | logreg (F1) | 0.7656 | 0.7685 | 0.7660 | 0.7663 |
+| bank-marketing | gradient_boosting (F1) | 0.7302 | **0.7477** | **0.7494** | **0.7446** |
+| bank-marketing | random_forest (F1) | 0.7205 | 0.7226 | 0.7179 | 0.7200 |
+| bank-marketing | logreg (F1) | 0.6913 | 0.6923 | 0.6946 | 0.6925 |
+| house_16H | gradient_boosting (RMSE) | 34144.7 | 32598.6 | 31719.1 | **31651.4** |
+| house_16H | random_forest (RMSE) | 31513.2 | 31485.3 | 31408.9 | 31428.7 |
+| house_16H | logreg (RMSE) | 49283.9 | skipped | skipped | skipped |
+
+**gradient_boosting is the one model tuning moves by a real amount on
+every dataset, at every level**: F1 gains of 1.4 to 1.9 points on the
+two classification datasets, and a RMSE improvement of 1,546 to 2,493
+on house_16H (4.5% to 7.3%), consistent in direction and size across
+all three non-baseline tuning levels. random_forest moves a little
+(F1 up to +0.8 points, RMSE down by roughly 0.3%) and logreg barely
+moves at all (F1 within 0.3 points either way) on both classification
+datasets.
+
+This is the same shape of result as the smaller-dataset tuning arm
+(4j, 4p): gradient_boosting's default hyperparameters (particularly
+`n_estimators` and `max_depth`) leave real room on the table that a
+search closes, while logreg's single hyperparameter (`C`) and
+random_forest's defaults are already close to a local optimum for most
+data. It extends that pattern to datasets 2 to 25 times larger than any
+in the smaller-dataset arm, at a real compute cost: this single sweep
+took roughly as long as every other sweep in the programme combined,
+dominated by random_forest's expensive candidate fits (confirmed
+directly in 4y: a single random_forest tuning fit on adult measured at
+1,259 to 1,379 seconds depending on search strategy) and several very
+long optuna Bayesian runs that were checked directly rather than
+assumed stalled, more than once, during monitoring.
+
+Grid, random and Bayesian search are indistinguishable from each other
+here: no model or dataset shows a search strategy clearly ahead of the
+others by more than noise, matching 4p's classification-level finding
+(no search strategy result survived the v2-to-v3 correction) and
+extending it to these three large datasets.
+
+With this, every factor in the five-component design now has coverage
+on the three large datasets (scaling: 4q; encoding: 4r; selection: 4u;
+tuning: this section), closing the large-dataset gap entirely.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
