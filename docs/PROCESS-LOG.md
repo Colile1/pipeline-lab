@@ -2315,6 +2315,68 @@ is expected. The two headline results are far beyond that threshold; the
 weakest (tuning vs mean_abs_correlation, p = 0.0463) is flagged as
 unconfirmed in the write-up.
 
+---
+
+## 5a. The power floor acted on, not just reported, 2026-10-17
+
+Section 4.4.4 of the research report recorded that five selection cells
+had a significant global test and no surviving contrast, because at
+n = 7 regression datasets with k = 4 levels the smallest attainable
+Holm-adjusted p is (2 / 2^7) * 4 = 0.0625, above alpha. That was true
+but incomplete as a response: the shortfall was a single dataset.
+
+forest_fires (OpenML 42363, 517 rows, 12 features, 2 categorical, no
+missing values) was added to the registry and the four affected arms
+were re-run on that dataset alone, appending to their existing config
+names. 64 runs, 61 succeeded, 3 skipped (logreg tuning on a regression
+target, as always), 0 failed, about 19 minutes of compute. Integrity
+check ok, no duplicate cells.
+
+### What became detectable at n = 8
+
+| arm | model | contrast | Holm | datasets |
+|---|---|---|---|---|
+| selection | gradient_boosting | chi2 worse than none | 0.0312 | worse on 8 of 8 |
+| selection | gradient_boosting | rfe worse than none | 0.0312 | worse on 8 of 8 |
+| tuning | gradient_boosting | bayesian beats none | 0.0469 | better on 7 of 8 |
+| tuning | gradient_boosting | grid beats none | 0.0469 | better on 7 of 8 |
+| tuning | svm (SVR) | grid beats none | **0.0234** | better on 8 of 8 |
+
+The SVR grid result was already rejected at n = 7 (Holm 0.0469); the
+extra dataset strengthened it to 0.0234 on 8 of 8. The other four are
+new and could not have been found before.
+
+The selection result is worth stating plainly because it runs against
+the usual framing: on regression data in this registry, chi-square
+filtering and recursive elimination each made gradient boosting worse
+on **every** dataset tested. The arm's Friedman p was 0.0053 all along;
+the effect was present and undetectable, not absent.
+
+Programme totals move from 4,377 runs and 25 rejected contrasts to
+**4,441 runs and 29**, across 26 datasets and 81.6 hours.
+
+### Why this matters beyond the extra findings
+
+The limitation is now reported as identified, acted on and resolved
+rather than as an unfixed weakness, which is a materially different
+claim. It also demonstrates the point section 4.4.4 makes: computing
+the attainable floor costs minutes, and had it been done during design
+rather than after collection, these five results would have been
+available from the first analysis.
+
+### Also added to the report in this pass
+
+Effect sizes with bootstrapped confidence intervals are now reported in
+the body (Table 4.5) rather than left in the record. Doing so exposed a
+qualification worth stating: of the rejected contrasts, 14 have an
+interval that excludes zero and 11 have one that touches or crosses it,
+almost all in the imputation arm. Those are now described as weaker
+evidence than the headline findings rather than presented as equivalent.
+
+A worked leakage example was added to 4.5.1, so the claim that the
+instrumentation catches a deliberate leak is backed by what the leak
+actually does rather than asserted.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
