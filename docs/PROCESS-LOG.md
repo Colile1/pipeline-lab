@@ -2429,6 +2429,71 @@ which is different from the finding being absent.
 Programme totals: 5,049 runs, 83.4 hours, 25 sweeps. The seed rows are
 replication of an existing arm, not new coverage, and Table 4.3 says so.
 
+---
+
+## 5c. Three analyses over the existing record, no new compute
+
+The seed replication in 5b left an awkward result. Rather than only
+report it, three further analyses were run against data already
+collected.
+
+### A threshold for when a single-seed result can be trusted
+
+If seed instability were random it would fall evenly across datasets.
+It does not. Across the 132 (model, scaler, dataset) cells measured
+under all three seeds, agreement on direction depends on effect size:
+
+| mean effect | cells | seeds agree | rate |
+|---|---|---|---|
+| below 1 pp | 51 | 15 | 29% |
+| 1 pp or more | 42 | 39 | **93%** |
+
+Fisher exact test: odds ratio 31.2, p < 0.0001. Cells where all three
+seeds return exactly zero are excluded as true no-ops rather than
+counted as disagreement, which is the conservative reading; including
+them raises the odds ratio to 65.
+
+This converts 5b from a caveat into a rule: at 11 datasets and 10-fold
+CV, a scaling difference below about one percentage point should not be
+trusted from a single seed, and one above it generally can be. The
+threshold is specific to this registry, but the procedure transfers and
+cost 1.8 hours.
+
+### Cost scales very differently by component
+
+Mean wall seconds per run, by dataset size:
+
+| component | <1k rows | 1k-10k | >10k | ratio |
+|---|---|---|---|---|
+| encoding | 2.8 | 16.7 | 133.2 | 47x |
+| scaling | 4.2 | 16.3 | 378.1 | 91x |
+| selection | 2.8 | 16.6 | 642.7 | **228x** |
+| tuning | **51.4** | **615.2** | **3404.4** | 66x |
+
+Tuning is the most expensive at every size, an order of magnitude above
+the rest even on small data. Selection is cheap on small data and
+scales worst, because the wrapper methods refit once per candidate
+subset. By model: gradient_boosting 108.4s, random_forest 96.8s, svm
+27.8s, logreg 25.0s averaged over all runs, so the component with the
+worst evidence-to-cost ratio also benefits only the most expensive
+model family.
+
+### The meta-analysis re-run at n = 8, and a result lost
+
+Repeating the dataset-characteristic analysis on the enlarged record:
+categorical fraction still predicts encoding sensitivity at rho = 0.882
+(was 0.883 on 72 cells, now 76), which is how a real relationship
+behaves when observations are added.
+
+**The weakest correlation did not survive.** Tuning sensitivity against
+mean absolute correlation moved from rho = 0.248 at p = 0.0463 to
+0.229 at p = 0.0608. The meta-analysis had already flagged it as
+unconfirmed and warned that roughly one false positive was expected
+among 24 tests. It is now withdrawn rather than carried forward.
+
+Report totals: 14,164 words, 8 tables. Baseline package v1 was saved
+before this work began; v2 captures it.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:

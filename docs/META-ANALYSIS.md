@@ -110,16 +110,16 @@ not survive.
 
 | Factor | Property | n | Spearman rho | p |
 |---|---|---|---|---|
-| **Encoding** | **cat_fraction** | 72 | **0.883** | **<0.0001** |
-| Encoding | missing_pct | 72 | 0.667 | <0.0001 |
-| Selection | n_rows | 72 | 0.410 | 0.0003 |
-| Selection | n_features | 72 | −0.401 | 0.0005 |
-| Tuning | n_features | 65 | −0.374 | 0.0022 |
-| Tuning | mean_abs_correlation | 65 | 0.248 | 0.0463 |
+| **Encoding** | **cat_fraction** | 76 | **0.882** | **<0.0001** |
+| Encoding | missing_pct | 76 | 0.587 | <0.0001 |
+| Selection | n_rows | 76 | 0.387 | 0.0006 |
+| Selection | n_features | 76 | −0.401 | 0.0003 |
+| Tuning | n_features | 68 | −0.383 | 0.0013 |
+| Tuning | mean_abs_correlation | 68 | 0.229 | 0.0608, withdrawn |
 
 ### 3.1 The strongest result, and it is mechanistically obvious
 
-`cat_fraction` predicts encoding sensitivity at **rho = 0.883**. Every
+`cat_fraction` predicts encoding sensitivity at **rho = 0.882**. Every
 dataset with zero categorical features shows exactly zero encoding
 spread — the three encoders are literally no-ops there. This is not a
 surprising finding; it is a **sanity check the analysis passes**, and it
@@ -258,6 +258,26 @@ programme's 81.4 hours, and surfaced one strong result, one caught
 confound, one actionable tail risk and one instrumentation gap.
 
 ---
+
+## 6a. Re-run after the registry grew to 26 datasets
+
+This analysis was first run when the regression arms held seven
+datasets. After an eighth was added (PROCESS-LOG section 5a) it was
+repeated on the enlarged record, and section 3 reports the updated
+figures.
+
+The headline result is stable: categorical fraction still predicts
+encoding sensitivity, at rho = 0.882 against 0.883 before, on 76 cells
+rather than 72. That is how a real relationship should behave when a
+few observations are added.
+
+**The weakest result did not survive.** Tuning sensitivity against
+mean absolute correlation moved from rho = 0.248 at p = 0.0463 to
+rho = 0.229 at p = 0.0608, so it no longer clears the threshold.
+Section 7 had already flagged it as unconfirmed and noted that roughly
+one false positive was expected among the 24 correlations tested. That
+caution proved justified, and the result is withdrawn rather than
+carried forward.
 
 ## 7. Limitations
 
