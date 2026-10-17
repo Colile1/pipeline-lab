@@ -2794,6 +2794,71 @@ It also explains the meta-analysis figure from the other direction:
 gradient boosting's median scaling spread of 0.01 per cent is not a
 small effect averaged over datasets, it is mostly exact zeros.
 
+---
+
+## 5i. Recounting every headline figure, and two mistakes caught by doing it
+
+The report quotes run totals, dataset counts, cell counts and contrast
+counts in fifteen separate places. The registry has grown twice since
+those were written, so they were regenerated together rather than
+patched one at a time, which is how a set of figures stops agreeing
+with itself. `docs/analysis/report_figures.py` is now the single source
+for them.
+
+### The script was wrong first, in a way that mattered
+
+The first version omitted the `drop_rows` exclusion that
+`master_analysis.py` applies to the six injected sweeps, and reported
+21 imputation contrasts heavy with `drop_rows` rows. Those are the
+bodyfat artefact (4.4.3): listwise deletion scores the model on
+whatever rows survive, so the comparison is not against the same
+sample. Including it manufactures contrasts the study had already
+withdrawn.
+
+This is worth recording because it is the second time the same
+artefact has had to be excluded, and the first time it reappeared
+through new analysis code rather than new data. The protocol lives in
+`master_analysis.py` and anything that recomputes these figures has to
+match it rather than re-derive it.
+
+Once corrected, the script returns **167 cells, exactly the figure the
+report already states**. That agreement is the check that the
+recomputation follows the established protocol, which makes the
+remaining differences real rather than methodological.
+
+### A misreading avoided
+
+The contrast listing showed `logreg` against RMSE, which a logistic
+regression cannot produce. The engine was read rather than assumed: the
+record stores a model *slot* name, and on a regression target
+`piplab.components.models` substitutes the counterpart estimator, so
+`logreg` there is `LinearRegression`. The engine documents this in
+`MODEL_SUBSTITUTIONS` and the record is sound. The script now prints
+the estimator actually fitted, because the slot name invites exactly
+this error.
+
+### What actually changed
+
+| figure | report states | record now | why |
+|---|---|---|---|
+| statistical cells | 167 | 167 | unchanged |
+| significant global tests | 28 | 31 | registry growth |
+| surviving contrasts | 29 | 34 | registry growth |
+| experimental runs | 5,049 | 4,761 | the report's total counted the scaling seed checks as experiments |
+| datasets | 26 | 31 | forest_fires plus the five classification datasets |
+| measured hours | 83.4 | 85.5 | the new runs |
+
+The run total needs care in the write-up. 4,761 is the experimental
+record; the seed replications add 1,422 more at the time of writing,
+and they repeat existing work rather than extending coverage, so they
+belong in a separate line rather than in the headline figure. The
+report currently folds them in, which overstates the experimental
+programme.
+
+These are not applied to the report yet. The imputation seed
+replication is still running and will change the contrast counts
+again, so the fifteen figures are updated in one pass when it lands.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
