@@ -2494,6 +2494,64 @@ among 24 tests. It is now withdrawn rather than carried forward.
 Report totals: 14,164 words, 8 tables. Baseline package v1 was saved
 before this work began; v2 captures it.
 
+---
+
+## 5d. Widening the registry and testing the imputation arm, launched 2026-10-17
+
+Two pieces of work were launched together, both following directly from
+the seed replication in 5b. In progress at the time of writing; this
+entry records what was set up and why, and the results follow in a
+later section.
+
+### Submission packages saved first
+
+Before starting, the project was archived as
+`Submission/ITRI671 Pipeline Lab Submission v1.zip` (4.4 MB, 30 items)
+so there is a complete, verified fallback if the remaining work runs
+out of time. v2 was written after 5c. Each carries a manifest recording
+every file with its size, modification time, SHA-256 prefix and the git
+commit of the engine and docs repositories at packaging time, so the
+contents can be dated rather than taken on trust.
+
+### Five classification datasets, for stability rather than the floor
+
+The classification side held 11 datasets. The discreteness floor is not
+the binding constraint there: at n = 11 with k = 3 it is 0.0029, well
+under alpha. The constraint is **stability**. Section 5b showed that at
+this sample size two sign changes move a contrast across the threshold
+while the underlying effect barely moves, which is why the scaling
+result reached significance under one seed of three.
+
+banknote, blood_transfusion, climate_sim, phoneme and steel_plates were
+registered (OpenML 1462, 1464, 1467, 1489, 1504). All five are
+complete, binary and numeric, chosen before scoring for a spread of
+size (540 to 5,404 rows), width (4 to 33 features) and class balance
+(0.093 to 0.801). They take the classification arms to **n = 16**.
+
+320 runs across the four arms, appended under the existing config names.
+
+### The imputation arm faces the seed test
+
+The imputation arm carries 21 of the programme's 29 rejected contrasts
+and every one rests on seed 671. Having shown that the scaling result
+is seed-sensitive, leaving the arm that carries most of the findings
+untested would be indefensible.
+
+All six injected sweeps are repeated under seed 1337: 1,728 runs,
+measured at roughly 3.4 hours from the originals. The seed changes both
+the fold assignment and the injected missingness pattern, which is the
+stronger test, since it asks whether a finding survives a different
+draw rather than a different split of the same gaps. Separate config
+names keep the seeds from being pooled.
+
+### The risk is acknowledged in advance
+
+If the imputation contrasts behave like the scaling ones, a substantial
+part of the findings section will need qualifying shortly before
+submission. That is the reason v1 and v2 exist. The alternative, not
+running the check, would leave the single largest untested assumption
+in the study for an examiner to find.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
