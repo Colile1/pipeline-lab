@@ -685,6 +685,186 @@
    "n_levels": 4
   },
   {
+   "dataset": "banknote",
+   "model": "logreg",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 2.133882674339665,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "banknote",
+   "model": "svm",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 0.3647254121477475,
+   "gain_pct": 0.3647254121477475,
+   "n_levels": 4
+  },
+  {
+   "dataset": "banknote",
+   "model": "random_forest",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "banknote",
+   "model": "gradient_boosting",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "blood_transfusion",
+   "model": "logreg",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 0.3415105413786146,
+   "gain_pct": 0.16841793618557302,
+   "n_levels": 4
+  },
+  {
+   "dataset": "blood_transfusion",
+   "model": "svm",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 1.2233723010684245,
+   "gain_pct": 0.7044685406450605,
+   "n_levels": 4
+  },
+  {
+   "dataset": "blood_transfusion",
+   "model": "random_forest",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 0.36800368693607266,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "blood_transfusion",
+   "model": "gradient_boosting",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 0.3486198031629033,
+   "gain_pct": 0.17554337946973694,
+   "n_levels": 4
+  },
+  {
+   "dataset": "climate_sim",
+   "model": "logreg",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 0.40736467827097994,
+   "gain_pct": 0.40736467827097994,
+   "n_levels": 4
+  },
+  {
+   "dataset": "climate_sim",
+   "model": "svm",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "climate_sim",
+   "model": "random_forest",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "climate_sim",
+   "model": "gradient_boosting",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "phoneme",
+   "model": "logreg",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 0.24680329071054907,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "phoneme",
+   "model": "svm",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 1.3772366656624095,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "phoneme",
+   "model": "random_forest",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "phoneme",
+   "model": "gradient_boosting",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "steel_plates",
+   "model": "logreg",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 40.75229285485061,
+   "gain_pct": 40.75229285485061,
+   "n_levels": 4
+  },
+  {
+   "dataset": "steel_plates",
+   "model": "svm",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 52.23527047640506,
+   "gain_pct": 52.23527047640506,
+   "n_levels": 4
+  },
+  {
+   "dataset": "steel_plates",
+   "model": "random_forest",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "steel_plates",
+   "model": "gradient_boosting",
+   "factor": "scaling",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
    "dataset": "iris",
    "model": "logreg",
    "factor": "encoding",
@@ -1365,6 +1545,186 @@
    "factor": "encoding",
    "task": "regression",
    "spread_pct": 0.7148541811787013,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "banknote",
+   "model": "logreg",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "banknote",
+   "model": "svm",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "banknote",
+   "model": "random_forest",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "banknote",
+   "model": "gradient_boosting",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "blood_transfusion",
+   "model": "logreg",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "blood_transfusion",
+   "model": "svm",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "blood_transfusion",
+   "model": "random_forest",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "blood_transfusion",
+   "model": "gradient_boosting",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "climate_sim",
+   "model": "logreg",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "climate_sim",
+   "model": "svm",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "climate_sim",
+   "model": "random_forest",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "climate_sim",
+   "model": "gradient_boosting",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "phoneme",
+   "model": "logreg",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "phoneme",
+   "model": "svm",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "phoneme",
+   "model": "random_forest",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "phoneme",
+   "model": "gradient_boosting",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "steel_plates",
+   "model": "logreg",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "steel_plates",
+   "model": "svm",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "steel_plates",
+   "model": "random_forest",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 3
+  },
+  {
+   "dataset": "steel_plates",
+   "model": "gradient_boosting",
+   "factor": "encoding",
+   "task": "classification",
+   "spread_pct": 0.0,
    "gain_pct": 0.0,
    "n_levels": 3
   },
@@ -2053,6 +2413,186 @@
    "n_levels": 5
   },
   {
+   "dataset": "banknote",
+   "model": "logreg",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 10.674464938088008,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "banknote",
+   "model": "svm",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 7.095484992462611,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "banknote",
+   "model": "random_forest",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 6.088897970769979,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "banknote",
+   "model": "gradient_boosting",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 5.929872843052565,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "blood_transfusion",
+   "model": "logreg",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 1.3944797353098597,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "blood_transfusion",
+   "model": "svm",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 0.5212493826452629,
+   "gain_pct": 0.173836669112188,
+   "n_levels": 5
+  },
+  {
+   "dataset": "blood_transfusion",
+   "model": "random_forest",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 3.878458054892852,
+   "gain_pct": 3.878458054892852,
+   "n_levels": 5
+  },
+  {
+   "dataset": "blood_transfusion",
+   "model": "gradient_boosting",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 4.34210184632165,
+   "gain_pct": 0.1732062634708844,
+   "n_levels": 5
+  },
+  {
+   "dataset": "climate_sim",
+   "model": "logreg",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 1.2220940348129643,
+   "gain_pct": 1.018411695677462,
+   "n_levels": 5
+  },
+  {
+   "dataset": "climate_sim",
+   "model": "svm",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "climate_sim",
+   "model": "random_forest",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 0.6073359094461728,
+   "gain_pct": 0.4048906062974404,
+   "n_levels": 5
+  },
+  {
+   "dataset": "climate_sim",
+   "model": "gradient_boosting",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 2.020253810816803,
+   "gain_pct": 1.0100723599736892,
+   "n_levels": 5
+  },
+  {
+   "dataset": "phoneme",
+   "model": "logreg",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 3.5025800344004714,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "phoneme",
+   "model": "svm",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 9.55405509182956,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "phoneme",
+   "model": "random_forest",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 13.939352196534129,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "phoneme",
+   "model": "gradient_boosting",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 8.63430861611246,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
+   "dataset": "steel_plates",
+   "model": "logreg",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 48.80262024468379,
+   "gain_pct": 40.75229285485061,
+   "n_levels": 5
+  },
+  {
+   "dataset": "steel_plates",
+   "model": "svm",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 52.7840786264725,
+   "gain_pct": 52.23527047640506,
+   "n_levels": 5
+  },
+  {
+   "dataset": "steel_plates",
+   "model": "random_forest",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 41.48230944672227,
+   "gain_pct": 0.41372946555923423,
+   "n_levels": 5
+  },
+  {
+   "dataset": "steel_plates",
+   "model": "gradient_boosting",
+   "factor": "selection",
+   "task": "classification",
+   "spread_pct": 36.6823,
+   "gain_pct": 0.0,
+   "n_levels": 5
+  },
+  {
    "dataset": "iris",
    "model": "logreg",
    "factor": "tuning",
@@ -2663,6 +3203,186 @@
    "spread_pct": 13.823009081212843,
    "gain_pct": 10.249692228670163,
    "n_levels": 4
+  },
+  {
+   "dataset": "banknote",
+   "model": "logreg",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 0.1470005819404465,
+   "gain_pct": 0.0737528692897102,
+   "n_levels": 4
+  },
+  {
+   "dataset": "banknote",
+   "model": "svm",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 0.3647254121477475,
+   "gain_pct": 0.3647254121477475,
+   "n_levels": 4
+  },
+  {
+   "dataset": "banknote",
+   "model": "random_forest",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 0.21994481750619746,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "banknote",
+   "model": "gradient_boosting",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 0.29328458648882444,
+   "gain_pct": 0.29328458648882444,
+   "n_levels": 4
+  },
+  {
+   "dataset": "blood_transfusion",
+   "model": "logreg",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 0.17309260519304157,
+   "gain_pct": 0.17309260519304157,
+   "n_levels": 4
+  },
+  {
+   "dataset": "blood_transfusion",
+   "model": "svm",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 1.401639589933109,
+   "gain_pct": 0.011728111109508431,
+   "n_levels": 4
+  },
+  {
+   "dataset": "blood_transfusion",
+   "model": "random_forest",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 7.011111862358073,
+   "gain_pct": 7.011111862358073,
+   "n_levels": 4
+  },
+  {
+   "dataset": "blood_transfusion",
+   "model": "gradient_boosting",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 2.2623282868939723,
+   "gain_pct": 1.2165987171829948,
+   "n_levels": 4
+  },
+  {
+   "dataset": "climate_sim",
+   "model": "logreg",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 0.8147293565419721,
+   "gain_pct": 0.8147293565419721,
+   "n_levels": 4
+  },
+  {
+   "dataset": "climate_sim",
+   "model": "svm",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 0.20244530314873233,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "climate_sim",
+   "model": "random_forest",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 0.20244530314873233,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "climate_sim",
+   "model": "gradient_boosting",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 0.6061088705058658,
+   "gain_pct": 0.2020362901686179,
+   "n_levels": 4
+  },
+  {
+   "dataset": "phoneme",
+   "model": "logreg",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 0.02466699555993956,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "phoneme",
+   "model": "svm",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 2.033660009097304,
+   "gain_pct": 2.033660009097304,
+   "n_levels": 4
+  },
+  {
+   "dataset": "phoneme",
+   "model": "random_forest",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 0.7885723156781935,
+   "gain_pct": 0.34361330766346304,
+   "n_levels": 4
+  },
+  {
+   "dataset": "phoneme",
+   "model": "gradient_boosting",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 4.100783367781609,
+   "gain_pct": 4.100783367781609,
+   "n_levels": 4
+  },
+  {
+   "dataset": "steel_plates",
+   "model": "logreg",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 0.3631409155655183,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "steel_plates",
+   "model": "svm",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 1.0216509001671579,
+   "gain_pct": 0.4728427500997222,
+   "n_levels": 4
+  },
+  {
+   "dataset": "steel_plates",
+   "model": "random_forest",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 0.1557013950804815,
+   "gain_pct": 0.0,
+   "n_levels": 4
+  },
+  {
+   "dataset": "steel_plates",
+   "model": "gradient_boosting",
+   "factor": "tuning",
+   "task": "classification",
+   "spread_pct": 0.0,
+   "gain_pct": 0.0,
+   "n_levels": 4
   }
  ],
  "characteristics": {
@@ -2721,6 +3441,28 @@
    "mean_abs_correlation": 0.057295,
    "missing_pct": 0.0
   },
+  "banknote": {
+   "task": "classification",
+   "n_rows": 1372,
+   "n_features": 4,
+   "n_numeric": 4,
+   "n_categorical": 0,
+   "cat_fraction": 0.0,
+   "class_balance": 0.800525,
+   "mean_abs_correlation": 0.425625,
+   "missing_pct": 0.0
+  },
+  "blood_transfusion": {
+   "task": "classification",
+   "n_rows": 748,
+   "n_features": 4,
+   "n_numeric": 4,
+   "n_categorical": 0,
+   "cat_fraction": 0.0,
+   "class_balance": 0.312281,
+   "mean_abs_correlation": 0.465998,
+   "missing_pct": 0.0
+  },
   "bodyfat": {
    "task": "regression",
    "n_rows": 252,
@@ -2729,7 +3471,7 @@
    "n_categorical": 0,
    "cat_fraction": 0.0,
    "class_balance": null,
-   "mean_abs_correlation": 0.531924,
+   "mean_abs_correlation": 0.532389,
    "missing_pct": 0.0
   },
   "breast_cancer": {
@@ -2741,6 +3483,17 @@
    "cat_fraction": 0.0,
    "class_balance": 0.593838,
    "mean_abs_correlation": 0.408646,
+   "missing_pct": 0.0
+  },
+  "climate_sim": {
+   "task": "classification",
+   "n_rows": 540,
+   "n_features": 20,
+   "n_numeric": 20,
+   "n_categorical": 0,
+   "cat_fraction": 0.0,
+   "class_balance": 0.093117,
+   "mean_abs_correlation": 0.017047,
    "missing_pct": 0.0
   },
   "colic": {
@@ -2828,7 +3581,7 @@
    "n_categorical": 0,
    "cat_fraction": 0.0,
    "class_balance": null,
-   "mean_abs_correlation": 0.256388,
+   "mean_abs_correlation": 0.25653,
    "missing_pct": 0.0
   },
   "forest_fires": {
@@ -2897,6 +3650,17 @@
    "mean_abs_correlation": 0.012849,
    "missing_pct": 0.0
   },
+  "phoneme": {
+   "task": "classification",
+   "n_rows": 5404,
+   "n_features": 5,
+   "n_numeric": 5,
+   "n_categorical": 0,
+   "cat_fraction": 0.0,
+   "class_balance": 0.415401,
+   "mean_abs_correlation": 0.126089,
+   "missing_pct": 0.0
+  },
   "pima": {
    "task": "classification",
    "n_rows": 768,
@@ -2917,6 +3681,17 @@
    "cat_fraction": 0.0,
    "class_balance": 0.873874,
    "mean_abs_correlation": 0.238608,
+   "missing_pct": 0.0
+  },
+  "steel_plates": {
+   "task": "classification",
+   "n_rows": 1941,
+   "n_features": 33,
+   "n_numeric": 33,
+   "n_categorical": 0,
+   "cat_fraction": 0.0,
+   "class_balance": 0.530757,
+   "mean_abs_correlation": 0.21576,
    "missing_pct": 0.0
   },
   "stock": {
@@ -2957,144 +3732,144 @@
   {
    "factor": "scaling",
    "model": "logreg",
-   "n": 19,
-   "median": 0.42364822457635315,
-   "p90": 3.6749566464760695,
-   "max_dataset": "sonar",
-   "max_spread": 7.588576636471629
+   "n": 24,
+   "median": 0.41550645142366655,
+   "p90": 3.964314747185078,
+   "max_dataset": "steel_plates",
+   "max_spread": 40.75229285485061
   },
   {
    "factor": "scaling",
    "model": "svm",
-   "n": 19,
-   "median": 6.3053418670914,
-   "p90": 45.53411747268202,
-   "max_dataset": "energy-efficiency",
-   "max_spread": 50.775094966051505
+   "n": 24,
+   "median": 5.597852499405171,
+   "p90": 45.78794826936794,
+   "max_dataset": "steel_plates",
+   "max_spread": 52.23527047640506
   },
   {
    "factor": "scaling",
    "model": "random_forest",
-   "n": 19,
-   "median": 0.11348402055344949,
-   "p90": 0.4609052111528893,
+   "n": 24,
+   "median": 0.06509401188515745,
+   "p90": 0.39130938178932634,
    "max_dataset": "energy-efficiency",
    "max_spread": 1.1902327827346593
   },
   {
    "factor": "scaling",
    "model": "gradient_boosting",
-   "n": 19,
-   "median": 0.019008383624417587,
-   "p90": 0.36158186691152455,
+   "n": 24,
+   "median": 0.0,
+   "p90": 0.3464829894042737,
    "max_dataset": "iris",
    "max_spread": 0.6944791666666644
   },
   {
    "factor": "encoding",
    "model": "logreg",
-   "n": 19,
+   "n": 24,
    "median": 0.0,
-   "p90": 3.2851718266099783,
+   "p90": 2.3330270940461997,
    "max_dataset": "autoMpg",
    "max_spread": 10.961357295889782
   },
   {
    "factor": "encoding",
    "model": "svm",
-   "n": 19,
+   "n": 24,
    "median": 0.0,
-   "p90": 0.4740426065233732,
+   "p90": 0.3257187154335218,
    "max_dataset": "abalone",
    "max_spread": 2.8709844415522023
   },
   {
    "factor": "encoding",
    "model": "random_forest",
-   "n": 19,
+   "n": 24,
    "median": 0.0,
-   "p90": 3.189807693745705,
+   "p90": 2.786308977499914,
    "max_dataset": "autoMpg",
    "max_spread": 14.823392743708354
   },
   {
    "factor": "encoding",
    "model": "gradient_boosting",
-   "n": 19,
+   "n": 24,
    "median": 0.0,
-   "p90": 2.3207519114264286,
+   "p90": 1.4149839588390989,
    "max_dataset": "autoMpg",
    "max_spread": 11.104793672050755
   },
   {
    "factor": "selection",
    "model": "logreg",
-   "n": 19,
-   "median": 3.640426115994644,
-   "p90": 42.65732862048049,
+   "n": 24,
+   "median": 3.5715030751975574,
+   "p90": 42.96004160070831,
    "max_dataset": "energy-efficiency",
    "max_spread": 54.35824408126357
   },
   {
    "factor": "selection",
    "model": "svm",
-   "n": 19,
-   "median": 1.3793788346969604,
-   "p90": 32.94252354248968,
+   "n": 24,
+   "median": 1.4050708008612078,
+   "p90": 39.84180827584128,
    "max_dataset": "kin8nm",
    "max_spread": 228.50096638971866
   },
   {
    "factor": "selection",
    "model": "random_forest",
-   "n": 19,
-   "median": 2.858034867130465,
-   "p90": 62.06831081600329,
+   "n": 24,
+   "median": 4.216939577985791,
+   "p90": 44.278512800213335,
    "max_dataset": "energy-efficiency",
    "max_spread": 570.3990499019015
   },
   {
    "factor": "selection",
    "model": "gradient_boosting",
-   "n": 19,
-   "median": 4.026157766234485,
-   "p90": 47.409821832351476,
+   "n": 24,
+   "median": 4.484866437715771,
+   "p90": 43.82192717316591,
    "max_dataset": "energy-efficiency",
    "max_spread": 560.5397540377621
   },
   {
    "factor": "tuning",
    "model": "logreg",
-   "n": 11,
-   "median": 0.736639550520755,
-   "p90": 2.3257537937273414,
+   "n": 16,
+   "median": 0.6585627270583196,
+   "p90": 1.8525145900920543,
    "max_dataset": "sonar",
    "max_spread": 4.452735859741912
   },
   {
    "factor": "tuning",
    "model": "svm",
-   "n": 19,
-   "median": 8.154939268969578,
-   "p90": 50.59080519416938,
+   "n": 24,
+   "median": 3.053832086016444,
+   "p90": 43.26536484805376,
    "max_dataset": "stock",
    "max_spread": 62.723520754816754
   },
   {
    "factor": "tuning",
    "model": "random_forest",
-   "n": 19,
-   "median": 1.0362694300518143,
-   "p90": 9.146871228234309,
+   "n": 24,
+   "median": 0.8968744065178214,
+   "p90": 7.787192174377045,
    "max_dataset": "energy-efficiency",
    "max_spread": 15.59418108417331
   },
   {
    "factor": "tuning",
    "model": "gradient_boosting",
-   "n": 19,
-   "median": 2.647648717533256,
-   "p90": 23.981936996670065,
+   "n": 24,
+   "median": 2.445868370886071,
+   "p90": 20.331628915011123,
    "max_dataset": "airfoil_self_noise",
    "max_spread": 42.470895768436236
   }
@@ -3105,216 +3880,216 @@
    "property": "n_rows",
    "model": null,
    "task": null,
-   "n": 76,
-   "rho": -0.1892329133032706,
-   "p": 0.10159236256812217
+   "n": 96,
+   "rho": -0.1625532152339795,
+   "p": 0.11356511157942414
   },
   {
    "factor": "scaling",
    "property": "n_features",
    "model": null,
    "task": null,
-   "n": 76,
-   "rho": -0.03645081213957408,
-   "p": 0.7545783267582975
+   "n": 96,
+   "rho": -0.024082557206516416,
+   "p": 0.8158369500716399
   },
   {
    "factor": "scaling",
    "property": "cat_fraction",
    "model": null,
    "task": null,
-   "n": 76,
-   "rho": 0.08920865266565625,
-   "p": 0.4434718296550679
+   "n": 96,
+   "rho": 0.09203663081654738,
+   "p": 0.3724715868672046
   },
   {
    "factor": "scaling",
    "property": "missing_pct",
    "model": null,
    "task": null,
-   "n": 76,
-   "rho": 0.1649141413811851,
-   "p": 0.15455387896432207
+   "n": 96,
+   "rho": 0.15748932642004673,
+   "p": 0.1254137387314703
   },
   {
    "factor": "scaling",
    "property": "mean_abs_correlation",
    "model": null,
    "task": null,
-   "n": 76,
-   "rho": 0.08249176696122203,
-   "p": 0.4786740842841932
+   "n": 96,
+   "rho": 0.1483331949822093,
+   "p": 0.14921315085979198
   },
   {
    "factor": "scaling",
    "property": "class_balance",
    "model": null,
    "task": null,
-   "n": 44,
-   "rho": 0.09712523379121704,
-   "p": 0.530531783942449
+   "n": 64,
+   "rho": 0.1928999077723576,
+   "p": 0.12671954302687552
   },
   {
    "factor": "encoding",
    "property": "n_rows",
    "model": null,
    "task": null,
-   "n": 76,
-   "rho": -0.04032266302529523,
-   "p": 0.7294632440935718
+   "n": 96,
+   "rho": -0.13410972680607577,
+   "p": 0.1926832807165823
   },
   {
    "factor": "encoding",
    "property": "n_features",
    "model": null,
    "task": null,
-   "n": 76,
-   "rho": -0.15437077515228964,
-   "p": 0.18303564853398788
+   "n": 96,
+   "rho": -0.05797913275424749,
+   "p": 0.5747239313093867
   },
   {
    "factor": "encoding",
    "property": "cat_fraction",
    "model": null,
    "task": null,
-   "n": 76,
-   "rho": 0.8821226006012918,
-   "p": 6.662178124899981e-26
+   "n": 96,
+   "rho": 0.906827198035002,
+   "p": 4.863486603877454e-37
   },
   {
    "factor": "encoding",
    "property": "missing_pct",
    "model": null,
    "task": null,
-   "n": 76,
-   "rho": 0.587070387003795,
-   "p": 2.4909530930998415e-08
+   "n": 96,
+   "rho": 0.6118723650729198,
+   "p": 3.5208141196265435e-11
   },
   {
    "factor": "encoding",
    "property": "mean_abs_correlation",
    "model": null,
    "task": null,
-   "n": 76,
-   "rho": -0.019972624333808107,
-   "p": 0.8640282437203249
+   "n": 96,
+   "rho": 0.021284437633617734,
+   "p": 0.8369193909440419
   },
   {
    "factor": "encoding",
    "property": "class_balance",
    "model": null,
    "task": null,
-   "n": 44,
-   "rho": -0.10278762671826015,
-   "p": 0.5067225323955525
+   "n": 64,
+   "rho": 0.12203345758916255,
+   "p": 0.3367418758394606
   },
   {
    "factor": "selection",
    "property": "n_rows",
    "model": null,
    "task": null,
-   "n": 76,
-   "rho": 0.38691942709234317,
-   "p": 0.0005550020563525513
+   "n": 96,
+   "rho": 0.4804852121757751,
+   "p": 7.255507208301644e-07
   },
   {
    "factor": "selection",
    "property": "n_features",
    "model": null,
    "task": null,
-   "n": 76,
-   "rho": -0.40093341121143783,
-   "p": 0.0003317583839274802
+   "n": 96,
+   "rho": -0.26582063682377527,
+   "p": 0.008853608835687032
   },
   {
    "factor": "selection",
    "property": "cat_fraction",
    "model": null,
    "task": null,
-   "n": 76,
-   "rho": -0.1728187144527359,
-   "p": 0.13546672886353403
+   "n": 96,
+   "rho": -0.1559812608563246,
+   "p": 0.12911950480725917
   },
   {
    "factor": "selection",
    "property": "missing_pct",
    "model": null,
    "task": null,
-   "n": 76,
-   "rho": -0.16377791428660582,
-   "p": 0.15745431470067983
+   "n": 96,
+   "rho": -0.15044669716472134,
+   "p": 0.14343932941968687
   },
   {
    "factor": "selection",
    "property": "mean_abs_correlation",
    "model": null,
    "task": null,
-   "n": 76,
-   "rho": 0.1373872153518408,
-   "p": 0.23661670885736294
+   "n": 96,
+   "rho": 0.12319230397985813,
+   "p": 0.23178140374639028
   },
   {
    "factor": "selection",
    "property": "class_balance",
    "model": null,
    "task": null,
-   "n": 44,
-   "rho": -0.1259596820567442,
-   "p": 0.4152319838809995
+   "n": 64,
+   "rho": -0.14397912328137524,
+   "p": 0.256351344938557
   },
   {
    "factor": "tuning",
    "property": "n_rows",
    "model": null,
    "task": null,
-   "n": 68,
-   "rho": 0.029214337905406142,
-   "p": 0.8130511737502327
+   "n": 88,
+   "rho": -0.1768405460313192,
+   "p": 0.09930966121803975
   },
   {
    "factor": "tuning",
    "property": "n_features",
    "model": null,
    "task": null,
-   "n": 68,
-   "rho": -0.3831627795627815,
-   "p": 0.0012592863845451046
+   "n": 88,
+   "rho": -0.18924980491496207,
+   "p": 0.07740724418614288
   },
   {
    "factor": "tuning",
    "property": "cat_fraction",
    "model": null,
    "task": null,
-   "n": 68,
-   "rho": -0.1183433108981347,
-   "p": 0.3364645067251124
+   "n": 88,
+   "rho": 0.044632302173698575,
+   "p": 0.6796744128216532
   },
   {
    "factor": "tuning",
    "property": "missing_pct",
    "model": null,
    "task": null,
-   "n": 68,
-   "rho": -0.06710704583579959,
-   "p": 0.586625311698006
+   "n": 88,
+   "rho": 0.04199255192842169,
+   "p": 0.697672661204313
   },
   {
    "factor": "tuning",
    "property": "mean_abs_correlation",
    "model": null,
    "task": null,
-   "n": 68,
-   "rho": 0.22855273928632805,
-   "p": 0.0608411474311076
+   "n": 88,
+   "rho": 0.22225272451850722,
+   "p": 0.03741459074701195
   },
   {
    "factor": "tuning",
    "property": "class_balance",
    "model": null,
    "task": null,
-   "n": 44,
-   "rho": 0.013898996227467087,
-   "p": 0.9286483143058624
+   "n": 64,
+   "rho": 0.12275666912767873,
+   "p": 0.333864515618909
   }
  ]
 }

@@ -72,6 +72,37 @@ def fig1():
     plt.close(fig)
 
 
+def _fig2_caption_facts():
+    """Return (dataset count, SVM standard-vs-none Holm p) for the caption.
+
+    Computed from the record so the caption cannot drift away from the
+    result it describes, which is what happened when it was a literal.
+    """
+    import sys
+    sys.path.insert(
+        0, r"C:/Users/Colile/Documents/School/NWU/S1/ITRI671 Project/pipeline-lab-engine/src"
+    )
+    from piplab.statistics.tests import compare_levels
+
+    conn = sqlite3.connect(f"file:{DB}?mode=ro", uri=True)
+    rows = conn.execute("""
+        select dataset, scaling, accuracy_mean from runs
+        where config_name='ofat_scaling_v2' and status='succeeded'
+          and task_type='classification' and accuracy_mean is not null
+          and model='svm'""").fetchall()
+    conn.close()
+    table = {}
+    for d, lv, v in rows:
+        table.setdefault(d, {})[lv] = v
+    levels = sorted({lv for v in table.values() for lv in v})
+    complete = {d: v for d, v in table.items() if len(v) == len(levels)}
+    datasets = sorted(complete)
+    scores = {lv: [complete[d][lv] for d in datasets] for lv in levels}
+    res = compare_levels(scores, "none", higher_is_better=True)
+    p = next(c.p_adjusted for c in res.comparisons if c.level == "standard")
+    return len(datasets), p
+
+
 # ---- Figure 2: scaling, the model-dependence headline -----------------
 def fig2():
     """Scaling effect per model: SVM and logreg move, trees do not."""
@@ -97,12 +128,23 @@ def fig2():
     ax.set_xticks(x)
     ax.set_xticklabels(["Logistic\nregression", "SVM", "Random\nforest", "Gradient\nboosting"])
     ax.set_ylabel("mean accuracy across datasets")
-    ax.set_ylim(0.6, 0.9)
+    # Fit the axis to the bars with a margin. A hardcoded ceiling of 0.9
+    # clipped the SVM and random forest bars once the registry grew, so
+    # the figure could not show the effect it exists to show.
+    allv = [data[m][lv] for m in models for lv in levels]
+    lo, hi = min(allv), max(allv)
+    pad = (hi - lo) * 0.25 or 0.01
+    ax.set_ylim(max(0.0, lo - pad), min(1.0, hi + pad))
     ax.set_title("Scaling: the effect is a property of the model, not the pipeline")
     ax.legend(ncol=4, loc="upper center", bbox_to_anchor=(0.5, -0.12))
+    # The caption states the tested result, so it is computed rather
+    # than typed. A hardcoded caption survived the registry growth and
+    # went on asserting a superseded finding against refreshed data.
+    n_ds, svm_gain = _fig2_caption_facts()
     fig.text(0.5, -0.09,
-             "ofat_scaling_v2, 19 datasets. Logistic regression is the only model with a "
-             "Holm-rejected gain (standard vs none, Holm = 0.041, better on 10 of 11 datasets).",
+             f"ofat_scaling_v2, {n_ds} classification datasets. The support vector machine is "
+             f"the only model with Holm-rejected gains (standard vs none, Holm = "
+             f"{svm_gain:.4f}). The two tree ensembles return identical scores in most cells.",
              ha="center", color=SLATE, fontsize=8.5)
     fig.tight_layout()
     fig.savefig(FIGS / "fig2_scaling_by_model.png", dpi=200, bbox_inches="tight")

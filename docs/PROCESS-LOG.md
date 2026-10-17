@@ -2859,6 +2859,50 @@ These are not applied to the report yet. The imputation seed
 replication is still running and will change the contrast counts
 again, so the fifteen figures are updated in one pass when it lands.
 
+---
+
+## 5j. A figure that kept asserting a superseded result
+
+All nine data figures predated the registry growth, so they were
+regenerated. Looking at the output rather than trusting the "ok" line
+caught two faults in Figure 4.3, the scaling chart.
+
+### The caption was a string literal
+
+The bars redrew from the current record. The caption did not, because
+it was typed into the script, and it went on reading "Logistic
+regression is the only model with a Holm-rejected gain (Holm = 0.041,
+better on 10 of 11 datasets)". Every part of that is now false: the
+support vector machine holds the rejected contrasts, logreg's is at
+0.0557, and the arm has sixteen datasets.
+
+A figure that refreshes its data but not its caption is worse than a
+stale figure, because the numbers beside the chart look current. The
+caption now computes the dataset count and the Holm value from the
+record at draw time, so it cannot drift from the result it describes.
+This is the same rule already applied to the summary page, where a
+hardcoded count was removed for the same reason.
+
+### The axis was clipping the result
+
+`set_ylim(0.6, 0.9)` was fixed when the highest bar was below 0.9. The
+new datasets lifted the support vector machine and random forest above
+it, so both were cut off at the frame, and the chart could not show
+the effect it exists to show. The limits now follow the data with a
+margin.
+
+The rebuilt figure makes the argument the section makes: the support
+vector machine rises from 0.824 to 0.902, logistic regression moves
+less, and the two tree ensembles are visibly flat.
+
+### Why this one mattered
+
+The figure is cited from 4.4.1, and that section was rewritten in the
+same sitting to lead with the support vector machine. Had the figure
+not been checked by eye, the report would have carried a corrected
+paragraph beside a chart captioned with the result it was correcting.
+Regenerating an artefact is not the same as verifying it.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
