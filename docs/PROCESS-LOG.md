@@ -2903,6 +2903,86 @@ not been checked by eye, the report would have carried a corrected
 paragraph beside a chart captioned with the result it was correcting.
 Regenerating an artefact is not the same as verifying it.
 
+---
+
+## 5k. The imputation replication, three sweeps in: half the findings do not reproduce
+
+The three MCAR sweeps of the replication are complete and were
+analysed without waiting for MAR.
+`docs/analysis/imputation_seed_check.py` does the comparison.
+
+### The script reported 100 per cent first, and that was a bug
+
+The first run returned a reproduction rate of 5 of 5. It also printed
+"present in only one seed" against a long list of contrasts, which was
+the reason to distrust the number rather than publish it.
+
+The cause: `compare_levels` returns no comparisons when the Friedman
+gate does not pass, so no key is written for that cell. The script
+read an absent key as missing data and dropped the row. But an absent
+key means the cell showed **no effect at all** under that seed, which
+is the most important kind of disagreement there is. The rate was
+being computed only over cells that cleared the gate under both seeds,
+which is precisely the subset guaranteed to agree.
+
+Every candidate contrast is now recorded, including the ones the gate
+stopped, and the Friedman verdict is reported alongside.
+
+### The corrected result
+
+| | |
+|---|---|
+| rejected under 671, reproduced under 1337 | 5 |
+| rejected under 671, **not** under 1337 | 5 |
+| rejected under 1337, not under 671 | 6 |
+| **reproduction rate** | **5 of 10, 50 per cent** |
+
+Agreement on the global test is 21 of 36 cells, or 58 per cent. The
+two seeds disagree about whether an effect exists at all in 15 cells.
+
+### Some disagreements are not borderline
+
+A threshold crossing from 0.049 to 0.051 would be unremarkable. These
+are not that:
+
+| cell | seed 671 | seed 1337 |
+|---|---|---|
+| mcar05 svm accuracy | 0.0297 | 0.6483 |
+| mcar05 svm f1 | 0.0302 | 0.4169 |
+| mcar15 gradient_boosting f1 | 0.6412 | 0.0131 |
+| mcar30 regression random_forest | 0.6412 | 0.0084 |
+
+These are reversals, not crossings. The classification side at mcar15
+is the clearest case: under seed 671 logreg shows an effect and
+gradient boosting does not, and under 1337 it is exactly the other way
+round. A reader given one seed would conclude the effect belongs to a
+different model family than a reader given the other.
+
+### What survived
+
+The reproducing contrasts are concentrated and interpretable. kNN
+against mean imputation on regression at mcar15 holds at 8 of 9
+datasets under both seeds, and median against mean on regression holds
+at 0 of 9 and 1 of 9, meaning median is reliably worse. The svm kNN
+result at mcar30 holds on both metrics. What reproduces is the large,
+directionally consistent effects, which is the same conclusion the
+scaling replication reached by its own route (5b): the effect-size
+threshold, not the p-value, predicts whether a finding will survive a
+different draw.
+
+### Consequence for the report
+
+The imputation arm supplies 21 of the study's rejected contrasts and
+is presented as its main source of findings. On this evidence that
+presentation cannot stand unqualified. Half of the MCAR findings do
+not reproduce under a second seed, and the arm's results have to be
+reported with that rate attached and with the surviving subset
+identified.
+
+MAR is still running. The final figure may move, but not enough to
+change the conclusion: these contrasts are not stable at nine
+datasets.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
