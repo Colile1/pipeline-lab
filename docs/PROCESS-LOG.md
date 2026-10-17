@@ -2377,6 +2377,58 @@ A worked leakage example was added to 4.5.1, so the claim that the
 instrumentation catches a deliberate leak is backed by what the leak
 actually does rather than asserted.
 
+---
+
+## 5b. Seed replication: the headline scaling result does not fully survive
+
+Every run in the record used seed 671, so the scaling result rested on
+one fold assignment. The whole scaling arm was repeated under seeds
+1337 and 20260702, 608 runs in 1.8 hours, 576 succeeded and 32 skipped
+(colic row deletion, as in every other scaling sweep), 0 failed. The
+three seeds are kept under separate config names and are never pooled.
+
+### Logistic regression, standard scaling against none
+
+| seed | Friedman p | Holm | datasets improved | median difference |
+|---|---|---|---|---|
+| 671 | 0.0275 | **0.0410 rejected** | 10 of 11 | +0.0061 |
+| 1337 | 0.0742 | not licensed | 8 of 11 | +0.0080 |
+| 20260702 | 0.1746 | not licensed | 8 of 11 | +0.0070 |
+
+**The contrast reaches significance under one seed of three.** Stated
+as "standard scaling significantly improves logistic regression", the
+finding does not replicate.
+
+What does replicate is the effect. Standard scaling wins on the
+majority of datasets under all three seeds, and the median improvement
+is almost constant at 0.61, 0.80 and 0.70 of a percentage point. The
+direction and the magnitude are stable; what moves is whether the win
+count clears the threshold. At n = 11 the Wilcoxon test is sensitive to
+a couple of sign changes, so 10 of 11 and 8 of 11 fall on opposite
+sides of the boundary while the underlying difference barely moves.
+
+### A second observation from the same sweeps
+
+Under seed 1337 the SVM produced three rejected contrasts on accuracy
+(minmax, robust and standard, each Holm 0.0176, 8 or 9 of 11 datasets).
+The same arm is not significant under the other two seeds, at Friedman
+0.0530 and 0.0771, both close to the line. The SVM behaves exactly like
+logreg here: consistent in direction, intermittently significant.
+
+### Why this is reported rather than quietly dropped
+
+The replication was run to test a limitation and it found a larger one.
+Reporting only the seed that worked would be the specific failure the
+rest of this programme was built to prevent. The report now states the
+result in section 4.4.7 with the table above, qualifies the claim in
+4.4.1 and 4.6, and replaces the old "sensitivity to the seed was not
+examined" limitation in 5.3.1 with what the replication actually found:
+the registry is not large enough to establish this finding reliably,
+which is different from the finding being absent.
+
+Programme totals: 5,049 runs, 83.4 hours, 25 sweeps. The seed rows are
+replication of an existing arm, not new coverage, and Table 4.3 says so.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
