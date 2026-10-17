@@ -2743,6 +2743,57 @@ it had answered a question it never put.
    are at 16 datasets; encoding is still at 11.
 5. Consolidate the three instability sightings into one argument.
 
+---
+
+## 5h. How far the no-op problem reaches, and why scaling is the opposite case
+
+Having found that the encoding arm is mostly no-ops (5g), the obvious
+question is whether the other arms share the defect. They were counted
+rather than assumed. A cell is a no-op when every level returns exactly
+the same score, so the comparison carries no information.
+
+| arm | no-op cells | reading |
+|---|---|---|
+| Encoding, classification | 54 of 64 | registry gap |
+| Encoding, regression | 20 of 32 | registry gap |
+| Scaling, classification | 22 of 64 | **a result, see below** |
+| Selection, classification | 4 of 64 | sound |
+| Tuning, classification | 2 of 64 | sound |
+
+Selection and tuning are clean, so their null results are real nulls
+and need no qualification. Encoding fails on both sides: five of the
+eight regression datasets have no categorical features either, so the
+restatement in 5g applies to the whole arm, not only to classification.
+
+### The scaling no-ops mean the opposite thing
+
+22 of 64 looked like the same defect until it was broken down by model:
+
+| model | no-op cells |
+|---|---|
+| gradient_boosting | 12 of 16 |
+| random_forest | 9 of 16 |
+| svm | 1 of 16 |
+| logreg | 0 of 16 |
+
+Twenty-one of the twenty-two sit in the two tree ensembles, and almost
+none in the two scale-sensitive models. These cells are not missing
+information. A decision tree splits on rank order, which no monotone
+rescaling changes, so an exactly identical score is the predicted
+result arriving as a zero rather than as a small number.
+
+The distinction matters for how the report argues. An encoding no-op
+means the registry could not pose the question. A scaling no-op on a
+tree means the question was posed and the answer is exactly zero, which
+is stronger evidence of invariance than a small non-significant
+difference would be. The same statistical signature carries opposite
+meanings, and the write-up has to separate them rather than report a
+single no-op count as a limitation.
+
+It also explains the meta-analysis figure from the other direction:
+gradient boosting's median scaling spread of 0.01 per cent is not a
+small effect averaged over datasets, it is mostly exact zeros.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
