@@ -2552,6 +2552,61 @@ submission. That is the reason v1 and v2 exist. The alternative, not
 running the check, would leave the single largest untested assumption
 in the study for an examiner to find.
 
+---
+
+## 5e. The scaling arm at 16 datasets: the result moves between models
+
+The five classification datasets from 5d are in (320 runs, 0 failed).
+The scaling arm now has 16 classification datasets rather than 11, and
+the picture changes in a way worth recording carefully.
+
+| model | n=11 (seed 671) | n=16 (seed 671) |
+|---|---|---|
+| logreg | Friedman 0.0275, **standard rejected** Holm 0.0410, 10/11 | Friedman 0.0298, **nothing rejected**, standard Holm 0.0557 |
+| svm | Friedman 0.0530, nothing rejected | Friedman 0.0154, **three rejected**: standard Holm 0.0071 (12/16), minmax and robust 0.0249 (11/16) |
+| random_forest | not significant | not significant (0.8939) |
+| gradient_boosting | not significant | not significant (0.1888) |
+
+### The logreg result did not weaken, the correction did
+
+Standard scaling against none for logreg is **12 of 16 at raw
+p = 0.0186**, against 10 of 11 at n = 11. The win count and the raw
+test both improved. It fails only because Holm multiplies the smallest
+of three contrasts by three, giving 0.0557 against a bar of 0.05.
+
+Two of the five new datasets return exactly equal scores for standard
+and none (blood_transfusion and phoneme). Wilcoxon discards exact ties,
+so adding five datasets added only three usable pairs to this contrast
+while leaving the Holm multiplier unchanged. That is the mechanism, and
+it is the same family of problem as 4.4.4: the procedure, not the data,
+decides what can be reported.
+
+### The SVM result is now the stronger one
+
+At 11 datasets the SVM sat at Friedman 0.0530, just outside. At 16 it
+is 0.0154 with three rejected contrasts, and standard scaling has a
+confidence interval that **excludes zero** (+0.0036 to +0.1082), which
+only 14 of the previous 29 contrasts could claim. This is the
+best-supported scaling result the programme has produced, and it
+matches the theoretical expectation most strongly: the SVM depends on
+inner products and should be the most scale-sensitive model.
+
+### What this means for the write-up
+
+The report currently leads the scaling section with the logreg result.
+On the enlarged registry that is no longer the defensible choice. The
+SVM result is better supported, agrees with the literature, and has an
+interval excluding zero. The logreg finding becomes a near-miss that is
+reported honestly as such: a real effect on 12 of 16 datasets that the
+correction does not license.
+
+This also sharpens 5b and 5c. The seed instability, the n=11 fragility
+and this reversal are three views of one problem, namely that the study
+operates close to the resolution limit of its own statistical
+procedure. The report should say that once rather than three times.
+
+The imputation seed replication is still running, 1,116 of 2,048 runs.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
