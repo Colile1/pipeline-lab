@@ -2607,6 +2607,62 @@ procedure. The report should say that once rather than three times.
 
 The imputation seed replication is still running, 1,116 of 2,048 runs.
 
+---
+
+## 5f. Two monitoring errors, and a real effect found while checking
+
+The imputation seed replication reached 798 of 2,048 runs. Nothing is
+wrong with it, but two checks on it went wrong, and both are the kind
+of mistake that wastes an hour when it is not written down.
+
+### The status column is not called what the query assumed
+
+A progress query counted rows where `status = 'ok'` and returned zero
+for every sweep. The engine writes `succeeded`, `failed` and `skipped`.
+The sweep was at 734 succeeded, 64 skipped and 0 failed and looked like
+a total failure for about a minute.
+
+### Checking the wrong process name, which is how 4t happened
+
+A process check on `python.exe` found one process at 0 CPU seconds and
+11 MB after 24 minutes of uptime, which is the exact appearance that
+led to a healthy run being killed in 4t.
+
+The process list was read properly this time instead of acted on. The
+`python.exe` entry is the virtual environment's launcher stub. The real
+worker is its child, **`python3.11.exe`**, at 751 MB across 26 threads.
+Measured over 45 seconds it used 55.9 processor seconds, so it is
+running on several cores at full load.
+
+The general lesson from 4t was to measure before concluding. The
+specific lesson is narrower and more useful: **on this machine the
+worker process is not named `python.exe`**, and a check that filters on
+that name will always find an idle stub.
+
+### A real difference in the skipped runs
+
+Comparing which runs each seed skipped turned up something worth
+keeping. Every skip is `drop_rows`, and seed 1337 skips a superset of
+seed 671: 8 against 0 at MCAR 5 per cent, 24 against 20 at MCAR 15 per
+cent, never fewer.
+
+The cause is the injector. A different draw places the missing cells in
+more distinct rows, and on a wide dataset that is enough for listwise
+deletion to empty the training set. digits has 64 features and sonar
+60, so at 5 per cent missingness almost every row carries at least one
+gap.
+
+This is the guard added after the bodyfat artefact (4.4.3) working on
+the replication: rather than scoring a model on whatever fragment
+survives deletion, the run is refused. It also means the two seeds
+cannot be compared on `drop_rows` by win count alone, because they do
+not have the same denominator. That contrast needs its sample size
+stated per seed when the replication is analysed.
+
+It is a further argument against `drop_rows` as a default. Whether the
+method is usable at all depends on which cells happen to go missing,
+not only on how many.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
