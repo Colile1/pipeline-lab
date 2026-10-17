@@ -2663,6 +2663,86 @@ It is a further argument against `drop_rows` as a default. Whether the
 method is usable at all depends on which cells happen to go missing,
 not only on how many.
 
+---
+
+## 5g. All four classification arms at 16 datasets, and what the encoding null actually means
+
+Section 5e tested the scaling arm by hand. `docs/analysis/`
+`recheck_classification_arms.py` now does all four arms at once, runs
+them twice (the original eleven datasets, then all sixteen) and reports
+exact ties beside every contrast, so the two registries can be compared
+directly rather than from memory.
+
+### The net effect of the five datasets
+
+Three contrasts gained, one lost, all in the scaling arm:
+
+| | before, n=11 | after, n=16 |
+|---|---|---|
+| svm, standard vs none | not rejected | **rejected**, Holm 0.0071 |
+| svm, minmax vs none | not rejected | **rejected**, Holm 0.0249 |
+| svm, robust vs none | not rejected | **rejected**, Holm 0.0249 |
+| logreg, standard vs none | rejected, Holm 0.0410 | not rejected, 0.0557 |
+
+The SVM standard contrast is the only one whose interval excludes zero
+(+0.0036 to +0.1082). It is the best-supported result in the
+programme and the write-up should lead with it.
+
+### A third instance of the instability pattern
+
+The selection arm swapped which model reaches Friedman significance.
+random_forest went from 0.0386 to 0.0649 and logreg from 0.0659 to
+0.0202, in opposite directions, with no surviving contrast on either
+side before or after. Nothing was gained or lost in reportable terms,
+but it is the same phenomenon as 5b and 5e: results near the threshold
+move when the registry changes, and the direction of the move is not
+predictable. Three independent sightings of this is enough that the
+report should treat it as a finding about the method rather than as a
+caveat repeated three times.
+
+### The encoding arm did not move at all, and that is the point
+
+The encoding Friedman values are identical to four decimal places
+before and after: 0.2636, 0.3679, 0.7165, 0.3679. Adding five datasets
+changed nothing whatsoever.
+
+The reason was checked rather than assumed. The runs exist, all five
+datasets against all three encoders, none skipped. But all five are
+entirely numeric, so the three encoders are no-ops and return **bit
+identical** scores: 20 of 20 new dataset-model cells have onehot,
+ordinal and target exactly equal. The test discards them, and the arm
+stays at eleven.
+
+Checking the original eleven showed the problem is not confined to the
+new datasets. **34 of 44 cells there are also all-equal**, because only
+three of the sixteen classification datasets carry categorical features
+at all (credit-approval 9, credit-g 13, heart-c 7).
+
+This changes what the encoding null is allowed to say. Across the whole
+classification side, 54 of 64 cells apply a treatment that cannot have
+an effect. The arm is not evidence that the choice of encoder does not
+matter; it is a test conducted almost entirely on data where no encoder
+does anything. The report currently states the encoding result as a
+null finding and must instead state it as **not tested**, with the cell
+count given.
+
+The meta-analysis already said this from the other direction:
+categorical fraction predicts encoding sensitivity at rho = 0.882, and
+every dataset with no categorical features shows exactly zero spread.
+The two analyses agree; only the confirmatory arm was phrased as though
+it had answered a question it never put.
+
+### Consequences for the write-up
+
+1. Lead the scaling section with the SVM result, not logreg.
+2. Report logreg standard as a near miss at 12 of 16 and Holm 0.0557,
+   stated plainly rather than omitted.
+3. Restate the encoding result as untested on this registry, with the
+   54-of-64 figure, and move it from findings to limitations.
+4. State the n of each arm separately. Scaling, selection and tuning
+   are at 16 datasets; encoding is still at 11.
+5. Consolidate the three instability sightings into one argument.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
