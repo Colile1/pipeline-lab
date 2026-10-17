@@ -54,13 +54,31 @@ def fig7():
                     fontweight="bold" if v > 1 else "normal", fontsize=10)
     ax.set_title("Which preprocessing choices actually move the score, and for which model")
     fig.colorbar(im, ax=ax, label="median spread across levels\n(% of baseline score)")
+    n_ds = len({c["dataset"] for c in cells})
     fig.text(0.5, -0.04,
-             "Spread = (best - worst level) / baseline, per dataset, median over 18 datasets. "
-             "Read as: 'if I change this choice, how much can the score move at all?'",
+             f"Spread = (best - worst level) / baseline, per dataset, median over {n_ds} "
+             f"datasets. Read as: 'if I change this choice, how much can the score move at all?'",
              ha="center", color=SLATE, fontsize=8.5)
     fig.tight_layout()
     fig.savefig(FIGS / "fig7_sensitivity_map.png", dpi=200, bbox_inches="tight")
     plt.close(fig)
+
+
+def _partial_spearman(a, b, control):
+    """Spearman correlation of a and b with control partialled out.
+
+    Ranks everything, regresses the two rank vectors on the control's
+    ranks, and correlates the residuals. Used for the confound check in
+    Figure 8, where missingness and categorical fraction are themselves
+    correlated in this registry.
+    """
+    ra, rb, rc = (stats.rankdata(v) for v in (a, b, control))
+
+    def resid(u):
+        slope, intercept = np.polyfit(rc, u, 1)
+        return u - (slope * rc + intercept)
+
+    return stats.pearsonr(resid(ra), resid(rb))
 
 
 def fig8():
@@ -105,11 +123,19 @@ def fig8():
                   f"datasets\nthat have categoricals (rho = {rho_c:.2f})", fontsize=11)
     ax2.legend(loc="upper left", fontsize=8.5)
 
+    # Computed, never typed. An earlier version of this caption carried
+    # literals that went stale when the registry grew, so the figure
+    # reported partial correlations the data no longer supported.
+    mp_cell = np.array([chars[c["dataset"]].get("missing_pct", 0.0) or 0.0 for c in sel])
+    rho_m, _ = stats.spearmanr(x, mp_cell)
+    pc, _ = _partial_spearman(y, x, mp_cell)
+    pm, pm_p = _partial_spearman(y, mp_cell, x)
     fig.text(0.5, -0.08,
-             "Left: categorical fraction genuinely predicts encoding sensitivity (partial rho = 0.78 "
-             "controlling for missingness). Right: raw missingness appeared to predict it too "
-             "(rho = 0.67), but every dataset with missing values also has categorical features, and "
-             "the partial correlation collapses to 0.12 (p = 0.31). Reported as a confound, not a finding.",
+             f"Left: categorical fraction genuinely predicts encoding sensitivity (partial rho = "
+             f"{pc:.2f} controlling for missingness). Right: raw missingness appeared to predict it "
+             f"too (rho = {rho_m:.2f}), but every dataset with missing values also has categorical "
+             f"features, and the partial correlation collapses to {pm:.2f} (p = {pm_p:.2f}). "
+             f"Reported as a confound, not a finding.",
              ha="center", color=SLATE, fontsize=8.5)
     fig.tight_layout()
     fig.savefig(FIGS / "fig8_encoding_predictor.png", dpi=200, bbox_inches="tight")
