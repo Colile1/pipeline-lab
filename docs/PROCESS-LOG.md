@@ -3315,6 +3315,99 @@ work does not skip work in progress.** Either wait for the running job
 or have the queue refuse to start a configuration that already has an
 active process.
 
+---
+
+## 5p. The held-out test: the prediction was not confirmed
+
+The study's strongest result, support vector machine scaling, was put
+to a pre-registered test on five datasets the study had never used.
+The prediction, the datasets, the procedure and the decision rule were
+written into `docs/PREREGISTRATION-HELDOUT.md` and **committed to git
+at 06:54 (1f82653) before any of the five had been scored**, so the
+timestamp establishes that the hypothesis preceded the data.
+
+**The prediction was not confirmed.**
+
+| dataset | none | standard | difference |
+|---|---|---|---|
+| eeg-eye-state | 0.5512 | 0.6587 | **+0.1075** |
+| kc1 | 0.8502 | 0.8530 | +0.0028 |
+| mozilla4 | 0.8720 | 0.8736 | +0.0015 |
+| diabetes_sylva | 0.7136 | 0.7119 | -0.0017 |
+| wall-robot-nav | 0.8906 | 0.8886 | -0.0020 |
+
+Standard scaling won on 3 of 5 at a one-sided Wilcoxon p of 0.3125.
+The registered bar was p below 0.05 and at least 4 of 5 wins. Neither
+was met. The registered falsification condition, 2 or fewer wins, was
+also not met, so the registered verdict is **a failure to confirm
+rather than a refutation**, and that is how it is reported.
+
+### The control worked, which matters
+
+Random forest on the same five datasets: 1 win of 5, p = 0.6875,
+median difference -0.0001. The control was included to show the test
+could distinguish a real effect from a procedure that finds one
+everywhere, and it did. The instrument is not manufacturing results.
+
+### What the numbers actually say
+
+The headline of 3 of 5 conceals the shape of the data. One dataset
+moved **10.8 percentage points**, the largest single scaling effect
+recorded anywhere in this study. The other four moved by less than
+0.3 of a percentage point in either direction, which is inside the
+band where this study has already shown, twice, that the sign of a
+difference is not reproducible.
+
+So the result is not that scaling fails to help support vector
+machines. It is that on four of the five datasets there was nothing
+to find, and the test counts a 0.15 percentage point win and a 10.8
+point win as one each. Wilcoxon on five datasets cannot distinguish
+those cases, and the pre-registration said in advance that five
+datasets gives a weak test whose smallest attainable p is 0.031.
+
+The honest summary: the effect appeared where it was large and was
+absent where it was small, which is consistent with the effect-size
+threshold the study established independently in 5c and 5l. That
+consistency is real support for the threshold finding, but it is not
+what was registered, so it cannot be claimed as a confirmation of the
+scaling result.
+
+### A negative result on the new statistic
+
+`feature_scale_ratio`, added hours earlier in 5o, was checked against
+these five to see whether it predicts the gain. **It does not.**
+
+| dataset | feature_scale_ratio | svm gain |
+|---|---|---|
+| kc1 | 2,218 | +0.0028 |
+| mozilla4 | 508 | +0.0015 |
+| diabetes_sylva | 64 | -0.0017 |
+| eeg-eye-state | 9.4 | **+0.1075** |
+| wall-robot-nav | 1.3 | -0.0020 |
+
+The dataset that moved has the second *lowest* ratio, and if anything
+the relationship runs backwards. This is reported as a negative
+result. The statistic does what it was built for, separating
+house_16H from ordinary datasets by five orders of magnitude, but
+that mechanism is a least-squares solver discarding singular values,
+and support vector machine kernel sensitivity is a different thing.
+Closing one instrumentation gap did not close the other, and the
+report should not imply it did.
+
+### Why this strengthens the study
+
+An examiner's sharpest question about a registry that grew during the
+study is whether the findings are an artefact of dataset selection.
+Before today there was no answer. Now there is one, it is documented
+in advance, and it is unflattering.
+
+A study that pre-registers a test of its own headline result and
+reports that the test did not confirm it is more credible than one
+that never looked. The 16-dataset result stands on its own evidence
+and is not withdrawn, but its generality is now an open question
+stated in the text rather than an assumption left for someone else to
+find.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
