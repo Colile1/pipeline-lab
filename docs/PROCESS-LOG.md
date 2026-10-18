@@ -3118,6 +3118,43 @@ finding is uncomfortable but it is the most valuable thing the
 instrument has produced: a study that tested its own largest
 assumption and reported what it found.
 
+---
+
+## 5m. Separating compute time from calendar time, for the whole programme
+
+Colile has twice had to point out that a stretch of elapsed time was
+the machine idle or asleep rather than the study computing, and an
+entry in 5l repeated the error from the other direction by assuming
+sleep where there was none. The record can settle this exactly, so it
+was asked rather than estimated again.
+
+Every run stores `started_at` and its own `wall_seconds`. Summing
+`wall_seconds` therefore measures only the time inside runs, and any
+interval between them, whether idle, asleep or shut down, is excluded
+by construction.
+
+Over the whole programme, all 7,097 runs from 12 to 17 October:
+
+| | |
+|---|---|
+| calendar span, first run to last | 128.1 hours |
+| measured compute, sum of run durations | **89.8 hours** |
+| idle, in 11 gaps over ten minutes | 37.9 hours |
+
+The largest gaps are 16.8 hours overnight on 16 to 17 October, 6.3
+hours on 12 to 13 October and 4.8 hours on 14 October. None of that
+time is in the reported cost.
+
+**The cost figures in the report were never inflated by sleep.** The
+85.5 hours quoted for the experimental programme, and the 89.8
+including replication, are sums of per-run durations. This is now
+checked rather than asserted, and the check is one query, so there is
+no reason to estimate it again.
+
+The same query applied to the imputation replication showed no gap
+above three minutes across its 1,728 runs, which is what established
+that its 2.6 hours is continuous compute.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
