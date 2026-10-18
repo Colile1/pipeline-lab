@@ -3155,6 +3155,80 @@ The same query applied to the imputation replication showed no gap
 above three minutes across its 1,728 runs, which is what established
 that its 2.6 hours is continuous compute.
 
+---
+
+## 5n. The report rebuilt on the final record, and package v3
+
+With the replication complete, the fifteen stale figures identified in
+5i were updated in a single pass rather than individually, and the
+report was rebuilt as
+`Chapters/Pipeline Lab Research Report  _  18 October 2026.docx`.
+A new date was used rather than overwriting the 17 October file,
+because the content changed materially.
+
+### What changed in the report
+
+Section 4.4.7 gains the imputation replication: two new tables, the
+35 per cent reproduction rate, the mar30 random forest case at
+p = 0.0063 against 0.9718, and the effect-size comparison against the
+scaling arm. The abstract and the conclusion both state the
+replication result, since it qualifies the study's central claim and
+should not be discoverable only by reading chapter 4.
+
+Three earlier passages were corrected rather than merely renumbered.
+The scaling section now leads with the support vector machine. The
+encoding section states the arm as untested with the 54 of 64 figure.
+The aside about the support vector machine being intermittently
+significant under seed 1337 was rewritten, because the enlarged
+registry resolved that intermittency in the direction the replication
+had indicated, which is a better story than the one it replaced.
+
+### The verification caught six things the rebuild did not
+
+Running the checklist against the built document rather than the
+source found:
+
+1. `67 per cent` surviving in a paragraph added by a later script, in
+   a back-reference whose line wrapping hid it from a source grep.
+2. Table 4.3's per-component hours **all stale**, including 54.6 for
+   tuning against a measured 58.1.
+3. Table 4.6's cost-by-size figures stale in most cells.
+4. Per-model costs stale: 108.4 and 96.8 seconds against measured
+   118.5 and 104.5.
+5. `228-fold` surviving a replacement that silently did not match.
+6. Two apparent style violations, "modeling" and "we", which turned
+   out to be inside verified reference titles and were correctly left
+   alone.
+
+Point 2 deserves singling out. Correcting the tuning share, the first
+attempt divided 54.6 by the new total of 85.5 and wrote 64 per cent.
+The arithmetic was right and the answer was wrong, because the
+numerator was also stale: tuning actually measured 58.1 hours, giving
+68 per cent. **Recomputing a figure from one stale input and one fresh
+one produces a number that is new, plausible and incorrect.** The
+check that caught it was going back to the database for both values
+rather than reusing the one already on the page.
+
+The document now passes: no stale figures, every expected figure
+present, no em or en dashes, and every in-text citation matched
+against the reference list. 15,499 words, 10 tables, 9 figures, 33
+references.
+
+### Package v3
+
+`Submission/ITRI671 Pipeline Lab Submission v3.zip`, 5.2 MB, 35
+entries, archive integrity verified. It carries the rebuilt report,
+the full run record at 7,097 runs over 31 datasets, and the four
+analysis scripts written during this work
+(`recheck_classification_arms.py`, `report_figures.py`,
+`imputation_seed_check.py`, `imputation_effect_threshold.py`), so
+every figure in the report can be regenerated from the database by a
+reader.
+
+v1 and v2 remain in place. They were written as fallbacks before the
+replication ran, and they are now superseded rather than deleted,
+since the point of a dated fallback is that it stays where it was.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
