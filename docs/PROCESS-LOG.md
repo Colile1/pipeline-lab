@@ -2987,12 +2987,35 @@ datasets.
 
 ## 5l. The imputation replication, complete: 35 per cent reproduces
 
-All six sweeps finished: 1,728 runs, no failures, final write 00:58 on
-18 October. (The machine then slept for about four hours, so the
-elapsed wall-clock to the next check is not compute time. The
-replication itself took roughly two hours.) The 2,048 figure quoted
-while it ran was an overestimate of my own; 1,728 is the correct total
-for six sweeps.
+All six sweeps finished: 1,728 runs, no failures. The 2,048 figure
+quoted while it ran was an overestimate of my own; 1,728 is the
+correct total for six sweeps.
+
+The timeline was reconstructed from the `started_at` and
+`wall_seconds` columns rather than estimated, because an earlier note
+in this entry guessed at it and guessed wrong:
+
+| | local time |
+|---|---|
+| first run started | 17 Oct 22:21 |
+| last run ended | 18 Oct 00:58 |
+| wall span | 2.62 hours |
+| sum of individual run durations | 2.60 hours |
+| gaps longer than three minutes | none |
+
+The 0.02 hour difference between the span and the sum is scheduling
+overhead between runs. The absence of any gap above three minutes
+establishes that the machine was awake and working continuously for
+the whole sweep, so **2.6 hours is the replication's true cost** and
+no part of it is suspended time.
+
+The idle period afterwards is therefore bounded exactly: the sweep
+ended at 00:58 and the next check was at 06:19, which is 5 hours 21
+minutes during which the machine had simply run out of work. Colile
+confirms it was still awake at 03:00 on 37 per cent battery and shut
+down when the battery ran out, which matches. An earlier draft of this
+entry attributed that window to sleep during the run; that was wrong
+and is corrected here.
 
 Skips rise with the missingness rate exactly as 5f predicted: 8, 24
 and 36 at MCAR 5, 15 and 30 per cent, all `drop_rows`.
