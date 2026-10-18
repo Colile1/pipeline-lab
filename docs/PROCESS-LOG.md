@@ -2983,6 +2983,118 @@ MAR is still running. The final figure may move, but not enough to
 change the conclusion: these contrasts are not stable at nine
 datasets.
 
+---
+
+## 5l. The imputation replication, complete: 35 per cent reproduces
+
+All six sweeps finished: 1,728 runs, no failures, final write 00:58 on
+18 October. (The machine then slept for about four hours, so the
+elapsed wall-clock to the next check is not compute time. The
+replication itself took roughly two hours.) The 2,048 figure quoted
+while it ran was an overestimate of my own; 1,728 is the correct total
+for six sweeps.
+
+Skips rise with the missingness rate exactly as 5f predicted: 8, 24
+and 36 at MCAR 5, 15 and 30 per cent, all `drop_rows`.
+
+### The headline
+
+| | |
+|---|---|
+| rejected under 671, reproduced under 1337 | 8 |
+| rejected under 671, **not** under 1337 | 15 |
+| rejected under 1337, not under 671 | 9 |
+| **reproduction rate** | **8 of 23, 35 per cent** |
+
+Agreement on the global test is 50 of 72 cells, 69 per cent. The MCAR
+half alone had read 50 per cent; the MAR sweeps are worse, and mar30
+loses six of its seven contrasts.
+
+### The clearest single case
+
+`mar30 / random_forest / accuracy` is the starkest result in the
+programme: **p = 0.0063 under seed 671 and p = 0.9718 under seed
+1337**. The comparison was checked directly rather than trusted. Both
+seeds use the same nine datasets at comparable scores, so the registry
+is identical and the test is sound. What differs:
+
+| dataset | 671, knn minus mean | 1337, knn minus mean |
+|---|---|---|
+| digits | +0.0317 | +0.0323 |
+| sonar | +0.0769 | -0.0055 |
+| wine | +0.0229 | -0.0170 |
+| pima | +0.0104 | -0.0261 |
+| breast_cancer | +0.0070 | -0.0088 |
+
+Under the first seed kNN beats mean imputation on 8 of 9 datasets with
+one tie. Under the second it wins 4 of 9. Only `digits` holds both its
+direction and its size. Every other dataset differs by under one
+percentage point, and at 30 per cent missingness the sign of that
+difference is decided by which cells the injector happened to remove.
+
+This is not a threshold crossing. It is the same comparison returning
+opposite answers because the quantity being measured is smaller than
+the noise in measuring it.
+
+### Effect size predicts reproducibility here too, but weakly
+
+The 5c analysis was repeated on this arm, over 843 comparisons after
+excluding 21 no-ops:
+
+| effect size | agree on direction |
+|---|---|
+| below 1 percentage point | 205 of 368, **56 per cent** |
+| 1 percentage point or more | 371 of 475, **78 per cent** |
+
+Fisher exact test: odds ratio 2.8 at p = 4.9e-12. The direction
+matches the scaling finding, derived independently on a different arm,
+which is real support for the rule.
+
+The levels do not match, and that matters more than the agreement
+does. Scaling gave 93 per cent above the threshold and 29 below. Here
+it is 78 and 56. **Fifty-six per cent is barely distinguishable from a
+coin.** Raising the bar does not fix it:
+
+| threshold | comparisons | agreement |
+|---|---|---|
+| 0.5% | 629 | 73% |
+| 1% | 475 | 78% |
+| 2% | 367 | 84% |
+| 5% | 244 | 86% |
+| 10% | 183 | 85% |
+
+Agreement plateaus near 85 per cent from 2 per cent upward and never
+approaches scaling's 93. There is no effect size at which an
+imputation result on nine datasets becomes as dependable as a scaling
+result on sixteen. The limit is the sample, not the effect.
+
+### What this does to the study
+
+The imputation arm supplies 21 of the study's rejected contrasts and
+the report presents it as the principal source of findings. That
+presentation cannot survive this. Two thirds of those contrasts do not
+reproduce under a second draw, and the arm has nine datasets against
+the scaling arm's sixteen.
+
+The honest position, and the one the report will take:
+
+1. The imputation findings are reported with the 35 per cent
+   reproduction rate attached, not as settled results.
+2. The eight that reproduced are named, since they are the defensible
+   subset. kNN against mean on regression holds across both seeds at
+   several rates, and median being worse than mean on regression holds
+   at 0 or 1 of 9 datasets under both.
+3. The arm's conclusions are stated as provisional pending more
+   datasets, with nine named as the binding constraint.
+4. The scaling arm becomes the study's strongest evidence, having
+   sixteen datasets and a confidence interval excluding zero.
+
+This is the outcome 5d anticipated when the replication was launched,
+and it is the reason the v1 and v2 packages were written first. The
+finding is uncomfortable but it is the most valuable thing the
+instrument has produced: a study that tested its own largest
+assumption and reported what it found.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
