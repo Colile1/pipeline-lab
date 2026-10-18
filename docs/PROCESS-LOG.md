@@ -3229,6 +3229,92 @@ v1 and v2 remain in place. They were written as fallbacks before the
 replication ran, and they are now superseded rather than deleted,
 since the point of a dated fallback is that it stays where it was.
 
+---
+
+## 5o. Widening the imputation arm, and a duplicate-row mistake
+
+Four further pieces of work were started on 18 October, following the
+replication result in 5l. This entry records the setup and one error
+made during it.
+
+### The instrumentation gap is closed
+
+`feature_scale_ratio`, defined as max(std) / median(std) over the
+numeric features before any scaling, is now recorded on every run.
+The meta-analysis had flagged this as a concrete gap: the study used
+`mean_abs_correlation` as a proxy for scale disparity, and that
+statistic measures something else entirely, so the house_16H mechanism
+could not be tested across the registry.
+
+The new statistic was checked against the case that motivated it:
+
+| dataset | feature_scale_ratio | mean_abs_correlation |
+|---|---|---|
+| house_16H | **742,937** | 0.1488 |
+| wine | 388 | 0.3050 |
+| iris | 2.2 | 0.5941 |
+| digits | 1.5 | 0.1236 |
+| concrete | 1.5 | 0.2075 |
+
+house_16H is separated from ordinary datasets by five orders of
+magnitude, while the old proxy ranked it *below* iris. That is direct
+evidence the proxy was wrong and the replacement measures the intended
+property.
+
+The median is used as the denominator rather than the minimum, so a
+single near-constant column cannot send the ratio to infinity. Six
+tests cover the behaviour and the full suite passes at 348. Existing
+rows read NULL, which the engine's column migration handles already.
+
+### The imputation arm goes from 9 datasets to 14
+
+Seven registry entries qualified and were not in the arm: banknote,
+blood_transfusion, climate_sim, phoneme and steel_plates for
+classification, house_16H and forest_fires for regression. All are
+complete, so an injected rate stays truthful, which is the criterion
+that excluded heart-c, credit-approval, colic and autoMpg originally.
+
+Twelve sweeps are queued, six missingness settings under seeds 671 and
+1337, so the widened arm can be replicated like for like. 400 runs per
+sweep against the previous 288.
+
+### The mistake: two copies of one sweep at once
+
+A single sweep was started first to measure the cost, and the queue
+for the remaining eleven was then launched before that sweep had
+finished. The queue skips a sweep only when the record already holds
+its full 400 runs, and a partially complete sweep does not meet that
+test, so it started a second copy of the same configuration.
+
+Two faults, both mine:
+
+1. A first attempt to chain the queue behind the running sweep used a
+   detached shell. The harness terminated the child when the wrapper
+   exited, so the queue never ran at all and the log was empty. The
+   launch message said "queue armed", which was not true. Checking the
+   log rather than trusting the message is what caught it.
+2. Restarting the queue directly then put two copies of
+   `wide_imputation_mcar05_s671` on the machine together.
+
+The duplicate was stopped once the process list confirmed it, and 26
+cells had by then been written twice under two `batch_id` values.
+
+**No result is affected.** All 35 overlapping rows are scored
+identically across the two batches, which is what a deterministic
+engine given the same seed should produce, and is a small unintended
+confirmation that it is deterministic. The rows are redundant, not
+contradictory.
+
+The record is append-only, so nothing was deleted. The analysis for
+this arm selects one batch per configuration instead, and the
+duplicate check that already runs before every commit now also covers
+the `wide_imputation` sweeps.
+
+The lesson is narrow and worth keeping: **a queue that skips completed
+work does not skip work in progress.** Either wait for the running job
+or have the queue refuse to start a configuration that already has an
+active process.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
