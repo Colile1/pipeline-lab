@@ -3449,6 +3449,45 @@ diagnosis was right. This will either firm up or wash out as the
 remaining four sweep pairs land, and the final figure is the one that
 will be reported.
 
+---
+
+## 5r. Widened imputation arm, all three MCAR sweeps complete
+
+mcar05, mcar15 and mcar30 are now complete under both seeds (7 of 12
+sweeps done overall; mar05 through mar30 remain). This is still not
+the final figure, but it is a larger and steadier reading than 5q's.
+
+| | 9-dataset arm (final) | 14/11-dataset arm, MCAR only |
+|---|---|---|
+| reproduced | 8 of 23 | 6 of 10 |
+| rate | 35 per cent | **60 per cent** |
+| global-test agreement | 50 of 72, 69 per cent | 24 of 36, 67 per cent |
+
+The reproduction rate has held at roughly this level across two
+successive checks (57 per cent at 2 sweeps, 60 at 3), which is a
+better basis for treating it as real than a single reading would be.
+Global-test agreement remains close to the nine-dataset figure rather
+than improving with it, which says the extra datasets are helping
+contrasts that already passed the gate survive a second seed more than
+they are helping new cells pass the gate in the first place.
+
+### One result checked directly: random forest loses badly to kNN at 30 per cent
+
+`regression/rmse_mean/random_forest/knn` under seed 1337 rejects at
+p = 0.0195 with kNN beating mean on only 1 of 11 datasets, which reads
+as an unusual result worth checking rather than trusting from the
+summary line. Checked directly against the per-dataset scores: kNN is
+worse than mean on 10 of 11, consistently, with differences from
++0.006 to +1.18 RMSE and one extreme case, **house_16H, at +825**.
+That dataset's known scale disparity (feature_scale_ratio of 742,937,
+5o) plausibly distorts kNN's distance calculation at high missingness,
+compounding across its many imputed cells. The pattern is genuine, not
+a data artefact, and is a candidate explanation worth stating if it
+survives the mar sweeps too.
+
+The mar05, mar15 and mar30 pairs are still running (queue at 7 of 12,
+sweep 8 of 12 under way). The figure above is not final.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
