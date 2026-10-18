@@ -3408,6 +3408,47 @@ and is not withdrawn, but its generality is now an open question
 stated in the text rather than an assumption left for someone else to
 find.
 
+---
+
+## 5q. Widened imputation arm, interim: two of six sweep pairs in
+
+The queue is running (started 06:52, roughly 55 to 110 minutes per
+sweep depending on missingness rate). mcar05 and mcar15 are complete
+under both seeds; mcar30, mar05, mar15, mar30 are not, so this is an
+interim reading, not the final one.
+
+### The duplicate count was verified precisely, not estimated
+
+5o reported 26 duplicated cells from checking a 35-row sample. The
+full comparison script found 222. Checked directly: `mcar05_s671`
+holds two batches, one of 400 rows and one of 222, and all 222
+overlapping (dataset, model, imputation) cells were compared at full
+precision. **Every one agrees.** mcar15 has one batch per seed at
+exactly 400 rows and no duplication at all. The 5o entry undercounted
+because it sampled rather than checked the full set; this entry
+corrects it. The conclusion is unchanged and now rests on a complete
+check: the duplication is redundant, not contradictory, and does not
+touch any result.
+
+### Interim reproduction rate
+
+| | 9-dataset arm (final) | 14/11-dataset arm (2 of 6 sweeps) |
+|---|---|---|
+| reproduced | 8 of 23 | 4 of 7 |
+| rate | 35 per cent | 57 per cent |
+| global-test agreement | 50 of 72, 69 per cent | 16 of 24, 67 per cent |
+
+The reproduction rate looks improved; the global-test agreement does
+not. Seven contrasts is too few to treat the first figure as
+established, and it is reported here as an interim reading only. What
+is more informative at this stage is the pattern in which cells
+changed: several moved from "no global test" under one seed to a
+passing Friedman test under the other, at the larger sample, which is
+the direction widening the registry should produce if the original
+diagnosis was right. This will either firm up or wash out as the
+remaining four sweep pairs land, and the final figure is the one that
+will be reported.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
