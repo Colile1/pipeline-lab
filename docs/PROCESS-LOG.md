@@ -3488,6 +3488,63 @@ survives the mar sweeps too.
 The mar05, mar15 and mar30 pairs are still running (queue at 7 of 12,
 sweep 8 of 12 under way). The figure above is not final.
 
+---
+
+## 5s. A guard that could not see a deleted class
+
+The `mar15_s671` sweep exited non-zero with 3 failures, the first in
+the whole widened arm. The exit code was investigated rather than
+written off as the sklearn convergence warning printed beside it, and
+it turned out to be a real bug in the engine's own safety check.
+
+### What happened
+
+All three failures were `climate_sim` with `drop_rows`, on logreg, svm
+and gradient_boosting, each raising a different single-class error
+from inside sklearn. Reproduced directly: climate_sim has a 494 to 46
+class split, and at 15 per cent MAR the injector plus listwise
+deletion left **70 rows, all of one class**. The 46-member minority
+class was removed entirely.
+
+### Why the existing guard missed it
+
+A guard added on 2026-10-13 already refuses a dataset whose smallest
+class falls below the fold count. It computes
+`y.value_counts().min()`. **`value_counts()` only counts classes that
+are present**, so a class deleted outright does not appear in the
+tally at all, and `min()` returned 70, the size of the one surviving
+class, comfortably above the 10 folds requested. The check passed.
+
+A rare class and an absent class are different failures. The old test
+could only ever catch the first.
+
+### The dangerous part was the run that succeeded
+
+Three models crashed, but **random_forest did not: it scored accuracy
+1.0 and f1 1.0 on a single-class problem and the record stored that as
+a successful result.** A crash is self-announcing. A meaningless 1.0
+sitting in the record next to real numbers is not.
+
+Every `drop_rows` classification success in the whole 9,000-row record
+was then scanned by re-deriving the post-deletion class count for each
+one. **Exactly one contaminated run exists**, this climate_sim case.
+It belongs to the widened arm, which is new work that has not entered
+any report, so no published figure is affected. The other
+accuracy-1.0 runs in the record sit at full row counts on genuinely
+easy datasets and are legitimate.
+
+### The fix
+
+The surviving-class count is now checked first and separately, before
+the smallest-class test, and refuses with its own message. Verified on
+the real failing case: all four models now skip cleanly with a
+recorded reason, random_forest included. Two regression tests were
+added, one for a class deleted outright and one confirming a rare
+class still gets the older, different refusal. Suite at 350 passing.
+
+The affected cells will be re-run with the fix in place so they are
+recorded as skips rather than as three failures and one false success.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
