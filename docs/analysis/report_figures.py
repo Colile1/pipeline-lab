@@ -109,7 +109,15 @@ def cells(conn):
 
 
 with sqlite3.connect(f"file:{DB}?mode=ro", uri=True) as conn:
-    real = "config_name not like 'seed_check%'"
+    # "Experimental" means the main OFAT programme only. Replication
+    # and confirmation sweeps repeat or test existing work rather than
+    # extending coverage, so folding them into one total would overstate
+    # the programme. Each is reported on its own line instead. Added
+    # 2026-10-19 after the widened arm and the held-out set would
+    # otherwise have inflated the headline to 9,891 runs over 36
+    # datasets.
+    EXCLUDE = ("seed_check%", "wide_imputation%", "third_seed%", "heldout%")
+    real = " and ".join(f"config_name not like '{p}'" for p in EXCLUDE)
 
     runs = conn.execute(f"select count(*) from runs where {real}").fetchone()[0]
     datasets = conn.execute(f"select count(distinct dataset) from runs where {real}").fetchone()[0]
@@ -119,13 +127,16 @@ with sqlite3.connect(f"file:{DB}?mode=ro", uri=True) as conn:
     ).fetchone()[0] / 3600.0
 
     seed_runs = conn.execute(
-        "select count(*) from runs where config_name like 'seed_check%'"
+        "select count(*) from runs where config_name like 'seed_check%' "
+        "or config_name like 'wide_imputation%' or config_name like 'third_seed%'"
     ).fetchone()[0]
     seed_sweeps = conn.execute(
-        "select count(distinct config_name) from runs where config_name like 'seed_check%'"
+        "select count(distinct config_name) from runs where config_name like 'seed_check%' "
+        "or config_name like 'wide_imputation%' or config_name like 'third_seed%'"
     ).fetchone()[0]
     seed_hours = conn.execute(
-        "select sum(wall_seconds) from runs where config_name like 'seed_check%' "
+        "select sum(wall_seconds) from runs where (config_name like 'seed_check%' "
+        "or config_name like 'wide_imputation%' or config_name like 'third_seed%') "
         "and wall_seconds is not null"
     ).fetchone()[0] / 3600.0
 

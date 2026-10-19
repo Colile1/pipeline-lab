@@ -3650,6 +3650,65 @@ Both are now superseded by skips. The scan logic was right; it was run
 too early, which is worth noting because an "all clear" on a record
 that is still being written is not an all clear.
 
+---
+
+## 5v. Report rebuilt, and a run total that would have overstated the study
+
+The report was rebuilt as
+`Chapters/Pipeline Lab Research Report  _  19 October 2026.docx` with
+two new sections: 4.4.8 on the widened arm and 4.4.9 on the
+pre-registered held-out test. 16,486 words, 12 tables, 9 figures, 33
+references, verification clean.
+
+### The totals needed separating, not updating
+
+`report_figures.py` counted as "experimental" anything not named
+`seed_check%`. With the widened arm and the held-out set in the
+record, it returned **9,891 experimental runs over 36 datasets in
+110.1 hours**, and those numbers were nearly written into the report.
+
+They would have overstated the study. The widened arm is a
+*replication* of existing sweeps at a larger registry, not new
+exploratory coverage, and the held-out five are a separate
+confirmatory test that by design took no part in generating any
+hypothesis. Counting either as experimental work inflates the
+programme.
+
+Broken out properly:
+
+| | runs | hours | datasets |
+|---|---|---|---|
+| main experimental programme | 4,761 | 85.5 | 31 |
+| seed replication, both arms | 2,336 | 4.4 | 22 |
+| widened imputation arm | 5,054 | 24.5 | 25 |
+| pre-registered held-out test | 20 | 0.1 | 5 |
+
+The main programme figures are **unchanged**: 4,761 runs, 31 datasets,
+85.5 hours. That is what the report states, with the rest on their own
+lines. The script now excludes all four replication and confirmation
+prefixes and carries a comment saying why, so the inflated figure
+cannot come back.
+
+This is the same category of error as the stale-numerator mistake in
+5n: a number that is arithmetically correct, plausible, and measures
+the wrong thing. Both were caught by asking what the figure was
+supposed to mean rather than whether it computed.
+
+### Package v4
+
+`Submission/ITRI671 Pipeline Lab Submission v4.zip`, 6.89 MB, 43
+entries, integrity verified, SHA-256 beginning 3e690cc6. It adds the
+pre-registration document, which is the evidence that the held-out
+prediction preceded the data, and the queue runners and config
+generators that produced the widened arm.
+
+v1 to v3 remain in place as dated fallbacks.
+
+The third-seed sweeps (option 2) are running, one of six complete at
+the time of writing. They will add a third draw to the nine-dataset
+imputation arm, matching the scaling arm's three-seed design, and are
+reported when they land.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
