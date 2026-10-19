@@ -3545,6 +3545,51 @@ class still gets the older, different refusal. Suite at 350 passing.
 The affected cells will be re-run with the fix in place so they are
 recorded as skips rather than as three failures and one false success.
 
+---
+
+## 5t. Widened arm at five of six pairs: the diagnosis is holding
+
+mar05 and mar15 are now complete under both seeds. Only mar30 remains.
+
+| | 9-dataset arm (final) | widened arm, 5 of 6 pairs |
+|---|---|---|
+| reproduced | 8 of 23 | 10 of 16 |
+| rate | 35 per cent | **62 per cent** |
+| global-test agreement | 50 of 72, 69 per cent | **46 of 60, 77 per cent** |
+
+The reproduction rate has now held across four successive readings as
+the sample grew: 57 per cent at 2 pairs, 60 at 3, 62 at 5. A figure
+that stays put while the denominator doubles is far better evidence
+than any single reading.
+
+### A correction to 5r
+
+5r observed that global-test agreement was *not* improving (67 per
+cent against the nine-dataset arm's 69) and reasoned from that the
+extra datasets were helping already-passing contrasts survive a second
+seed rather than helping new cells pass the gate. **With mar05 and
+mar15 in, that reading is wrong.** Agreement is now 77 per cent,
+clearly above the nine-dataset figure. The MCAR-only reading was
+drawn from 36 cells and did not survive the sample doubling.
+
+This is the fourth time in this study that a pattern read off a small
+sample has reversed on a larger one, which is the study's own central
+finding arriving yet again in its own process. It is recorded rather
+than quietly overwritten.
+
+### What this means if mar30 agrees
+
+The original diagnosis in 5l was that the imputation arm's 35 per cent
+reproduction rate was caused by its nine-dataset sample rather than by
+anything deeper. Adding five classification and two regression
+datasets nearly doubled the reproduction rate and lifted global-test
+agreement by eight points. That is direct support for the diagnosis,
+and it converts the 5l result from an awkward limitation into a
+measured relationship between sample size and reproducibility, which
+is a considerably stronger contribution.
+
+The final figure waits on mar30.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
