@@ -3709,6 +3709,83 @@ the time of writing. They will add a third draw to the nine-dataset
 imputation arm, matching the scaling arm's three-seed design, and are
 reported when they land.
 
+---
+
+## 5w. Three seeds on the imputation arm: 8 per cent survive all of them
+
+The third draw (seed 20260702) completed: 1,728 runs in 4.9 hours,
+**zero failures**, with the fixed guard holding throughout. The
+nine-dataset imputation arm now has three seeds, matching the scaling
+arm's design since 5b.
+
+Three draws permit a measure two cannot: not whether a pair agreed,
+but how many of three independent draws rejected each contrast.
+
+| | contrasts | share |
+|---|---|---|
+| rejected under **3 of 3** seeds | 3 | **8 per cent** |
+| rejected under 2 of 3 | 9 | 25 per cent |
+| rejected under **1 of 3** | 24 | **67 per cent** |
+| ever rejected under any seed | 36 | |
+
+This is markedly worse than the two-seed figure in 5l implied. Two
+thirds of everything this arm has ever called significant appears
+under exactly one draw of three. **Each of those 24 would have been
+reported as a finding had that seed been the only one run**, which is
+exactly how a single-seed study is normally conducted.
+
+### The three that survived everything
+
+| sweep | contrast |
+|---|---|
+| mcar05 | regression, logreg, median against mean |
+| mar05 | regression, logreg, median against mean |
+| mcar30 | classification, svm, knn against mean |
+
+Median imputation being worse than mean for regression at 5 per cent
+missingness is the only result appearing under both mechanisms and all
+three seeds. It is the single most dependable imputation finding the
+programme has produced, and it is a negative one.
+
+### The seed the study chose is the most generous of the three
+
+The three designs are identical: 288 runs per sweep per seed, the same
+nine datasets, near-identical success counts (checked, because an
+asymmetry here would have made the comparison meaningless). The number
+of contrasts each draw rejects is not:
+
+| seed | contrasts rejected |
+|---|---|
+| **671** | **23** |
+| 1337 | 17 |
+| 20260702 | 11 |
+
+Seed 671 is the one the study's findings rest on, and it yields more
+than twice as many rejections as 20260702. Run under that seed
+instead, this arm would have reported fewer than half its findings.
+
+This is **not** cherry-picking: 671 was fixed before any data was
+collected and is documented throughout. That is the point worth
+making. An honestly pre-committed, arbitrary choice still determined
+more than half of what the arm reported, and no amount of care in
+choosing it would have helped, because there is nothing to choose on.
+The only defence is to run more than one, which is what this section
+does.
+
+### How this sits with 5u
+
+5u widened the registry and raised two-seed reproduction from 35 to 59
+per cent. 5w holds the registry at nine and adds a third seed, finding
+8 per cent unanimity. The two are consistent and measure different
+things: 5u shows the instability shrinks as the registry grows, 5w
+shows how severe it is at the original size when examined properly
+rather than pairwise.
+
+Together they make the study's central methodological claim concrete:
+a preprocessing comparison on roughly ten datasets under one random
+seed is close to unreproducible, the deficit is measurable, and it is
+substantially fixable by enlarging the registry.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
