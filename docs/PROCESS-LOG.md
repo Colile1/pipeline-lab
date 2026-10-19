@@ -3590,6 +3590,66 @@ is a considerably stronger contribution.
 
 The final figure waits on mar30.
 
+---
+
+## 5u. The widened imputation arm, complete: the diagnosis was right
+
+All twelve sweeps finished: 4,822 runs over 24.4 hours of queue time.
+Two sweeps carried the climate_sim failures described in 5s; those
+cells were re-run with the fixed guard before the final analysis, so
+the figures below rest on a clean record.
+
+### The headline, on identical cell counts
+
+| | nine datasets | fourteen / eleven datasets |
+|---|---|---|
+| contrasts reproduced | 8 of 23 | 10 of 17 |
+| **reproduction rate** | **35 per cent** | **59 per cent** |
+| global-test agreement | 50 of 72, 69 per cent | 54 of 72, **75 per cent** |
+
+Both arms are compared over exactly 72 cells, so the agreement figures
+are directly comparable rather than scaled.
+
+The reproduction rate held steady across five readings taken as the
+sample grew: 57 per cent at two sweep pairs, 60 at three, 62 at five,
+59 at six. A number that stays in a narrow band while its denominator
+more than doubles is much better evidence than any single reading, and
+the slight fall at the end is the sort of movement a rate of this size
+makes on seventeen observations.
+
+### What it establishes
+
+5l reported that the imputation arm reproduced at 35 per cent and
+attributed that to its nine-dataset sample rather than to anything
+deeper. Adding five classification and two regression datasets raised
+reproduction from 35 to 59 per cent and gate agreement from 69 to 75.
+**The diagnosis is confirmed by intervention rather than argument.**
+
+This changes what the study can say. The 5l result on its own is a
+limitation: most of the main arm's findings do not replicate. With
+5u beside it the pair becomes a measured relationship between
+registry size and reproducibility, demonstrated by changing the one
+variable and observing the effect. That is a contribution rather than
+an apology, and it is the strongest methodological result the
+programme has produced.
+
+It also sets the honest ceiling. 59 per cent is better than 35 but it
+is not high. Fourteen datasets still leave four of every ten
+rejected contrasts failing to survive a change of seed, so the
+recommendation that follows is not "the problem is solved" but "this
+kind of study needs more datasets than the field customarily uses,
+and the shortfall is measurable".
+
+### The second false success
+
+5s found one contaminated run and scanned the record for others,
+finding none. That scan ran before mar30 had finished. With all twelve
+sweeps in there are **two**, the same climate_sim cell at 15 and 30
+per cent MAR, both recording accuracy 1.0 on a single-class problem.
+Both are now superseded by skips. The scan logic was right; it was run
+too early, which is worth noting because an "all clear" on a record
+that is still being written is not an all clear.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
