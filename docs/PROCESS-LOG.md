@@ -3786,6 +3786,62 @@ a preprocessing comparison on roughly ten datasets under one random
 seed is close to unreproducible, the deficit is measurable, and it is
 substantially fixable by enlarging the registry.
 
+---
+
+## 5x. Table numbering, a verification gate, and package v5
+
+Adding the three-seed section to the report produced a second
+"Table 4.10". Checking the rest found the clash was not the only one:
+the cost-by-size table had been inserted as 4.6 when 4.5 was free, and
+the effect-size table still carried 4.5 while appearing last. Three
+numbering faults, two of them pre-existing and none visible in the
+source, because a table's number is only wrong relative to the
+*order* its captions appear in.
+
+All thirteen tables were renumbered by document position, 4.1 to 4.13,
+and the three prose references that introduce them were updated to
+match. Numbering is law in this project because sibling chapters
+cross-reference it, so this had to be exact rather than approximately
+right.
+
+### The verification script had two false positives of its own
+
+Checking the rebuilt document raised three failures, and **two were
+defects in the checker, not the report**:
+
+1. It counted any paragraph beginning "Table 4.3" as a caption, so a
+   sentence introducing a table ("Table 4.3 summarises the experiments
+   that were run") read as a duplicate caption. It now filters on the
+   Caption *style*.
+2. It screened for the bare string "67 per cent", left over from the
+   stale tuning-cost figure. That string now legitimately appears in
+   the three-seed table, where 24 of 36 contrasts is 67 per cent. It
+   now matches the full claim, "67 per cent of the total compute",
+   rather than a number that any result might contain.
+
+A checker that cries wolf is worse than none, because the next real
+failure gets waved through. Both were fixed and the gate is now
+committed as `docs/analysis/verify_report.py` rather than living in a
+scratch directory, which is the same mistake 5v recorded about the
+queue runners.
+
+### Final state
+
+The report is `Pipeline Lab Research Report  _  19 October 2026.docx`:
+16,845 words, 13 tables, 9 figures, 33 references, verification clean.
+Sections 4.4.7 to 4.4.9 now carry the two-seed replication, the
+three-seed analysis, the widened registry and the pre-registered
+held-out test.
+
+`Submission/ITRI671 Pipeline Lab Submission v5.zip`, 7.48 MB, 45
+entries, integrity verified, SHA-256 beginning 437b4963. The record
+stands at 13,899 runs over 36 datasets and 119.3 hours of measured
+compute, of which 4,761 runs over 31 datasets and 85.5 hours are the
+main experimental programme and the rest is replication and
+confirmation.
+
+v1 to v4 remain as dated fallbacks.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
