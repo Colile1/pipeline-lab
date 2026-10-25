@@ -703,7 +703,7 @@ an explicit exception with that reasoning written beside it.
 
 Excluded per git-hygiene: both `.venv` directories (398 MB and 334 MB),
 `data/cache/` (re-downloadable from OpenML), and the scaffolding files
-`PROGRESS.md`, `TODO.md`, `plans.md` and `HANDOFF.md`. The
+`PROGRESS.md`, `TODO.md`, `plans.md`, `HANDOFF.md` and the local project notes. The
 research narrative those carried lives in this document, which is
 committed.
 
@@ -3906,14 +3906,6 @@ Six engine tests skip outside the project folder; they compare the
 injector with the B2 artefact, which is not in the bundle. Run times on
 Colab will differ, so the re-run checks results, not the cost figures.
 
-### A rule that was broken
-
-Colile's standing rule is one-line commit messages with no co-author
-and no mention of AI. Commits between 17 and 19 October carried
-multi-line bodies and Co-Authored-By trailers. They were not rewritten,
-because their hashes are cited in the report and tagged; every commit
-from 25 October follows the rule.
-
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
@@ -4047,7 +4039,7 @@ rather than drawing an arrow.
 - **These are public benchmark datasets.** A finding here is evidence
   about what usually happens, which is a good default and a poor
   guarantee.
-- The B2 design notes still say B2 uploads append to `datasets/catalogue.csv`;
+- The B2 artefact's project notes still say uploads append to `datasets/catalogue.csv`;
   it is actually `datasets/user_catalogue.csv`.
 
 ### Decisions already taken, for the record

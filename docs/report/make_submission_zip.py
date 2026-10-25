@@ -165,7 +165,11 @@ with zipfile.ZipFile(OUT, "w", zipfile.ZIP_DEFLATED, compresslevel=6) as z:
         manifest_rows.append((arc, stat.st_size, datetime.fromtimestamp(stat.st_mtime),
                               sha256(fig), "Figure used in the report or poster."))
 
+    # The internal grading report is a private self-assessment, not part of the
+    # research, and is never packaged.
     for scr in sorted(ANALYSIS_DIR.glob("*.py")):
+        if scr.name in ("grading_content.py", "build_grading.py"):
+            continue
         arc = f"06 Analysis scripts/{scr.name}"
         z.write(scr, arc)
         stat = scr.stat()

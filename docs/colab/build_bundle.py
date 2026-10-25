@@ -119,7 +119,11 @@ def main():
                     "--prefix=pipeline-lab-engine/", "-o", str(OUT / "pipeline-lab-engine.zip"), TAG],
                    check=True)
 
+    # The internal grading report is a private self-assessment, not part of the
+    # research, and is never packaged.
     for script in sorted((LAB / "docs" / "analysis").glob("*.py")):
+        if script.name in ("grading_content.py", "build_grading.py"):
+            continue
         shutil.copy2(script, OUT / "analysis" / script.name)
 
     with zipfile.ZipFile(OUT / "sklearn_data.zip", "w", zipfile.ZIP_DEFLATED) as z:
