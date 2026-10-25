@@ -3842,6 +3842,78 @@ confirmation.
 
 v1 to v4 remain as dated fallbacks.
 
+---
+
+## 5y. Package v6, and a Colab bundle for an independent re-run (25 October 2026)
+
+### The report fixes
+
+The internal grading report (19 October) named the highest-value
+remaining work. All of it was done and checked against the built
+document:
+
+| fix | detail |
+|---|---|
+| abstract | 510 words cut to 288 (range 150 to 300). It also held a stray fragment, "additional random seeds. Of 167", left by an earlier edit and missed by every check until now |
+| section 1.5 | it said the study "required no ethical clearance beyond the standard institutional declaration". A signed ethics form (31 August 2026), three TRREE certificates (30 August) and a signed NWU Code of Conduct exist. Rewritten to match them |
+| section 5.3.1 | "twenty of its twenty-five datasets" corrected to 26 of 31, checked against the record |
+| section 5.5.3 | Figure 5.1 added: planned assessment windows against dated evidence (chapter files, repository histories, ethics documents, run record). It shows ethics was signed in late August rather than by 30 March as planned, though still before the first run on 12 October; the text says so |
+| appendices | A ethics form, B training and code of conduct, C pre-registration record, D reproduction materials; the signed PDFs travel in the package |
+
+### Two near-misses
+
+The session scratch directory had been partly cleared, deleting
+verified_refs.txt and the master_results JSON files. The reference list
+was recovered exactly from the 19 October report, which had been built
+from it and verified. The report sources now live in `docs/report/`.
+
+The first attempt to extend the verification gate failed on a
+backslash escape and left it unchanged, so its "PASS" had checked the
+old 19 October report, not v6. The gate was rewritten whole, then run
+against the old report to prove it fails there (nine defects) before
+its pass on v6 was trusted.
+
+### The Colab bundle
+
+`Colab/PipelineLab_Colab/` holds `main_colab.ipynb`, which re-runs the
+experiments, compares every cell with the original record, re-runs the
+fifteen analyses on both records, draws the figures, and zips the
+results for v7. Design points, each tested:
+
+* **Chunks.** Two sweeps (31 h and 21 h) outlast a Colab session, so
+  sweeps run per dataset, or per dataset and model for the six heaviest,
+  and each chunk is saved to Drive when it finishes. A local run of the
+  smoke profile through the bundle reproduced all 60 cells with per-fold
+  scores identical to the last digit, so chunking changes nothing.
+* **Plan from the record.** For every sweep the plan picks the config
+  files that reproduce its recorded cells exactly. The six imputation
+  base configs already contain their addons' datasets, so running both
+  would have scored three datasets twice. `ofat_scaling_full` is left
+  out: it stopped at 97 of 112 cells and nothing reads it.
+* **Portable analyses.** Every analysis script hardcoded Windows paths.
+  They now read environment variables with the old paths as defaults;
+  ten scripts' outputs were diffed before and after and are identical.
+* **Two false positives removed.** The analysis comparison first dropped
+  every line containing a slash, which threw away the win counts; and
+  scripts that crash on a partial record produced identical tracebacks
+  that it called "identical". Analyses now declare the sweeps they need
+  and report "not applicable" otherwise, and only two successful runs
+  can be called identical. Checked by altering one SVM score and one
+  imputation score in a copy of the record: exactly the analyses that
+  read those cells reported a difference.
+
+Six engine tests skip outside the project folder; they compare the
+injector with the B2 artefact, which is not in the bundle. Run times on
+Colab will differ, so the re-run checks results, not the cost figures.
+
+### A rule that was broken
+
+Colile's standing rule is one-line commit messages with no co-author
+and no mention of AI. Commits between 17 and 19 October carried
+multi-line bodies and Co-Authored-By trailers. They were not rewritten,
+because their hashes are cited in the report and tagged; every commit
+from 25 October follows the rule.
+
 ### Which arms can actually produce a finding
 
 Checked rather than assumed, for all four:
