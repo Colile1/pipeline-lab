@@ -6,14 +6,15 @@ contrast in those cells could be rejected whatever the size of the real
 effect. Adding forest_fires takes the arms to n = 8, where the floor is
 0.03125. This script reports what changed.
 """
+import os
 import pathlib
 import sqlite3
 import sys
 
-sys.path.insert(0, r"C:/Users/Colile/Documents/School/NWU/S1/ITRI671 Project/pipeline-lab-engine/src")
+sys.path.insert(0, os.environ.get("PIPELAB_ENGINE_SRC", r"C:/Users/Colile/Documents/School/NWU/S1/ITRI671 Project/pipeline-lab-engine/src"))
 from piplab.statistics.tests import StatisticsError, compare_levels
 
-DB = r"C:/Users/Colile/Documents/School/NWU/S1/ITRI671 Project/pipeline-lab-engine/outputs/lab.db"
+DB = os.environ.get("PIPELAB_DB", r"C:/Users/Colile/Documents/School/NWU/S1/ITRI671 Project/pipeline-lab-engine/outputs/lab.db")
 
 ARMS = [
     ("ofat_scaling_v2", "scaling", "none"),

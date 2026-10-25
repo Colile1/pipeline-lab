@@ -6,18 +6,18 @@ excluded). Both are legitimate and answer different questions; the
 report needs both, so this computes the first, which master_analysis.py
 deliberately left out.
 """
+import os
 import json
 import pathlib
 import sqlite3
 import sys
 
-sys.path.insert(0, r"C:/Users/Colile/Documents/School/NWU/S1/ITRI671 Project/pipeline-lab-engine/src")
+sys.path.insert(0, os.environ.get("PIPELAB_ENGINE_SRC", r"C:/Users/Colile/Documents/School/NWU/S1/ITRI671 Project/pipeline-lab-engine/src"))
 from piplab.statistics.tests import compare_levels, StatisticsError
 
-DB = r"C:/Users/Colile/Documents/School/NWU/S1/ITRI671 Project/pipeline-lab-engine/outputs/lab.db"
-OUT = pathlib.Path(
-    r"C:/Users/Colile/AppData/Local/Temp/pipeline-lab-scratch"
-)
+DB = os.environ.get("PIPELAB_DB", r"C:/Users/Colile/Documents/School/NWU/S1/ITRI671 Project/pipeline-lab-engine/outputs/lab.db")
+OUT = pathlib.Path(os.environ.get("PIPELAB_OUT", pathlib.Path(__file__).resolve().parent / "out"))
+OUT.mkdir(parents=True, exist_ok=True)
 METRIC = {"classification": ["accuracy_mean", "f1_mean"], "regression": ["rmse_mean"]}
 COL = {"accuracy_mean": 4, "f1_mean": 5, "rmse_mean": 6}
 

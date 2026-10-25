@@ -17,13 +17,14 @@ the model on a reduced sample, so its contrast is not comparable.
 Sample sizes are printed per seed because the two seeds skip different
 runs (PROCESS-LOG 5f).
 """
+import os
 import sqlite3
 import sys
 
-sys.path.insert(0, r"C:/Users/Colile/Documents/School/NWU/S1/ITRI671 Project/pipeline-lab-engine/src")
+sys.path.insert(0, os.environ.get("PIPELAB_ENGINE_SRC", r"C:/Users/Colile/Documents/School/NWU/S1/ITRI671 Project/pipeline-lab-engine/src"))
 from piplab.statistics.tests import StatisticsError, compare_levels
 
-DB = r"C:/Users/Colile/Documents/School/NWU/S1/ITRI671 Project/pipeline-lab-engine/outputs/lab.db"
+DB = os.environ.get("PIPELAB_DB", r"C:/Users/Colile/Documents/School/NWU/S1/ITRI671 Project/pipeline-lab-engine/outputs/lab.db")
 
 SWEEPS = ["mcar05", "mcar15", "mcar30", "mar05", "mar15", "mar30"]
 METRICS = {

@@ -16,12 +16,13 @@ Cells where both seeds return exactly zero are excluded. Those are
 true no-ops, not disagreements, and counting them as agreement would
 inflate the result. This matches the treatment in 5c.
 """
+import os
 import sqlite3
 from collections import defaultdict
 
 from scipy import stats
 
-DB = r"C:/Users/Colile/Documents/School/NWU/S1/ITRI671 Project/pipeline-lab-engine/outputs/lab.db"
+DB = os.environ.get("PIPELAB_DB", r"C:/Users/Colile/Documents/School/NWU/S1/ITRI671 Project/pipeline-lab-engine/outputs/lab.db")
 
 SWEEPS = ["mcar05", "mcar15", "mcar30", "mar05", "mar15", "mar30"]
 METRICS = {

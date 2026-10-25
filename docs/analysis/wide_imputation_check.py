@@ -19,13 +19,14 @@ how many it dropped. The duplicated rows were verified to be scored
 identically, so the choice of which to keep does not affect any
 result; the deduplication exists to stop double counting.
 """
+import os
 import sqlite3
 import sys
 
-sys.path.insert(0, r"C:/Users/Colile/Documents/School/NWU/S1/ITRI671 Project/pipeline-lab-engine/src")
+sys.path.insert(0, os.environ.get("PIPELAB_ENGINE_SRC", r"C:/Users/Colile/Documents/School/NWU/S1/ITRI671 Project/pipeline-lab-engine/src"))
 from piplab.statistics.tests import StatisticsError, compare_levels
 
-DB = r"C:/Users/Colile/Documents/School/NWU/S1/ITRI671 Project/pipeline-lab-engine/outputs/lab.db"
+DB = os.environ.get("PIPELAB_DB", r"C:/Users/Colile/Documents/School/NWU/S1/ITRI671 Project/pipeline-lab-engine/outputs/lab.db")
 
 SWEEPS = ["mcar05", "mcar15", "mcar30", "mar05", "mar15", "mar30"]
 METRICS = {

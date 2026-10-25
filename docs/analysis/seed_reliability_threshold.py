@@ -10,14 +10,15 @@ some size should not be trusted from a single fold assignment at this
 sample size. That is a statement other researchers can act on, and it
 comes out of data already collected.
 """
+import os
 import pathlib
 import sqlite3
 import statistics
 import sys
 
-sys.path.insert(0, r"C:/Users/Colile/Documents/School/NWU/S1/ITRI671 Project/pipeline-lab-engine/src")
+sys.path.insert(0, os.environ.get("PIPELAB_ENGINE_SRC", r"C:/Users/Colile/Documents/School/NWU/S1/ITRI671 Project/pipeline-lab-engine/src"))
 
-DB = r"C:/Users/Colile/Documents/School/NWU/S1/ITRI671 Project/pipeline-lab-engine/outputs/lab.db"
+DB = os.environ.get("PIPELAB_DB", r"C:/Users/Colile/Documents/School/NWU/S1/ITRI671 Project/pipeline-lab-engine/outputs/lab.db")
 SEEDS = [("ofat_scaling_v2", 671),
          ("seed_check_scaling_1337", 1337),
          ("seed_check_scaling_20260702", 20260702)]

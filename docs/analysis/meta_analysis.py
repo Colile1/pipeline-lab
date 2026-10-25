@@ -16,18 +16,20 @@ Two corrections built in deliberately:
   * regression spread is normalised by the baseline RMSE, because raw
     RMSE is not comparable between datasets.
 """
+import os
 import json
 import pathlib
 import sqlite3
 import sys
 
-sys.path.insert(0, r"C:/Users/Colile/Documents/School/NWU/S1/ITRI671 Project/pipeline-lab-engine/src")
+sys.path.insert(0, os.environ.get("PIPELAB_ENGINE_SRC", r"C:/Users/Colile/Documents/School/NWU/S1/ITRI671 Project/pipeline-lab-engine/src"))
 
 import numpy as np
 from scipy import stats
 
-DB = r"C:/Users/Colile/Documents/School/NWU/S1/ITRI671 Project/pipeline-lab-engine/outputs/lab.db"
-OUT = pathlib.Path(__file__).resolve().parent
+DB = os.environ.get("PIPELAB_DB", r"C:/Users/Colile/Documents/School/NWU/S1/ITRI671 Project/pipeline-lab-engine/outputs/lab.db")
+OUT = pathlib.Path(os.environ.get("PIPELAB_OUT", pathlib.Path(__file__).resolve().parent / "out"))
+OUT.mkdir(parents=True, exist_ok=True)
 
 # Only the uninjected, single-sweep-per-factor configs: these are the
 # arms where a factor was varied against a common baseline on a shared

@@ -9,12 +9,13 @@ no correction, with random forest as the control.
 Nothing here is tunable. If the result disappoints, the result is what
 gets reported.
 """
+import os
 import sqlite3
 
 import numpy as np
 from scipy import stats
 
-DB = r"C:/Users/Colile/Documents/School/NWU/S1/ITRI671 Project/pipeline-lab-engine/outputs/lab.db"
+DB = os.environ.get("PIPELAB_DB", r"C:/Users/Colile/Documents/School/NWU/S1/ITRI671 Project/pipeline-lab-engine/outputs/lab.db")
 CONFIG = "heldout_scaling_confirmation"
 ALPHA = 0.05
 

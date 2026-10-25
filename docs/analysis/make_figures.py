@@ -4,6 +4,7 @@ House palette (plain-material-ui / NWU deck style): deep blue is the
 baseline or reference series, purple is the result being argued for,
 slate for muted labels. No decorative colour.
 """
+import os
 import json
 import pathlib
 import sqlite3
@@ -14,13 +15,10 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 
-DB = r"C:/Users/Colile/Documents/School/NWU/S1/ITRI671 Project/pipeline-lab-engine/outputs/lab.db"
-SCRATCH = pathlib.Path(
-    r"C:/Users/Colile/AppData/Local/Temp/pipeline-lab-scratch"
-)
-FIGS = pathlib.Path(
-    r"C:/Users/Colile/Documents/School/NWU/S1/ITRI671 Project/671 Research June/pipeline-lab/docs/figures"
-)
+DB = os.environ.get("PIPELAB_DB", r"C:/Users/Colile/Documents/School/NWU/S1/ITRI671 Project/pipeline-lab-engine/outputs/lab.db")
+SCRATCH = pathlib.Path(os.environ.get("PIPELAB_OUT", pathlib.Path(__file__).resolve().parent / "out"))
+SCRATCH.mkdir(parents=True, exist_ok=True)
+FIGS = pathlib.Path(os.environ.get("PIPELAB_FIGS", r"C:/Users/Colile/Documents/School/NWU/S1/ITRI671 Project/671 Research June/pipeline-lab/docs/figures"))
 FIGS.mkdir(parents=True, exist_ok=True)
 
 NAVY, MID, PURPLE, LPURPLE = "#1A365D", "#2B6CB0", "#6B46C1", "#9F7AEA"
@@ -79,9 +77,7 @@ def _fig2_caption_facts():
     result it describes, which is what happened when it was a literal.
     """
     import sys
-    sys.path.insert(
-        0, r"C:/Users/Colile/Documents/School/NWU/S1/ITRI671 Project/pipeline-lab-engine/src"
-    )
+    sys.path.insert(0, os.environ.get("PIPELAB_ENGINE_SRC", r"C:/Users/Colile/Documents/School/NWU/S1/ITRI671 Project/pipeline-lab-engine/src"))
     from piplab.statistics.tests import compare_levels
 
     conn = sqlite3.connect(f"file:{DB}?mode=ro", uri=True)

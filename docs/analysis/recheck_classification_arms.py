@@ -12,13 +12,14 @@ contrast. Wilcoxon discards tied pairs, so a contrast's effective
 sample size can be well below the number of datasets, which is the
 mechanism behind the logreg result in PROCESS-LOG 5e.
 """
+import os
 import sqlite3
 import sys
 
-sys.path.insert(0, r"C:/Users/Colile/Documents/School/NWU/S1/ITRI671 Project/pipeline-lab-engine/src")
+sys.path.insert(0, os.environ.get("PIPELAB_ENGINE_SRC", r"C:/Users/Colile/Documents/School/NWU/S1/ITRI671 Project/pipeline-lab-engine/src"))
 from piplab.statistics.tests import StatisticsError, compare_levels
 
-DB = r"C:/Users/Colile/Documents/School/NWU/S1/ITRI671 Project/pipeline-lab-engine/outputs/lab.db"
+DB = os.environ.get("PIPELAB_DB", r"C:/Users/Colile/Documents/School/NWU/S1/ITRI671 Project/pipeline-lab-engine/outputs/lab.db")
 
 ARMS = [
     ("ofat_scaling_v2", "scaling", "none"),

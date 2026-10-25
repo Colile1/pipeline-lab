@@ -1,4 +1,5 @@
 """Figures for the dataset-characteristic meta-analysis."""
+import os
 import json
 import pathlib
 
@@ -9,7 +10,7 @@ import numpy as np
 from scipy import stats
 
 HERE = pathlib.Path(__file__).resolve().parent
-FIGS = HERE.parent / "figures"
+FIGS = pathlib.Path(os.environ.get("PIPELAB_FIGS", HERE.parent / "figures"))
 FIGS.mkdir(parents=True, exist_ok=True)
 
 NAVY, MID, PURPLE, LPURPLE = "#1A365D", "#2B6CB0", "#6B46C1", "#9F7AEA"
@@ -22,7 +23,7 @@ plt.rcParams.update({
     "axes.facecolor": "white", "legend.frameon": False,
 })
 
-d = json.loads((HERE / "meta_analysis_results.json").read_text())
+d = json.loads((pathlib.Path(os.environ.get("PIPELAB_OUT", pathlib.Path(__file__).resolve().parent / "out")) / "meta_analysis_results.json").read_text())
 cells, chars = d["cells"], d["characteristics"]
 
 FACTORS = ["scaling", "encoding", "selection", "tuning"]

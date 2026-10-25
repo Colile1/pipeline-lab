@@ -16,14 +16,15 @@ master_analysis.py and for the reason given there: listwise deletion
 scores the model on a reduced sample, so its contrast is not against
 the same data as the others.
 """
+import os
 import sqlite3
 import sys
 from collections import Counter
 
-sys.path.insert(0, r"C:/Users/Colile/Documents/School/NWU/S1/ITRI671 Project/pipeline-lab-engine/src")
+sys.path.insert(0, os.environ.get("PIPELAB_ENGINE_SRC", r"C:/Users/Colile/Documents/School/NWU/S1/ITRI671 Project/pipeline-lab-engine/src"))
 from piplab.statistics.tests import StatisticsError, compare_levels
 
-DB = r"C:/Users/Colile/Documents/School/NWU/S1/ITRI671 Project/pipeline-lab-engine/outputs/lab.db"
+DB = os.environ.get("PIPELAB_DB", r"C:/Users/Colile/Documents/School/NWU/S1/ITRI671 Project/pipeline-lab-engine/outputs/lab.db")
 
 SWEEPS = ["mcar05", "mcar15", "mcar30", "mar05", "mar15", "mar30"]
 # (label, config prefix pattern) for the three draws of the same design.
