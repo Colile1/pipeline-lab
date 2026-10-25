@@ -24,12 +24,13 @@ ROOT = pathlib.Path(r"C:/Users/Colile/Documents/School/NWU/S1/ITRI671 Project")
 RESEARCH = ROOT / "671 Research June"
 LAB = RESEARCH / "pipeline-lab"
 ENGINE = ROOT / "pipeline-lab-engine"
+ETHICS = ROOT / "Ethics docs"
 OUT = RESEARCH / "Submission" / f"ITRI671 Pipeline Lab Submission {VERSION}.zip"
 OUT.parent.mkdir(parents=True, exist_ok=True)
 
 # (source, path inside the archive, description for the manifest)
 ITEMS = [
-    (RESEARCH / "Chapters" / "Pipeline Lab Research Report  _  19 October 2026.docx",
+    (RESEARCH / "Chapters" / "Pipeline Lab Research Report  _  25 October 2026.docx",
      "01 Report/Pipeline Lab Research Report.docx",
      "The research report, Chapters 1-5 per Addendum F. PRIMARY SUBMISSION."),
     (RESEARCH / "September" /
@@ -54,6 +55,27 @@ ITEMS = [
      "Scope boundaries and the reasoning for them."),
     (ENGINE / "outputs" / "lab.db", "04 Data/lab.db",
      "The complete run record. Append-only SQLite, one row per run."),
+    # Appendices A and B of the report, attached as the signed originals.
+    (ETHICS / "Sibanda EthicsForm signed.pdf",
+     "07 Appendices/Appendix A - Research ethics form (signed).pdf",
+     "Appendix A: ITRI 671 research ethics form, signed 31 August 2026."),
+    (ETHICS / "Module 1 _2023__Certificate of completion for module 1 _2023_.pdf",
+     "07 Appendices/Appendix B1 - TRREE Module 1 Introduction to Research Ethics.pdf",
+     "Appendix B: TRREE training certificate, module 1."),
+    (ETHICS / "Module 2 _2023__Certificate of completion for module 2 _2023_.pdf",
+     "07 Appendices/Appendix B2 - TRREE Module 2 Research Ethics Evaluation.pdf",
+     "Appendix B: TRREE training certificate, module 2."),
+    (ETHICS / "Module 3 _2023__Certificate of completion for module 3 _2023_.pdf",
+     "07 Appendices/Appendix B3 - TRREE Module 3 Informed Consent.pdf",
+     "Appendix B: TRREE training certificate, module 3."),
+    (ETHICS / "Code+of+Conduct+for+Researchers+-+9.1.5.1.3_Code_Conduct_.pdf",
+     "07 Appendices/Appendix B4 - NWU Code of Conduct for Researchers (signed).pdf",
+     "Appendix B: NWU Code of Conduct for Researchers, signed 31 August 2026."),
+    # Appendix D: the re-run bundle.
+    (RESEARCH / "Colab" / "PipelineLab_Colab.zip",
+     "08 Reproduction/PipelineLab_Colab.zip",
+     "Appendix D: main_colab.ipynb and everything it needs to re-run the experiments "
+     "on Google Colab and compare the result with the original record."),
 ]
 
 FIG_DIR = LAB / "docs" / "figures"
