@@ -60,7 +60,7 @@ central fact the scope decisions turn on.
 
 ## 2. Architecture decision: a third engine
 
-The design notes forbid the dashboard from holding experimental logic, and
+The project rules forbid the dashboard from holding experimental logic, and
 B1/B2 are frozen research records (B1 pre-registered, seed 20260702; B2
 672 completed runs). Adding feature selection and tuning to either would
 alter a pre-registered design and break comparability with results

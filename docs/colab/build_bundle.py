@@ -115,9 +115,20 @@ def main():
     plan = build_plan()
     (OUT / "plan.json").write_text(json.dumps(plan, indent=1), encoding="utf-8")
 
+    raw = OUT / "engine_raw.zip"
     subprocess.run(["git", "-C", str(ENGINE), "archive", "--format=zip",
-                    "--prefix=pipeline-lab-engine/", "-o", str(OUT / "pipeline-lab-engine.zip"), TAG],
-                   check=True)
+                    "--prefix=pipeline-lab-engine/", "-o", str(raw), TAG], check=True)
+    # Repository housekeeping files (.gitignore) are not part of the engine
+    # and are not needed to run it, so they are left out of the bundle. The
+    # archive comment, which records the tagged commit, is kept.
+    with zipfile.ZipFile(raw) as src, zipfile.ZipFile(
+            OUT / "pipeline-lab-engine.zip", "w", zipfile.ZIP_DEFLATED) as dst:
+        dst.comment = src.comment
+        for item in src.infolist():
+            if pathlib.PurePosixPath(item.filename).name == ".gitignore":
+                continue
+            dst.writestr(item, src.read(item.filename))
+    raw.unlink()
 
     # The internal grading report is a private self-assessment, not part of the
     # research, and is never packaged.
