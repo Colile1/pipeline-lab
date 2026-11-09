@@ -30,7 +30,8 @@ This table resolves each earlier ID to the commit that now holds the same files.
 ## 9 November 2026
 
 Before the repository was published, references to local planning notes were reworded
-in every commit and the corresponding lines were dropped from `.gitignore`. Every commit
+in every commit, the corresponding lines were dropped from `.gitignore`, and the sources of a
+private self-assessment were removed from the history. Every commit
 therefore has a new ID; messages, authors, dates and all other file contents are unchanged.
 The pre-registration commit cited in the report and in `heldout_test.py` is now 4fd88d0
 (previously 1f82653). The IDs in the table above resolve through this one.
@@ -101,11 +102,11 @@ The pre-registration commit cited in the report and in `heldout_test.py` is now 
 | 2026-10-19 | 777b2c5 | 30000a7 | Three-seed imputation analysis: only 8 per cent survive all three draws |
 | 2026-10-19 | bc2c83f | e052f51 | Add the report verification gate, with its own two false positives fixed |
 | 2026-10-19 | 7a68873 | be32af5 | Renumber tables 4.1-4.13, fix verification false positives, package v5 |
-| 2026-10-19 | 805adbd | 39e8373 | Add the internal grading report and its builder |
-| 2026-10-25 | 5f1c45d | 80f4a5d | Move report sources into the repo; v6 edits, timeline figure, appendices |
-| 2026-10-25 | 70c93c7 | 8257c50 | Read analysis paths from environment variables so the scripts run on Colab |
-| 2026-10-25 | 5e17e99 | e35341c | Add the Colab re-run bundle: notebook, runner, comparison and analyses |
-| 2026-10-25 | 6252d6d | 8455fc2 | Package v6 with ethics appendices and the Colab bundle |
-| 2026-10-25 | b04a741 | 7759c00 | Log v6 and the Colab bundle; add results ingestion for v7 |
-| 2026-10-25 | 94adb61 | 6c0bf1b | Map earlier commit IDs; keep the grading report out of packages |
-| 2026-10-25 | 0730dab | d9ddd37 | Reword a planning note; leave repository housekeeping out of the bundle |
+| 2026-10-19 | 805adbd | dc128e4 | Add the internal grading report and its builder |
+| 2026-10-25 | 5f1c45d | 6c8e74e | Move report sources into the repo; v6 edits, timeline figure, appendices |
+| 2026-10-25 | 70c93c7 | 9e67604 | Read analysis paths from environment variables so the scripts run on Colab |
+| 2026-10-25 | 5e17e99 | 9c7a634 | Add the Colab re-run bundle: notebook, runner, comparison and analyses |
+| 2026-10-25 | 6252d6d | 06fce95 | Package v6 with ethics appendices and the Colab bundle |
+| 2026-10-25 | b04a741 | 48c7597 | Log v6 and the Colab bundle; add results ingestion for v7 |
+| 2026-10-25 | 94adb61 | d0a42ed | Map earlier commit IDs; keep the grading report out of packages |
+| 2026-10-25 | 0730dab | 6671676 | Reword a planning note; leave repository housekeeping out of the bundle |
