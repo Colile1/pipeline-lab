@@ -72,7 +72,7 @@ def report(model, label):
 
 
 print("PRE-REGISTERED HELD-OUT CONFIRMATION")
-print("Registered 2026-10-18 06:54 (git 1f82653), before these datasets were scored.")
+print("Registered 2026-10-18 06:54 (git 4fd88d0), before these datasets were scored.")
 
 p_svm, wins_svm, n = report("svm", "PREDICTION: scaling helps the SVM")
 p_rf, wins_rf, _ = report("random_forest", "CONTROL: scaling does not help a tree")

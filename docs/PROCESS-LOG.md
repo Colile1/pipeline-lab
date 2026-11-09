@@ -3323,7 +3323,7 @@ The study's strongest result, support vector machine scaling, was put
 to a pre-registered test on five datasets the study had never used.
 The prediction, the datasets, the procedure and the decision rule were
 written into `docs/PREREGISTRATION-HELDOUT.md` and **committed to git
-at 06:54 (1f82653) before any of the five had been scored**, so the
+at 06:54 (4fd88d0) before any of the five had been scored**, so the
 timestamp establishes that the hypothesis preceded the data.
 
 **The prediction was not confirmed.**

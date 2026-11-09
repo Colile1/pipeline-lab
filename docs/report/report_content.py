@@ -1584,7 +1584,7 @@ CONTENT = [
       "record establishes the order of events independently of this report."),
 ("tbl", ("Table C.1: The pre-registration record and the terms it fixed in advance.",
          [["Item", "Recorded value"],
-          ["Commit", "1f82653"],
+          ["Commit", "4fd88d0"],
           ["Committed", "18 October 2026, 04:54:31 UTC"],
           ["First held-out run", "18 October 2026, 04:55:26 UTC"],
           ["Prediction", "Standard scaling improves support vector machine accuracy relative "
